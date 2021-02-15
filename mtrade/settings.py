@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mtrade.domain.users',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -101,6 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# NOSE
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=mtrade',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

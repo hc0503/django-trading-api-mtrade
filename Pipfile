@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-nose = "*"
+coverage = "*"
 
 [dev-packages]
 
