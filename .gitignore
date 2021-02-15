@@ -1,3 +1,9 @@
 db.sqlite3
 *.sw*
 *__pycache__*
+
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
