@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mtrade.urls'
+ROOT_URLCONF = 'mtrade.interface.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mtrade.wsgi.application'
+WSGI_APPLICATION = 'mtrade.drivers.wsgi.application'
 
 
 # Database
