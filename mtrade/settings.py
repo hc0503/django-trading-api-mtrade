@@ -80,9 +80,15 @@ REST_FRAMEWORK = {
     )
 }
 
+SPECTACULAR_DESCRIPTION="""
+This is an interactive view of the MTrade API, please log in by clicking the "Authorize" button in order to test it.
+
+This view should **NOT** be deployed to production.
+"""
+
 SPECTACULAR_SETTINGS = {
     'TITLE': 'MTrade API',
-    'DESCRIPTION': '',
+    'DESCRIPTION': SPECTACULAR_DESCRIPTION,
     'TOS': None,
     # Optional: MAY contain "name", "url", "email"
     'VERSION': '0.1.0',

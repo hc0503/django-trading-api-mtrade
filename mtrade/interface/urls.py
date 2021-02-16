@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from django.urls import include, path
+from django.views.generic.base import RedirectView
 from rest_framework import routers
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
@@ -32,6 +33,7 @@ router.register(r'groups', views.GroupViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('', RedirectView.as_view(url='api/v0/', permanent=False)),
     path('admin/', admin.site.urls),
     path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v0/', include(router.urls)),
