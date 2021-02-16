@@ -1,3 +1,9 @@
-[report]
+[run]
+include =
+    mtrade/*
 omit =
-    mtrade/settings.py
+    *tests*.py
+
+[report]
+skip_covered = True
+show_missing = True
