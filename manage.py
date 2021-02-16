@@ -3,10 +3,26 @@
 import os
 import sys
 
+class TestCoverageException(Exception):
+    pass
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mtrade.settings')
+
+    # Set up Coverage
+    try:
+        command = sys.argv[1]
+    except IndexError:
+        command = "help"
+
+    running_tests = (command == 'test')
+    if running_tests:
+        from coverage import Coverage
+        cov = Coverage()
+        cov.erase()
+        cov.start()
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -17,6 +33,14 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
+    # Finalize Coverage
+    if running_tests:
+        threshold = 80
+        cov.stop()
+        cov.save()
+        covered = cov.report()
+        if covered < threshold:
+            raise TestCoverageException("Coverage is below {}, please update your tests.".format(threshold))
 
 if __name__ == '__main__':
     main()
