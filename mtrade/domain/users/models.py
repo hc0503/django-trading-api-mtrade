@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.core.validators import validate_email
 
 from lib.data_manipulation.type_conversion import asdict
 
@@ -52,6 +53,9 @@ class UserPersonalData():
     first_name: str
     last_name: str
     email: str
+
+    def __post_init__(self):
+        validate_email(self.email)
 
 
 @dataclass(frozen=True)

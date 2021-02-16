@@ -14,6 +14,6 @@ class UserServices():
     def get_user_repo():
         return User.objects
 
-    @staticmethod
-    def subscribe_to_user_post_save(handler, dispatch_uid):
-        post_save.connect(handler, sender=User, dispatch_uid = dispatch_uid, weak=False)
+#    @staticmethod
+#    def subscribe_to_user_post_save(handler, dispatch_uid):
+#        post_save.connect(handler, sender=User, dispatch_uid = dispatch_uid, weak=False)
