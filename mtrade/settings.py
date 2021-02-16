@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mtrade.domain.users',
     'django_nose',
+    'rest_framework',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +71,24 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'MTrade API',
+    'DESCRIPTION': '',
+    'TOS': None,
+    # Optional: MAY contain "name", "url", "email"
+    'VERSION': '0.1.0',
+    'SCHEMA_PATH_PREFIX': r'/api/v[0-9]',
+}
 
 WSGI_APPLICATION = 'mtrade.drivers.wsgi.application'
 
