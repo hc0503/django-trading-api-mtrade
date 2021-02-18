@@ -22,6 +22,7 @@ from rest_framework import routers
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from . import views
+from .security.urls import router as security_router
 
 
 router = routers.DefaultRouter()
@@ -37,5 +38,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v0/', include(router.urls)),
+    path('api/v0/', include(security_router.urls)),
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
 ]

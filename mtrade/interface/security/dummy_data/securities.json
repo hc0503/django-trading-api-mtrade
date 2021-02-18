@@ -1,0 +1,4260 @@
+[
+    {
+        "isin": "MX0MGO000003",
+        "name": "Bono M  8.0%  06/Dec/2023",
+        "ticker": "Bono M",
+        "series": "MX0MGO000003",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg ajosnnhncquv",
+        "classification_mx": "ajosnnhncquv",
+        "amortization_scheme": {
+            "0": {
+                "date": "30/10/2003",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "31/12/2003",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "30/06/2004",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "29/12/2004",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "29/06/2005",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "28/12/2005",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "28/06/2006",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "27/12/2006",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "27/06/2007",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "26/12/2007",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "25/06/2008",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "24/12/2008",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "24/06/2009",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "23/12/2009",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "23/06/2010",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "22/12/2010",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "22/06/2011",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "21/12/2011",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "20/06/2012",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "19/12/2012",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "19/06/2013",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "18/12/2013",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "18/06/2014",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "17/12/2014",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "17/06/2015",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "16/12/2015",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "15/06/2016",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "14/12/2016",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "14/06/2017",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "13/12/2017",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "13/06/2018",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "12/12/2018",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "12/06/2019",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "11/12/2019",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "10/06/2020",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "09/12/2020",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "09/06/2021",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "08/12/2021",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "08/06/2022",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "07/12/2022",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "07/06/2023",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "06/12/2023",
+                "amort": 1,
+                "interest": 4.044444444444444,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.08000000000000000000",
+        "initial_margin": "274.42780000000000000000",
+        "coupon_benchmark": "benchmark_sgjjtuvnjsxp",
+        "issue_date": "2003-10-30T06:00:00Z",
+        "first_coupon_date": "2003-12-31T06:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2023-12-06T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.070Z",
+        "call_date_2": "2021-02-17T20:04:06.070Z",
+        "call_date_3": "2021-02-17T20:04:06.070Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 11,
+        "issued_amount": "250185200000.00000000000000000000",
+        "outstanding": "249632800000.00000000000000000000",
+        "listing": "listing-3",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO000078",
+        "name": "Bono M  10.0%  05/Dec/2024",
+        "ticker": "Bono M",
+        "series": "MX0MGO000078",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg ozloeoowphzi",
+        "classification_mx": "ozloeoowphzi",
+        "amortization_scheme": {
+            "0": {
+                "date": "20/01/2005",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "30/06/2005",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "29/12/2005",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "29/06/2006",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "28/12/2006",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "28/06/2007",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "27/12/2007",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "26/06/2008",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "25/12/2008",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "25/06/2009",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "24/12/2009",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "24/06/2010",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "23/12/2010",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "23/06/2011",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "22/12/2011",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "05/12/2024",
+                "amort": 1,
+                "interest": 5.055555555555555,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.10000000000000000000",
+        "initial_margin": "345.20110000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2005-01-20T06:00:00Z",
+        "first_coupon_date": "2005-06-30T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2024-12-05T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.088Z",
+        "call_date_2": "2021-02-17T20:04:06.088Z",
+        "call_date_3": "2021-02-17T20:04:06.088Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 0,
+        "issued_amount": "269658400000.00000000000000000000",
+        "outstanding": "270298000000.00000000000000000000",
+        "listing": "listing-3",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "secured"
+    },
+    {
+        "isin": "MX0MGO0000B2",
+        "name": "Bono M  10.0%  20/Nov/2036",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000B2",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg myhioixkectf",
+        "classification_mx": "myhioixkectf",
+        "amortization_scheme": {
+            "0": {
+                "date": "26/10/2006",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "28/12/2006",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "28/06/2007",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "27/12/2007",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "26/06/2008",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "25/12/2008",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "25/06/2009",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "24/12/2009",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "24/06/2010",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "23/12/2010",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "23/06/2011",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "22/12/2011",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "42": {
+                "date": "03/06/2027",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "43": {
+                "date": "02/12/2027",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "44": {
+                "date": "01/06/2028",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "45": {
+                "date": "30/11/2028",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "46": {
+                "date": "31/05/2029",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "47": {
+                "date": "29/11/2029",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "48": {
+                "date": "30/05/2030",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "49": {
+                "date": "28/11/2030",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "50": {
+                "date": "29/05/2031",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "51": {
+                "date": "27/11/2031",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "52": {
+                "date": "27/05/2032",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "53": {
+                "date": "25/11/2032",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "54": {
+                "date": "26/05/2033",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "55": {
+                "date": "24/11/2033",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "56": {
+                "date": "25/05/2034",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "57": {
+                "date": "23/11/2034",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "58": {
+                "date": "24/05/2035",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "59": {
+                "date": "22/11/2035",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "60": {
+                "date": "22/05/2036",
+                "amort": 0,
+                "interest": 5.055555555555555,
+                "outstanding": 100
+            },
+            "61": {
+                "date": "20/11/2036",
+                "amort": 1,
+                "interest": 5.055555555555555,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.10000000000000000000",
+        "initial_margin": "316.76870000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2006-10-26T05:00:00Z",
+        "first_coupon_date": "2006-12-28T06:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2036-11-20T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.106Z",
+        "call_date_2": "2021-02-17T20:04:06.106Z",
+        "call_date_3": "2021-02-17T20:04:06.106Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 27,
+        "issued_amount": "71207000000.00000000000000000000",
+        "outstanding": "71236200000.00000000000000000000",
+        "listing": "listing-3",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO0000D8",
+        "name": "Bono M  7.5%  03/Jun/2027",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000D8",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg tgtlbgljezvn",
+        "classification_mx": "tgtlbgljezvn",
+        "amortization_scheme": {
+            "0": {
+                "date": "18/01/2007",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "28/06/2007",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "27/12/2007",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "26/06/2008",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "25/12/2008",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "25/06/2009",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "24/12/2009",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "24/06/2010",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "23/12/2010",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "23/06/2011",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "22/12/2011",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 3.7916666666666665,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "03/06/2027",
+                "amort": 1,
+                "interest": 3.7916666666666665,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.07500000000000000000",
+        "initial_margin": "231.54430000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2007-01-18T06:00:00Z",
+        "first_coupon_date": "2007-06-28T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2027-06-03T05:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.123Z",
+        "call_date_2": "2021-02-17T20:04:06.123Z",
+        "call_date_3": "2021-02-17T20:04:06.123Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 32,
+        "issued_amount": "302137800000.00000000000000000000",
+        "outstanding": "301996700000.00000000000000000000",
+        "listing": "listing-2",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO0000H9",
+        "name": "Bono M  8.5%  31/May/2029",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000H9",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg kmwzumxgrmsf",
+        "classification_mx": "kmwzumxgrmsf",
+        "amortization_scheme": {
+            "0": {
+                "date": "15/01/2009",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "25/06/2009",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "24/12/2009",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "24/06/2010",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "23/12/2010",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "23/06/2011",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "22/12/2011",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "03/06/2027",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "02/12/2027",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "01/06/2028",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "30/11/2028",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "31/05/2029",
+                "amort": 1,
+                "interest": 4.2972222222222225,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.08500000000000000000",
+        "initial_margin": "222.21010000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2009-01-15T06:00:00Z",
+        "first_coupon_date": "2009-06-25T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2029-05-31T05:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.138Z",
+        "call_date_2": "2021-02-17T20:04:06.138Z",
+        "call_date_3": "2021-02-17T20:04:06.138Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 41,
+        "issued_amount": "293797000000.00000000000000000000",
+        "outstanding": "293580400000.00000000000000000000",
+        "listing": "listing-2",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "secured"
+    },
+    {
+        "isin": "MX0MGO0000J5",
+        "name": "Bono M  8.5%  18/Nov/2038",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000J5",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg bahueemcysly",
+        "classification_mx": "bahueemcysly",
+        "amortization_scheme": {
+            "0": {
+                "date": "29/01/2009",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "25/06/2009",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "24/12/2009",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "24/06/2010",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "23/12/2010",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "23/06/2011",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "22/12/2011",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "03/06/2027",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "02/12/2027",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "01/06/2028",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "30/11/2028",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "31/05/2029",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "42": {
+                "date": "29/11/2029",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "43": {
+                "date": "30/05/2030",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "44": {
+                "date": "28/11/2030",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "45": {
+                "date": "29/05/2031",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "46": {
+                "date": "27/11/2031",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "47": {
+                "date": "27/05/2032",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "48": {
+                "date": "25/11/2032",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "49": {
+                "date": "26/05/2033",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "50": {
+                "date": "24/11/2033",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "51": {
+                "date": "25/05/2034",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "52": {
+                "date": "23/11/2034",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "53": {
+                "date": "24/05/2035",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "54": {
+                "date": "22/11/2035",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "55": {
+                "date": "22/05/2036",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "56": {
+                "date": "20/11/2036",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "57": {
+                "date": "21/05/2037",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "58": {
+                "date": "19/11/2037",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "59": {
+                "date": "20/05/2038",
+                "amort": 0,
+                "interest": 4.2972222222222225,
+                "outstanding": 100
+            },
+            "60": {
+                "date": "18/11/2038",
+                "amort": 1,
+                "interest": 4.2972222222222225,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.08500000000000000000",
+        "initial_margin": "309.26600000000000000000",
+        "coupon_benchmark": "benchmark_sgjjtuvnjsxp",
+        "issue_date": "2009-01-29T06:00:00Z",
+        "first_coupon_date": "2009-06-25T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2038-11-18T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.152Z",
+        "call_date_2": "2021-02-17T20:04:06.152Z",
+        "call_date_3": "2021-02-17T20:04:06.152Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 11,
+        "issued_amount": "187028900000.00000000000000000000",
+        "outstanding": "188102800000.00000000000000000000",
+        "listing": "listing-4",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "secured"
+    },
+    {
+        "isin": "MX0MGO0000N7",
+        "name": "Bono M  6.5%  10/Jun/2021",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000N7",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg fggxgoxjeohg",
+        "classification_mx": "fggxgoxjeohg",
+        "amortization_scheme": {
+            "0": {
+                "date": "03/02/2011",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "23/06/2011",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "22/12/2011",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "10/06/2021",
+                "amort": 1,
+                "interest": 3.286111111111111,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.06500000000000000000",
+        "initial_margin": "311.05910000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2011-02-03T06:00:00Z",
+        "first_coupon_date": "2011-06-23T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2021-06-10T05:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.170Z",
+        "call_date_2": "2021-02-17T20:04:06.170Z",
+        "call_date_3": "2021-02-17T20:04:06.170Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 50,
+        "issued_amount": "239088000000.00000000000000000000",
+        "outstanding": "239131200000.00000000000000000000",
+        "listing": "listing-2",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "secured"
+    },
+    {
+        "isin": "MX0MGO0000P2",
+        "name": "Bono M  7.75%  29/May/2031",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000P2",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg iuahwdcjsxjc",
+        "classification_mx": "iuahwdcjsxjc",
+        "amortization_scheme": {
+            "0": {
+                "date": "09/09/2011",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "22/12/2011",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "03/06/2027",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "02/12/2027",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "01/06/2028",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "30/11/2028",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "31/05/2029",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "29/11/2029",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "30/05/2030",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "28/11/2030",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "29/05/2031",
+                "amort": 1,
+                "interest": 3.9180555555555556,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.07750000000000000000",
+        "initial_margin": "291.49360000000000000000",
+        "coupon_benchmark": "benchmark_sgjjtuvnjsxp",
+        "issue_date": "2011-09-09T05:00:00Z",
+        "first_coupon_date": "2011-12-22T06:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2031-05-29T05:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.184Z",
+        "call_date_2": "2021-02-17T20:04:06.184Z",
+        "call_date_3": "2021-02-17T20:04:06.184Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 24,
+        "issued_amount": "149959400000.00000000000000000000",
+        "outstanding": "148051300000.00000000000000000000",
+        "listing": "listing-4",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "secured"
+    },
+    {
+        "isin": "MX0MGO0000Q0",
+        "name": "Bono M  6.5%  09/Jun/2022",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000Q0",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg ozlukaybidkx",
+        "classification_mx": "ozlukaybidkx",
+        "amortization_scheme": {
+            "0": {
+                "date": "15/02/2012",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 3.286111111111111,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "09/06/2022",
+                "amort": 1,
+                "interest": 3.286111111111111,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.06500000000000000000",
+        "initial_margin": "287.96700000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2012-02-15T06:00:00Z",
+        "first_coupon_date": "2012-06-21T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2022-06-09T05:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.197Z",
+        "call_date_2": "2021-02-17T20:04:06.197Z",
+        "call_date_3": "2021-02-17T20:04:06.197Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 15,
+        "issued_amount": "300595600000.00000000000000000000",
+        "outstanding": "300023500000.00000000000000000000",
+        "listing": "listing-3",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO0000R8",
+        "name": "Bono M  7.75%  13/Nov/2042",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000R8",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg xuseowffunsc",
+        "classification_mx": "xuseowffunsc",
+        "amortization_scheme": {
+            "0": {
+                "date": "20/04/2012",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "21/06/2012",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "20/12/2012",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "20/06/2013",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "19/12/2013",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "03/06/2027",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "02/12/2027",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "01/06/2028",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "30/11/2028",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "31/05/2029",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "29/11/2029",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "30/05/2030",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "28/11/2030",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "29/05/2031",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "27/11/2031",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "27/05/2032",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "42": {
+                "date": "25/11/2032",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "43": {
+                "date": "26/05/2033",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "44": {
+                "date": "24/11/2033",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "45": {
+                "date": "25/05/2034",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "46": {
+                "date": "23/11/2034",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "47": {
+                "date": "24/05/2035",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "48": {
+                "date": "22/11/2035",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "49": {
+                "date": "22/05/2036",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "50": {
+                "date": "20/11/2036",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "51": {
+                "date": "21/05/2037",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "52": {
+                "date": "19/11/2037",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "53": {
+                "date": "20/05/2038",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "54": {
+                "date": "18/11/2038",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "55": {
+                "date": "19/05/2039",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "56": {
+                "date": "17/11/2039",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "57": {
+                "date": "17/05/2040",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "58": {
+                "date": "15/11/2040",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "59": {
+                "date": "16/05/2041",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "60": {
+                "date": "14/11/2041",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "61": {
+                "date": "15/05/2042",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "62": {
+                "date": "13/11/2042",
+                "amort": 1,
+                "interest": 3.9180555555555556,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.07750000000000000000",
+        "initial_margin": "326.94560000000000000000",
+        "coupon_benchmark": "benchmark_sgjjtuvnjsxp",
+        "issue_date": "2012-04-20T05:00:00Z",
+        "first_coupon_date": "2012-06-21T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2042-11-13T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.212Z",
+        "call_date_2": "2021-02-17T20:04:06.212Z",
+        "call_date_3": "2021-02-17T20:04:06.212Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 22,
+        "issued_amount": "195886200000.00000000000000000000",
+        "outstanding": "196373000000.00000000000000000000",
+        "listing": "listing-1",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "secured"
+    },
+    {
+        "isin": "MX0MGO0000U2",
+        "name": "Bono M  7.75%  23/Nov/2034",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000U2",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg qvhdbfocnmzf",
+        "classification_mx": "qvhdbfocnmzf",
+        "amortization_scheme": {
+            "0": {
+                "date": "11/04/2014",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "19/06/2014",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "18/12/2014",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "18/06/2015",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "17/12/2015",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "16/06/2016",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "15/12/2016",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "03/06/2027",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "02/12/2027",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "01/06/2028",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "30/11/2028",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "31/05/2029",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "29/11/2029",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "30/05/2030",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "28/11/2030",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "29/05/2031",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "27/11/2031",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "27/05/2032",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "25/11/2032",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "26/05/2033",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "24/11/2033",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "25/05/2034",
+                "amort": 0,
+                "interest": 3.9180555555555556,
+                "outstanding": 100
+            },
+            "42": {
+                "date": "23/11/2034",
+                "amort": 1,
+                "interest": 3.9180555555555556,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.07750000000000000000",
+        "initial_margin": "227.41110000000000000000",
+        "coupon_benchmark": "benchmark_sgjjtuvnjsxp",
+        "issue_date": "2014-04-11T05:00:00Z",
+        "first_coupon_date": "2014-06-19T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2034-11-23T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.224Z",
+        "call_date_2": "2021-02-17T20:04:06.224Z",
+        "call_date_3": "2021-02-17T20:04:06.224Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 15,
+        "issued_amount": "88854800000.00000000000000000000",
+        "outstanding": "90153000000.00000000000000000000",
+        "listing": "listing-3",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO0000Y4",
+        "name": "Bono M  5.75%  05/Mar/2026",
+        "ticker": "Bono M",
+        "series": "MX0MGO0000Y4",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg tzzryptapmdo",
+        "classification_mx": "tzzryptapmdo",
+        "amortization_scheme": {
+            "0": {
+                "date": "16/10/2015",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "17/03/2016",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "15/09/2016",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "16/03/2017",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "14/09/2017",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "15/03/2018",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "13/09/2018",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "14/03/2019",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "12/09/2019",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "12/03/2020",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "10/09/2020",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "11/03/2021",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "09/09/2021",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "10/03/2022",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "08/09/2022",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "09/03/2023",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "07/09/2023",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "07/03/2024",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "05/09/2024",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "06/03/2025",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "04/09/2025",
+                "amort": 0,
+                "interest": 2.9069444444444446,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "05/03/2026",
+                "amort": 1,
+                "interest": 2.9069444444444446,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.05750000000000000000",
+        "initial_margin": "292.81700000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2015-10-16T05:00:00Z",
+        "first_coupon_date": "2016-03-17T06:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2026-03-05T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.235Z",
+        "call_date_2": "2021-02-17T20:04:06.235Z",
+        "call_date_3": "2021-02-17T20:04:06.235Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 4,
+        "issued_amount": "216249000000.00000000000000000000",
+        "outstanding": "206912800000.00000000000000000000",
+        "listing": "listing-2",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "secured"
+    },
+    {
+        "isin": "MX0MGO000102",
+        "name": "Bono M  8.0%  07/Nov/2047",
+        "ticker": "Bono M",
+        "series": "MX0MGO000102",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg ecmuzfymzykm",
+        "classification_mx": "ecmuzfymzykm",
+        "amortization_scheme": {
+            "0": {
+                "date": "10/03/2017",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "15/06/2017",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "14/12/2017",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "09/12/2021",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "09/06/2022",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "12": {
+                "date": "08/12/2022",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "13": {
+                "date": "08/06/2023",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "14": {
+                "date": "07/12/2023",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "15": {
+                "date": "06/06/2024",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "16": {
+                "date": "05/12/2024",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "17": {
+                "date": "05/06/2025",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "18": {
+                "date": "04/12/2025",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "19": {
+                "date": "04/06/2026",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "20": {
+                "date": "03/12/2026",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "21": {
+                "date": "03/06/2027",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "22": {
+                "date": "02/12/2027",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "23": {
+                "date": "01/06/2028",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "24": {
+                "date": "30/11/2028",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "25": {
+                "date": "31/05/2029",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "26": {
+                "date": "29/11/2029",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "27": {
+                "date": "30/05/2030",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "28": {
+                "date": "28/11/2030",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "29": {
+                "date": "29/05/2031",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "30": {
+                "date": "27/11/2031",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "31": {
+                "date": "27/05/2032",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "32": {
+                "date": "25/11/2032",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "33": {
+                "date": "26/05/2033",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "34": {
+                "date": "24/11/2033",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "35": {
+                "date": "25/05/2034",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "36": {
+                "date": "23/11/2034",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "37": {
+                "date": "24/05/2035",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "38": {
+                "date": "22/11/2035",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "39": {
+                "date": "22/05/2036",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "40": {
+                "date": "20/11/2036",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "41": {
+                "date": "21/05/2037",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "42": {
+                "date": "19/11/2037",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "43": {
+                "date": "20/05/2038",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "44": {
+                "date": "18/11/2038",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "45": {
+                "date": "19/05/2039",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "46": {
+                "date": "17/11/2039",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "47": {
+                "date": "17/05/2040",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "48": {
+                "date": "15/11/2040",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "49": {
+                "date": "16/05/2041",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "50": {
+                "date": "14/11/2041",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "51": {
+                "date": "15/05/2042",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "52": {
+                "date": "13/11/2042",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "53": {
+                "date": "14/05/2043",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "54": {
+                "date": "12/11/2043",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "55": {
+                "date": "12/05/2044",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "56": {
+                "date": "10/11/2044",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "57": {
+                "date": "11/05/2045",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "58": {
+                "date": "09/11/2045",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "59": {
+                "date": "10/05/2046",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "60": {
+                "date": "08/11/2046",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "61": {
+                "date": "09/05/2047",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "62": {
+                "date": "07/11/2047",
+                "amort": 1,
+                "interest": 4.044444444444444,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.08000000000000000000",
+        "initial_margin": "247.30270000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2017-03-10T06:00:00Z",
+        "first_coupon_date": "2017-06-15T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2047-11-07T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.244Z",
+        "call_date_2": "2021-02-17T20:04:06.244Z",
+        "call_date_3": "2021-02-17T20:04:06.244Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 21,
+        "issued_amount": "172318600000.00000000000000000000",
+        "outstanding": "172315800000.00000000000000000000",
+        "listing": "listing-2",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO000128",
+        "name": "Bono M  6.75%  09/Mar/2023",
+        "ticker": "Bono M",
+        "series": "MX0MGO000128",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg zdtskxnypkjr",
+        "classification_mx": "zdtskxnypkjr",
+        "amortization_scheme": {
+            "0": {
+                "date": "04/10/2019",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "12/03/2020",
+                "amort": 0,
+                "interest": 3.4125,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "10/09/2020",
+                "amort": 0,
+                "interest": 3.4125,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "11/03/2021",
+                "amort": 0,
+                "interest": 3.4125,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "09/09/2021",
+                "amort": 0,
+                "interest": 3.4125,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "10/03/2022",
+                "amort": 0,
+                "interest": 3.4125,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "08/09/2022",
+                "amort": 0,
+                "interest": 3.4125,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "09/03/2023",
+                "amort": 1,
+                "interest": 3.4125,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.06750000000000000000",
+        "initial_margin": "298.87870000000000000000",
+        "coupon_benchmark": "benchmark_sgjjtuvnjsxp",
+        "issue_date": "2019-10-04T05:00:00Z",
+        "first_coupon_date": "2020-03-12T06:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2023-03-09T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.254Z",
+        "call_date_2": "2021-02-17T20:04:06.254Z",
+        "call_date_3": "2021-02-17T20:04:06.254Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 22,
+        "issued_amount": "186390500000.00000000000000000000",
+        "outstanding": "185820500000.00000000000000000000",
+        "listing": "listing-1",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO000144",
+        "name": "Bono M  7.25%  09/Dec/2021",
+        "ticker": "Bono M",
+        "series": "MX0MGO000144",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg imcgtuencpbs",
+        "classification_mx": "imcgtuencpbs",
+        "amortization_scheme": {
+            "0": {
+                "date": "20/04/2018",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "14/06/2018",
+                "amort": 0,
+                "interest": 3.665277777777777,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "13/12/2018",
+                "amort": 0,
+                "interest": 3.665277777777777,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "13/06/2019",
+                "amort": 0,
+                "interest": 3.665277777777777,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "12/12/2019",
+                "amort": 0,
+                "interest": 3.665277777777777,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "11/06/2020",
+                "amort": 0,
+                "interest": 3.665277777777777,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "10/12/2020",
+                "amort": 0,
+                "interest": 3.665277777777777,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "10/06/2021",
+                "amort": 0,
+                "interest": 3.665277777777777,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "09/12/2021",
+                "amort": 1,
+                "interest": 3.665277777777777,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.07250000000000000000",
+        "initial_margin": "323.09550000000000000000",
+        "coupon_benchmark": "benchmark_fupwfguwplce",
+        "issue_date": "2018-04-20T05:00:00Z",
+        "first_coupon_date": "2018-06-14T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2021-12-09T06:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.268Z",
+        "call_date_2": "2021-02-17T20:04:06.268Z",
+        "call_date_3": "2021-02-17T20:04:06.268Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 30,
+        "issued_amount": "218186300000.00000000000000000000",
+        "outstanding": "218337300000.00000000000000000000",
+        "listing": "listing-3",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "subordinate",
+        "security_guarantee": "unsecured"
+    },
+    {
+        "isin": "MX0MGO000151",
+        "name": "Bono M  8.0%  05/Sep/2024",
+        "ticker": "Bono M",
+        "series": "MX0MGO000151",
+        "issuer": "mexico",
+        "primary_issuance": "government_auction",
+        "registration": "Reg rnbgxryfkudd",
+        "classification_mx": "rnbgxryfkudd",
+        "amortization_scheme": {
+            "0": {
+                "date": "15/03/2019",
+                "amort": 0,
+                "interest": 0.0,
+                "outstanding": 100
+            },
+            "1": {
+                "date": "12/09/2019",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "2": {
+                "date": "12/03/2020",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "3": {
+                "date": "10/09/2020",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "4": {
+                "date": "11/03/2021",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "5": {
+                "date": "09/09/2021",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "6": {
+                "date": "10/03/2022",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "7": {
+                "date": "08/09/2022",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "8": {
+                "date": "09/03/2023",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "9": {
+                "date": "07/09/2023",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "10": {
+                "date": "07/03/2024",
+                "amort": 0,
+                "interest": 4.044444444444444,
+                "outstanding": 100
+            },
+            "11": {
+                "date": "05/09/2024",
+                "amort": 1,
+                "interest": 4.044444444444444,
+                "outstanding": 0
+            }
+        },
+        "fixed_coupon": "0.08000000000000000000",
+        "initial_margin": "222.24820000000000000000",
+        "coupon_benchmark": "benchmark_sgjjtuvnjsxp",
+        "issue_date": "2019-03-15T06:00:00Z",
+        "first_coupon_date": "2019-09-12T05:00:00Z",
+        "next_coupon_date": "2020-08-08T13:08:00Z",
+        "final_maturity_date": "2024-09-05T05:00:00Z",
+        "nominal_value": "100.00000000000000000000",
+        "year_day_count": 360,
+        "redemption_price": "100.00000000000000000000",
+        "call_date_1": "2021-02-17T20:04:06.277Z",
+        "call_date_2": "2021-02-17T20:04:06.277Z",
+        "call_date_3": "2021-02-17T20:04:06.277Z",
+        "call_price_1": "100.00000000000000000000",
+        "call_price_2": "100.00000000000000000000",
+        "call_price_3": "100.00000000000000000000",
+        "security_notes": "Issd. under 144a/Reg",
+        "number_pmts": 21,
+        "issued_amount": "230657500000.00000000000000000000",
+        "outstanding": "229677800000.00000000000000000000",
+        "listing": "listing-3",
+        "clearing": "indeval-ec-cl",
+        "amortization_structure": "bullet",
+        "redemption_type": "30-day-avg",
+        "coupon_period": "182d",
+        "day_count_convention": "mx",
+        "currency_risk": "mxn",
+        "currency_of_payments": "mxn",
+        "security_type": "bono_m",
+        "security_seniority": "senior",
+        "security_guarantee": "unsecured"
+    }
+]
