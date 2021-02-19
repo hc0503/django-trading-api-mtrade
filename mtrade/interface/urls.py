@@ -14,21 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from rest_framework import routers
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from . import views
 from .security.urls import router as security_router
+from .user.urls import router as user_router
 
 
-router = routers.DefaultRouter()
-# Only DRF views are placed in the router
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -37,7 +31,7 @@ urlpatterns = [
     path('', RedirectView.as_view(url='api/v0/', permanent=False)),
     path('admin/', admin.site.urls),
     path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/v0/', include(router.urls)),
+    path('api/v0/', include(user_router.urls)),
     path('api/v0/', include(security_router.urls)),
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
 ]
