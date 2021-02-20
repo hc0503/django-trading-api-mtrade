@@ -3,11 +3,18 @@
 ## Requirements
 - Python 3.9
 - pipenv
+- Postgres 12.6
+- Docker (optional)
 
 ## Quickstart
 ```
+./scripts/launch-postgres.sh
 pipenv shell
 pipenv install
+export $(cat .example.env | xargs)
+./manage migrate
+./manage createsuperuser
+./manage runserver
 ```
 
 ## Test and get coverage

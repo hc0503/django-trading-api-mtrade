@@ -8,6 +8,7 @@ django = "*"
 coverage = "*"
 djangorestframework = "*"
 drf-spectacular = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
