@@ -7,7 +7,7 @@
 - Docker (optional)
 
 ## Quickstart
-```
+```bash
 ./scripts/launch-postgres.sh
 pipenv shell
 pipenv install
@@ -17,14 +17,8 @@ export $(cat .example.env | xargs)
 ./manage runserver
 ```
 
-## Test and get coverage
-```
-pipenv shell
-./scripts/test.sh
-```
-
 ## Directory structure
-```
+```text
 root/
     mtrade/             -> The base project directory
         settings.py
@@ -39,13 +33,21 @@ root/
     ...
 ```
 
-## General development guidelines
-- Every module must include unit tests, consider success and failure scenarios
-    - Achieve 80% of code coverage at least
+## Development guidelines
+### Tests
+- Every module must include unit tests
+- Tests should consider success and failure scenarios
+- During the first development phase, code coverage should be at least of 80% per module, it should eventually be expanded to 100%
+
+### Architecture
 - Apps should be isolated
     - Each layer can only include direct calls to functions in lower layers (Interface > Application > Domain > Infrastructure)
-    - The application layer is the main point of integration of domain APIs
-    - Django apps should not include foreign keys to other django apps. Interactions should be modelled as API calls. Django signals can be used to decouple applications.
+- The application layer is the main point of integration of domain APIs
+- Django apps should not include foreign keys to other django apps. Interactions should be modelled as API/function calls. Django signals can be used to decouple applications.
         - When using Django signals, handlers should be registered in the application layer, avoiding direct calls from one domain module to another.
-    - Use dependency inversion for infrastructure modules whenever possible.
+- Use dependency inversion for infrastructure modules whenever possible.
+
+### Database
 - Do not use DB generated ids for entities, use uuid4 instead
+- Create model ids in the application, not the database
+- For any given operation perform all DB writes atomically in a single transaction
