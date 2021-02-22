@@ -9,6 +9,7 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 # app imports
+from mtrade.interface.lib.open_api import paginate
 
 # local imports
 
@@ -35,6 +36,7 @@ class SecurityView(viewsets.ViewSet):
         Return a list of securities
         """
         # TODO: Define if it requires pagination, pagination changes response structure
-        resp = self.dummy_securities
+        resp = paginate(self.dummy_securities)
+        
 
         return Response(resp)

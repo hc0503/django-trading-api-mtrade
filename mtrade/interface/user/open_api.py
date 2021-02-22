@@ -11,6 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 # app imports
 from mtrade.domain.users.services import UserServices
 from mtrade.domain.users.models import User, UserPersonalData, UserBasePermissions
+from mtrade.interface.lib.open_api import paginate
 
 # local imports
 from .serializers import UserSerializer
@@ -44,14 +45,6 @@ example_user_01 = {
     "last_name": "Testerson",
     "email": "testerman@example.com",
 }
-
-def paginate(data: typing.List):
-    return {
-      "count": len(data),
-      "next": None,
-      "previous": None,
-      "results": data
-    }
 
 user_list_extension=extend_schema(
         request=None,
