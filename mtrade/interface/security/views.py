@@ -13,13 +13,14 @@ from mtrade.interface.lib.open_api import paginate
 
 # local imports
 
+
 class BadRequest(APIException):
     status_code = 400
     default_detail = 'The request cannot be fulfilled, please try again with different parameters.'
     default_code = 'bad_request'
 
 
-class SecurityView(viewsets.ViewSet):
+class SecurityViewSet(viewsets.ViewSet):
     """
     API endpoint that allows the client to interact with securities.
     """
@@ -32,11 +33,13 @@ class SecurityView(viewsets.ViewSet):
         dummy_securities = json.load(f)
 
     def list(self, request):
-        """
-        Return a list of securities
-        """
-        # TODO: Define if it requires pagination, pagination changes response structure
         resp = paginate(self.dummy_securities)
-        
+        return Response(resp)
 
+    def retrieve(self, request, pk=None):
+        try:
+            resp = next(
+                item for item in self.dummy_securities if item["id"] == pk)
+        except:
+            raise BadRequest()
         return Response(resp)
