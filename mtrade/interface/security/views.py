@@ -10,14 +10,7 @@ from rest_framework import viewsets
 
 # app imports
 from mtrade.interface.lib.open_api import paginate
-
-# local imports
-
-
-class BadRequest(APIException):
-    status_code = 400
-    default_detail = 'The request cannot be fulfilled, please try again with different parameters.'
-    default_code = 'bad_request'
+from mtrade.interface.lib.base_responses import BadRequest
 
 
 class SecurityViewSet(viewsets.ViewSet):

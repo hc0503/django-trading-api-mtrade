@@ -11,7 +11,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view, inline_seri
 # app imports
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.application.users.services import UserAppServices
-from mtrade.interface.base_responses import BadRequest
+from mtrade.interface.lib.base_responses import BadRequest
 
 # local imports
 from .serializers import UserSerializer, GroupSerializer
