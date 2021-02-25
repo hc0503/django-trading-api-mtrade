@@ -9,6 +9,7 @@ coverage = "*"
 djangorestframework = "*"
 drf-spectacular = "*"
 psycopg2-binary = "*"
+drf-nested-routers = "*"
 
 [dev-packages]
 autopep8 = "*"
