@@ -11,6 +11,7 @@ drf-spectacular = "*"
 psycopg2-binary = "*"
 drf-nested-routers = "*"
 django-mock-queries = "*"
+django-extensions = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -62,3 +62,8 @@ root/
 
 #### Removing carriage returns from files
 Windows carriage returns appear as the `^M` chars; you can remove them from files with gnu sed (bsd sed won't work): `sed -i 's/\r//' <filename>`
+
+### Mtrade manager
+`mtrade_manager` is script that will help us during development. It's purpose is to populate our database with initialization data.
+To run script:
+`./manage.py runscript mtrade_manager`
