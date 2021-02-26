@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+from mtrade.infrastructure.logger.services import CustomisedJSONFormatter
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_structlog.middlewares.RequestMiddleware',
 ]
 
 ROOT_URLCONF = 'mtrade.interface.urls'
@@ -153,3 +155,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Logging (export log to JSON)
+# https://pypi.org/project/JSON-log-formatter/
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'json': {
+			'()': CustomisedJSONFormatter,
+		},
+    },
+    'handlers': {
+        'json_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs/log.json',
+            'formatter': 'json',
+		},
+    },
+    'loggers': {
+        'mtrade_log': {
+			'handlers': ['json_file'],
+            'level': 'INFO',
+		},
+    },
+}
