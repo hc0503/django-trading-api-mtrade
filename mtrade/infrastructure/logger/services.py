@@ -11,6 +11,6 @@ class CustomisedJSONFormatter(json_log_formatter.JSONFormatter):
 
         # Include builtins
         extra['level'] = record.levelname
-        extra['time'] = record.time
+        extra['time'] = record.created
 
         return extra
