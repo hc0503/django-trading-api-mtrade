@@ -67,3 +67,6 @@ Windows carriage returns appear as the `^M` chars; you can remove them from file
 `mtrade_manager` is script that will help us during development. It's purpose is to populate our database with initialization data.
 To run script:
 `./manage.py runscript mtrade_manager`
+
+### About app zero
+App zero contains the models we will be using in our platform. They must be decoupled when moving to their respective modules. 
