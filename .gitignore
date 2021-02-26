@@ -13,3 +13,5 @@ obsolete
 .env
 
 .vscode
+
+.DS_Store
