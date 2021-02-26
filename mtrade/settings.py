@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mtrade.domain.users',
     'mtrade.domain.market',
+    'app_zero.apps.AppZeroConfig',
     'rest_framework',
     'drf_spectacular',
     'django_extensions',
