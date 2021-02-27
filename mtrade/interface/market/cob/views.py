@@ -6,7 +6,6 @@ from pathlib import Path
 from rest_framework import viewsets
 from rest_framework import permissions
 from drf_spectacular.utils import extend_schema_view
-from django_filters import rest_framework as filters
 from rest_framework.response import Response
 
 # app imports
