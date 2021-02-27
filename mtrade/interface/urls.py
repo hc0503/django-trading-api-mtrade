@@ -21,6 +21,10 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from .security.urls import router as security_router
 from .user.urls import router as user_router
+from .market.urls import (
+    router as market_router,
+    cob_router as market_cob_router
+)
 
 
 
@@ -33,5 +37,7 @@ urlpatterns = [
     path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v0/', include(user_router.urls)),
     path('api/v0/', include(security_router.urls)),
+    path('api/v0/', include(market_router.urls)),
+    path('api/v0/', include(market_cob_router.urls)),
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
 ]

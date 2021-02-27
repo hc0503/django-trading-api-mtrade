@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mtrade.domain.users',
+    'mtrade.domain.market',
     'rest_framework',
     'drf_spectacular',
 ]
