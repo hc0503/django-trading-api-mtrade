@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.db.models.manager import Manager
 
 from .models import (
     Market,
@@ -6,7 +7,7 @@ from .models import (
     ISIN,
     MarketFactory
 )
-from . import services
+from .services import MarketServices
 from . import test_helper as th
 
 
@@ -30,7 +31,7 @@ class MarketTests(TestCase):
 
     def test_build_market(self):
         try:
-            MarketFactory.build_entity_with_id(ISIN("123456789012"))
+            MarketFactory.build_entity_with_id(ISIN("123456789012"),True)
         except Exception:
             self.fail("Unexpected exception")
 
@@ -38,3 +39,8 @@ class MarketTests(TestCase):
         mkts = th.generate_random_markets(5)
         self.assertEquals(len(mkts), 5)
 
+
+class MarketServicesTests(TestCase):
+    def test_get_market_repo(self):
+        repo = MarketServices.get_market_repo()
+        self.assertEquals(Manager, type(repo))

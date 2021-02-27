@@ -18,7 +18,7 @@ def generate_random_isin() -> ISIN:
     return ISIN(get_random_string(12))
 
 def generate_random_market() -> Market:
-    return MarketFactory.build_entity_with_id(generate_random_isin())
+    return MarketFactory.build_entity_with_id(generate_random_isin(), True)
 
 def generate_random_markets(num_of_markets: int) -> typing.List[Market]:
     markets = []

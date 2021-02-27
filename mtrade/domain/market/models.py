@@ -17,6 +17,7 @@ class Market(models.Model):
     """
     id = models.UUIDField(primary_key=True, editable=False)
     isin = models.CharField(max_length=24, unique=True)
+    open = models.BooleanField()
 
 
 @dataclass(frozen=True)
@@ -39,5 +40,5 @@ class ISIN():
 
 class MarketFactory():
     @staticmethod
-    def build_entity_with_id(isin: ISIN) -> Market:
-        return Market(id=MarketID().value, isin=isin.value)
+    def build_entity_with_id(isin: ISIN, open:bool) -> Market:
+        return Market(id=MarketID().value, isin=isin.value, open=open)
