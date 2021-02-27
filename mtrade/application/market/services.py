@@ -7,7 +7,7 @@ from django_mock_queries.query import MockSet, MockModel
 
 # app imports
 from mtrade.domain.market.services import MarketServices as ms
-from mtrade.domain.market.models import Market, ISIN, MarketFactory
+from mtrade.domain.market.models import Market, MarketID, ISIN, MarketFactory
 
 class MarketAppServices():
     @staticmethod
@@ -21,7 +21,19 @@ class MarketAppServices():
         # TODO:
         # Fetch controller by user id
         # If controller does not exist propagate or handle exception
-        return MarketFactory.build_entity_with_id(isin, is_open)
+        market = MarketFactory.build_entity_with_id(isin, is_open)
+        market.save()
+        return market
+
+    def update_market(user, instance, isin, is_open):
+        # TODO:
+        # Fetch controller by user id
+        # If controller does not exist propagate or handle exception
+        market_id = MarketID(instance.id)
+        market = MarketFactory.build_entity(market_id, isin, is_open)
+        market.save()
+        return market
+
 
 
 class COBAppServices():

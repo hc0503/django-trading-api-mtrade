@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from django.db import models
 
 # app imports
+from lib.ddd.exceptions import VOValidationExcpetion
 #from lib.data_manipulation.type_conversion import asdict
 
 # local imports
@@ -25,7 +26,8 @@ class MarketID():
     """
     This is a value object that should be used to generate and pass the UserID to the UserFactory
     """
-    value: uuid.UUID = field(init=False, default_factory=uuid.uuid4)
+    #value: uuid.UUID = field(init=False, default_factory=uuid.uuid4)
+    value: uuid.UUID
 
 @dataclass(frozen=True)
 class ISIN():
@@ -36,9 +38,14 @@ class ISIN():
 
     def validate_length(self):
         if len(self.value) < 12:
-            raise ValueError("Invalid ISIN length")
+            raise VOValidationExcpetion("isin", "Invalid length")
 
 class MarketFactory():
     @staticmethod
-    def build_entity_with_id(isin: ISIN, open:bool) -> Market:
-        return Market(id=MarketID().value, isin=isin.value, open=open)
+    def build_entity(market_id: MarketID, isin: ISIN, is_open:bool) -> Market:
+        return Market(id = market_id.value, isin = isin.value, open=is_open)
+
+    @classmethod
+    def build_entity_with_id(cls, isin: ISIN, is_open:bool) -> Market:
+        market_id = MarketID(uuid.uuid4())
+        return cls.build_entity(market_id, isin, is_open)
