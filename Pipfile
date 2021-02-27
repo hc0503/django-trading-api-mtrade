@@ -10,6 +10,7 @@ djangorestframework = "*"
 drf-spectacular = "*"
 psycopg2-binary = "*"
 drf-nested-routers = "*"
+django-mock-queries = "*"
 
 [dev-packages]
 autopep8 = "*"
