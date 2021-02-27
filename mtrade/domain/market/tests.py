@@ -1,6 +1,11 @@
+# django imports
 from django.test import TestCase
 from django.db.models.manager import Manager
 
+# app imports
+from lib.ddd.exceptions import VOValidationExcpetion
+
+# local imports
 from .models import (
     Market,
     MarketID,
@@ -26,7 +31,7 @@ class MarketTests(TestCase):
         except Exception:
             self.fail("Unexpected exception")
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(VOValidationExcpetion):
             m = ISIN("12345678901")
 
     def test_build_market(self):
