@@ -4,9 +4,11 @@ import ujson
 import json_log_formatter
 import datetime
 
+logging.addLevelName(logging.CRITICAL, 'FATAL')
+
 class CustomisedJSONFormatter(json_log_formatter.JSONFormatter):
     json_lib = ujson
-
+    
     def json_record(self, message, extra, record):
         extra['msg'] = message
         extra['level'] = record.__dict__['levelname']
