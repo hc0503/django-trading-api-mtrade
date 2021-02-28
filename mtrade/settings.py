@@ -169,7 +169,7 @@ LOGGING = {
     },
     'handlers': {
         'json_file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': BASE_DIR / 'logs/log.json',
             'formatter': 'json',
@@ -178,7 +178,7 @@ LOGGING = {
     'loggers': {
         'mtrade_log': {
 			'handlers': ['json_file'],
-            'level': 'INFO',
+            'level': 'DEBUG',
 		},
     },
 }
