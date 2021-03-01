@@ -166,6 +166,9 @@ LOGGING = {
         'json': {
 			'()': CustomisedJSONFormatter,
 		},
+        'app': {
+            'format': '%(message)s\t[%(levelname)s]\t[%(name)s.%(funcName)s]\t[%(asctime)s]',
+        },
     },
     'handlers': {
         'json_file': {
@@ -174,10 +177,16 @@ LOGGING = {
             'filename': BASE_DIR / 'logs/log.json',
             'formatter': 'json',
 		},
+        'app_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs/log.log',
+            'formatter': 'app',
+        }
     },
     'loggers': {
         '': {
-			'handlers': ['json_file'],
+			'handlers': ['json_file', 'app_file'],
             'level': 'DEBUG',
             # required to avoid double logging with root logger
             'propagate': False,
