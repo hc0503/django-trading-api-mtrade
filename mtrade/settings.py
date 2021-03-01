@@ -176,9 +176,11 @@ LOGGING = {
 		},
     },
     'loggers': {
-        'mtrade_log': {
+        '': {
 			'handlers': ['json_file'],
             'level': 'DEBUG',
+            # required to avoid double logging with root logger
+            'propagate': False,
 		},
     },
 }
