@@ -1074,7 +1074,7 @@ def create_rfq_transactions(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_watchlists(n: int = 20):
+def create_watchlists(n: int = 100):
     """
     Arguments
     ----------
