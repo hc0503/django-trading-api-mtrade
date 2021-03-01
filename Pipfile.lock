@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2a2023f2455ce11a443e4641c8e1c519959d8be172d0aa6b1d53d63b44430192"
+            "sha256": "27b15b07d0d91ddb3662b167a16a17dcc4675b35c5f872476943ed56a914fa4c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -98,13 +98,6 @@
             "index": "pypi",
             "version": "==3.1.7"
         },
-        "django-mock-queries": {
-            "hashes": [
-                "sha256:60eac2b7e4edddd6db500e138588a2459cd511cde0c3db2e5c93c665b81988c7"
-            ],
-            "index": "pypi",
-            "version": "==2.1.6"
-        },
         "django-extensions": {
             "hashes": [
                 "sha256:674ad4c3b1587a884881824f40212d51829e662e52f85b012cd83d83fe1271d9",
@@ -112,6 +105,13 @@
             ],
             "index": "pypi",
             "version": "==3.1.1"
+        },
+        "django-mock-queries": {
+            "hashes": [
+                "sha256:60eac2b7e4edddd6db500e138588a2459cd511cde0c3db2e5c93c665b81988c7"
+            ],
+            "index": "pypi",
+            "version": "==2.1.6"
         },
         "djangorestframework": {
             "hashes": [
@@ -291,6 +291,12 @@
             "index": "pypi",
             "version": "==1.5.5"
         },
+        "et-xmlfile": {
+            "hashes": [
+                "sha256:614d9722d572f6246302c4491846d2c393c199cfa4edc9af593437691683335b"
+            ],
+            "version": "==1.0.1"
+        },
         "isort": {
             "hashes": [
                 "sha256:c729845434366216d320e936b8ad6f9d681aab72dc7cbc2d51bedc3582f3ad1e",
@@ -298,6 +304,13 @@
             ],
             "markers": "python_version >= '3.6' and python_version < '4.0'",
             "version": "==5.7.0"
+        },
+        "jdcal": {
+            "hashes": [
+                "sha256:1abf1305fce18b4e8aa248cf8fe0c56ce2032392bc64bbd61b5dff2a19ec8bba",
+                "sha256:472872e096eb8df219c23f2689fc336668bdb43d194094b5cc1707e1640acfc8"
+            ],
+            "version": "==1.4.1"
         },
         "lazy-object-proxy": {
             "hashes": [
@@ -365,6 +378,14 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==1.20.1"
+        },
+        "openpyxl": {
+            "hashes": [
+                "sha256:1a4b3869c2500b5c713e8e28341cdada49ecfcff1b10cd9006945f5bcefc090d",
+                "sha256:b229112b46e158b910a5d1b270b212c42773d39cab24e8db527f775b82afc041"
+            ],
+            "index": "pypi",
+            "version": "==3.0.6"
         },
         "pandas": {
             "hashes": [
