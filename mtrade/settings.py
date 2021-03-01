@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mtrade.domain.users',
     'mtrade.domain.market',
+    'app_zero.apps.AppZeroConfig',
     'rest_framework',
     'drf_spectacular',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +84,7 @@ REST_FRAMEWORK = {
     )
 }
 
-SPECTACULAR_DESCRIPTION="""
+SPECTACULAR_DESCRIPTION = """
 This is an interactive view of the MTrade API, please log in by clicking the "Authorize" button in order to test it.
 
 This view should **NOT** be deployed to production.

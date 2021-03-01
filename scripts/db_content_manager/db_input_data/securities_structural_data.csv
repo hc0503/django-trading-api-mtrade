@@ -1,0 +1,17 @@
+isin,issuer,security_type,ticker,coupon_rate,issue_date,first_coupon_date,final_maturity_date,outstanding,issued_amount,nominal_value,amortization_structure,coupon_period,day_count_convention,currency_risk,currency_of_payments,year_day_count
+MX0MGO000003,mexico,bono-m,Bono M,0.08,10/30/2003,12/31/2003,12/06/2023,2.49633E+11,2.50185E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO000078,mexico,bono-m,Bono M,0.1,01/20/2005,06/30/2005,12/05/2024,2.70298E+11,2.69658E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000B2,mexico,bono-m,Bono M,0.1,10/26/2006,12/28/2006,11/20/2036,71236200000,71207000000,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000D8,mexico,bono-m,Bono M,0.075,01/18/2007,06/28/2007,06/03/2027,3.01997E+11,3.02138E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000H9,mexico,bono-m,Bono M,0.085,01/15/2009,06/25/2009,05/31/2029,2.9358E+11,2.93797E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000J5,mexico,bono-m,Bono M,0.085,01/29/2009,06/25/2009,11/18/2038,1.88103E+11,1.87029E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000N7,mexico,bono-m,Bono M,0.065,02/03/2011,06/23/2011,06/10/2021,2.39131E+11,2.39088E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000P2,mexico,bono-m,Bono M,0.0775,09/09/2011,12/22/2011,05/29/2031,1.48051E+11,1.49959E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000Q0,mexico,bono-m,Bono M,0.065,02/15/2012,06/21/2012,06/09/2022,3.00024E+11,3.00596E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000R8,mexico,bono-m,Bono M,0.0775,04/20/2012,06/21/2012,11/13/2042,1.96373E+11,1.95886E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000U2,mexico,bono-m,Bono M,0.0775,04/11/2014,06/19/2014,11/23/2034,90153000000,88854800000,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO0000Y4,mexico,bono-m,Bono M,0.0575,10/16/2015,03/17/2016,03/05/2026,2.06913E+11,2.16249E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO000102,mexico,bono-m,Bono M,0.08,03/10/2017,06/15/2017,11/07/2047,1.72316E+11,1.72319E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO000128,mexico,bono-m,Bono M,0.0675,10/04/2019,03/12/2020,03/09/2023,1.85821E+11,1.86391E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO000144,mexico,bono-m,Bono M,0.0725,04/20/2018,06/14/2018,12/09/2021,2.18337E+11,2.18186E+11,100,bullet,182d,mx_360,mxn,mxn,360
+MX0MGO000151,mexico,bono-m,Bono M,0.08,03/15/2019,09/12/2019,09/05/2024,2.29678E+11,2.30658E+11,100,bullet,182d,mx_360,mxn,mxn,360
