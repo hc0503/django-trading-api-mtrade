@@ -64,9 +64,10 @@ root/
 Windows carriage returns appear as the `^M` chars; you can remove them from files with gnu sed (bsd sed won't work): `sed -i 's/\r//' <filename>`
 
 ### About mtrade manager
-`mtrade_manager` is script that will help us during development. It's purpose is to populate our database with initialization data.
-To run script:
+`mtrade_manager` is script that will help us during development. It's purpose is (1) to reset database content and (2) to populate database with initialization data.
+To run mtrade manager:
 `./manage.py runscript mtrade_manager`
 
 ### About app zero
-App zero contains the models we will be using in our platform. They must be decoupled when moving to their respective modules. 
+App zero contains the models we will be using in our platform. Currently, they make use of models.ForeignKeys when referencing each other. This must be evaluated when movin models out of app zero, since modules must be decouples.
+ 
