@@ -12,7 +12,7 @@ class CustomisedJSONFormatter(json_log_formatter.JSONFormatter):
     def json_record(self, message, extra, record):
         extra['msg'] = message
         extra['level'] = record.__dict__['levelname']
-        extra['module'] = record.__dict__['pathname']
+        extra['module'] = record.__dict__['name'] + '.' + record.__dict__['funcName']
         extra['time'] = datetime.datetime.now()
         
         request = extra.pop('request', None)
