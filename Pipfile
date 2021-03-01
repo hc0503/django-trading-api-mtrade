@@ -16,6 +16,8 @@ django-extensions = "*"
 [dev-packages]
 autopep8 = "*"
 pylint = "*"
+pandas = "*"
+openpyxl = "*"
 
 [requires]
 python_version = "3.9"

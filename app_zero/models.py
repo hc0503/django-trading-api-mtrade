@@ -76,7 +76,7 @@ class User(models.Model):
     ]
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
 
-    fist_name = models.CharField(max_length=250, blank=True, null=True)
+    first_name = models.CharField(max_length=250, blank=True, null=True)
     second_name = models.CharField(max_length=250, blank=True, null=True)
     last_name = models.CharField(max_length=250, blank=True, null=True)
     email = models.EmailField()
@@ -183,9 +183,6 @@ class Institution(models.Model):
         ComplianceOfficer, on_delete=models.SET_NULL, null=True)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
-
-    def __str__(self):
-        return f'{self.name}'
 
 
 class Trader(models.Model):
@@ -505,9 +502,6 @@ class Security(models.Model):
         dolar_peso_exchange_rate = 20
         return float(self.issued_amount) * float(dolar_peso_exchange_rate)
 
-    def __str__(self):
-        return f'Security {str(self.isin)}'
-
 
 class SettlementInstruction(models.Model):
 
@@ -564,9 +558,6 @@ class Alarm(models.Model):
         Security, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f'value: {self.value} -- type: {self.alarm_type}'
-
 
 class CobOrder(models.Model):
 
@@ -614,9 +605,6 @@ class CobOrder(models.Model):
     direction = models.CharField(
         max_length=150, choices=DIRECTION_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.order_id}'
 
     @ classmethod
     def create_new_cob_order(cls, *args, **kwargs):
@@ -995,9 +983,6 @@ class Watchlist(models.Model):
     description = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     archived_at = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.name}'
 
 
 class TradeBlockSettlement(models.Model):
