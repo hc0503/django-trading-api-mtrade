@@ -7,7 +7,6 @@ from lib.ddd.exceptions import VOValidationExcpetion
 
 # local imports
 from .models import (
-    Market,
     MarketID,
     ISIN,
     MarketFactory
@@ -20,19 +19,18 @@ class MarketTests(TestCase):
 
     def test_build_market_id(self):
         try:
-            m = MarketID
+            MarketID
         except Exception:
             self.fail("Unexpected exception")
 
     def test_build_ISIN(self):
         try:
-            pass
-            m = ISIN("123456789012")
+            ISIN("123456789012")
         except Exception:
             self.fail("Unexpected exception")
 
         with self.assertRaises(VOValidationExcpetion):
-            m = ISIN("12345678901")
+            ISIN("12345678901")
 
     def test_build_market(self):
         try:
@@ -42,10 +40,10 @@ class MarketTests(TestCase):
 
     def test_build_markets(self):
         mkts = th.generate_random_markets(5)
-        self.assertEquals(len(mkts), 5)
+        self.assertEqual(len(mkts), 5)
 
 
 class MarketServicesTests(TestCase):
     def test_get_market_repo(self):
         repo = MarketServices.get_market_repo()
-        self.assertEquals(Manager, type(repo))
+        self.assertEqual(Manager, type(repo))

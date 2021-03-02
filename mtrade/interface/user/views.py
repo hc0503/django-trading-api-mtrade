@@ -9,9 +9,9 @@ from rest_framework import permissions
 from drf_spectacular.utils import extend_schema, extend_schema_view, inline_serializer
 
 # app imports
+from lib.django.custom_responses import BadRequest
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.application.users.services import UserAppServices
-from mtrade.interface.lib.base_responses import BadRequest
 
 # local imports
 from .serializers import UserSerializer, GroupSerializer

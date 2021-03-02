@@ -1,61 +1,41 @@
-# python imports
-import json
-from pathlib import Path
-
 # django imports
-from django_mock_queries.query import MockSet, MockModel
+from django.db.models.query import QuerySet
 
 # app imports
 from mtrade.domain.market.services import MarketServices as ms
-from mtrade.domain.market.models import Market, MarketID, ISIN, MarketFactory
+from mtrade.domain.market.models import Market, ISIN, MarketFactory
 
 class MarketAppServices():
     @staticmethod
-    def list_markets(user):
+    def list_markets(user) -> QuerySet:
         # TODO:
         # Fetch controller by user id
         # If controller does not exist propagate or handle exception
         return ms.get_market_repo().all()
 
-    def create_market(user, isin, is_open):
+    @staticmethod
+    def create_market_from_dict(user, data: dict) -> Market:
         # TODO:
         # Fetch controller by user id
         # If controller does not exist propagate or handle exception
+        isin = ISIN(data["isin"])
+        is_open = data["open"]
+
         market = MarketFactory.build_entity_with_id(isin, is_open)
         market.save()
         return market
 
-    def update_market(user, instance, isin, is_open):
+    @staticmethod
+    def update_market_from_dict(user, instance: Market, data: dict) -> Market:
         # TODO:
         # Fetch controller by user id
         # If controller does not exist propagate or handle exception
-        market_id = MarketID(instance.id)
-        market = MarketFactory.build_entity(market_id, isin, is_open)
-        market.save()
-        return market
+        # get market by id
 
+        # This is an update so we expect to fail if any of the required fields is not present.
+        isin = ISIN(data['isin'])
+        is_open = data['open']
 
-
-class COBAppServices():
-
-    dummy_orders = None
-
-    path = Path(__file__).parent / "dummy_data/coborder.json"
-    with path.open(mode='r') as f:
-        dummy_orders = json.load(f)
-
-    mock_models = []
-    for order in dummy_orders:
-        order["mock_name"] = order["id"]
-        m = MockModel(order)
-        mock_models.append(m)
-        #print(m)
-
-    mock_cob_queryset = MockSet(*mock_models)
-
-    @classmethod
-    def list_cob_orders(cls, user, market_id):
-        # TODO:
-        # Fetch trader by user id
-        # If trader does not exist propagate or handle exception
-        return cls.mock_cob_queryset.filter(isin=market_id)
+        instance.update_entity(isin, is_open)
+        instance.save()
+        return instance
