@@ -7,13 +7,13 @@ from rest_framework.response import Response
 
 # app imports
 from lib.django.custom_views import CreateListRetrieveViewSet
-from mtrade.application.market.cob.services import COBAppServices
+
+# TODO: Remove app zero
+from mtrade.application.market.cob.services import COB_ZERO_SERVICES
 
 # local imports
 from . import open_api
-from . serializers import (
-    COBSerializer
-)
+from . serializers import COBSerializer
 
 
 @extend_schema_view(
@@ -23,28 +23,25 @@ from . serializers import (
 )
 class COBViewSet(CreateListRetrieveViewSet):
     """
-    Allows clients to perform CRUD operations on markets
+    Allows clients to perform order operations
     """
-    serializer_class = COBSerializer
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = COBSerializer
+    filterset_fields = ('direction','security__isin', 'trader', 'origin')
+    # TODO: add missing filetr fields: 'institution'
 
     def get_queryset(self):
-        base_queryset = COBAppServices.list_cob_orders(self.request.user, self.kwargs['market_pk'])
-        # TODO: replace following block with django-filter
-        filtered_qs = base_queryset
-        params = self.request.query_params.lists()
-        for q_param, val in params:
-            if q_param == 'page':
-                continue
-            filtered_qs = filtered_qs.filter(**{q_param:val[0]})
-        return filtered_qs
+    # TODO: handle request path properly by filtering orders by market path
+        order_by_string=self.request.query_params.get('order_by', 'id')
+        return COB_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
 
-    # TODO: Remove this method once model is implemented
-    def retrieve(self, request, pk=None, market_pk=None):
-        serializer = COBSerializer(self.get_queryset().get(id=pk))
-        return Response(serializer.data)
+    ## TODO: Remove this method once model is implemented
+    #def retrieve(self, request, pk=None, market_pk=None):
+    #    serializer = COBSerializer(self.get_queryset().get(id=pk))
+    #    return Response(serializer.data)
 
     ## TODO: Replace with call to service
+    ## TODO: Ensure only resources of current market path are allowed
     #def create(self, request, market_pk=None):
     #    serializer = COBSerializer(data=request.data)
     #    if not serializer.is_valid():
