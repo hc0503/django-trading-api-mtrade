@@ -1,27 +1,21 @@
 # django imports
 from django.test import TestCase, RequestFactory
+import logging
+
+logging.addLevelName(logging.CRITICAL, 'FATAL')
 
 class DebugLoggerTest(TestCase):
-	def test_call_view_load(self):
-		response = self.client.get('/api/v0/loggers/debug')
-		self.assertEqual(response.status_code, 200)
-
-class InfoLoggerTest(TestCase):
-	def test_call_view_load(self):
-		response = self.client.get('/api/v0/loggers/info')
-		self.assertEqual(response.status_code, 200)
-
-class WarningLoggerTest(TestCase):
-	def test_call_view_load(self):
-		response = self.client.get('/api/v0/loggers/warning')
-		self.assertEqual(response.status_code, 200)
-
-class ErrorLoggerTest(TestCase):
-	def test_call_view_load(self):
-		response = self.client.get('/api/v0/loggers/error')
-		self.assertEqual(response.status_code, 200)
-
-class FatalLoggerTest(TestCase):
-	def test_call_view_load(self):
-		response = self.client.get('/api/v0/loggers/fatal')
-		self.assertEqual(response.status_code, 200)
+	def test_logging(self):
+		with self.assertLogs('foo', level='DEBUG') as cm:
+			logging.getLogger('foo').info('The info message')
+			logging.getLogger('foo').error('The error message')
+			logging.getLogger('foo').debug('The debug message')
+			logging.getLogger('foo').warning('The warning message')
+			logging.getLogger('foo').fatal('The fatal message')
+		self.assertEqual(cm.output, [
+			'INFO:foo:The info message',
+			'ERROR:foo:The error message',
+			'DEBUG:foo:The debug message',
+			'WARNING:foo:The warning message',
+			'FATAL:foo:The fatal message',
+		])
