@@ -9,8 +9,8 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 # app imports
+from lib.django.custom_responses import BadRequest
 from mtrade.interface.lib.open_api import paginate
-from mtrade.interface.lib.base_responses import BadRequest
 
 
 class SecurityViewSet(viewsets.ViewSet):
