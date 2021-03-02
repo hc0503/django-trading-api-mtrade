@@ -10,8 +10,8 @@ class CustomisedJSONFormatter(json_log_formatter.JSONFormatter):
     json_lib = ujson
     
     def json_record(self, message, extra, record):
-        extra['msg'] = message
         extra['level'] = record.__dict__['levelname']
+        extra['msg'] = message
         extra['module'] = record.__dict__['name'] + '.' + record.__dict__['funcName']
         extra['time'] = datetime.datetime.now()
         
