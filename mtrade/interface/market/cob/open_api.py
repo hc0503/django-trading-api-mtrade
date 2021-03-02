@@ -20,33 +20,45 @@ cob_list_extension=extend_schema(
     tags=["market cob"],
     parameters=[
         OpenApiParameter(
-            name='direction',
+            name='order_by',
             type=str,
             location=OpenApiParameter.QUERY,
-            description='A string identifying the order direction.',
-        ),
-        OpenApiParameter(
-            name='origin',
-            type=OpenApiTypes.UUID,
-            location=OpenApiParameter.QUERY,
-            description='A UUID string identifying the order origin.',
-        ),
-        OpenApiParameter(
-            name='trader_id',
-            # TODO: modify type from str to OpenApiTypes.UUID
-            type=str,
-            location=OpenApiParameter.QUERY,
-            description='A string identifying the trader.',
-        ),
-        OpenApiParameter(
-            name='institution',
-            type=OpenApiTypes.UUID,
-            location=OpenApiParameter.QUERY,
-            description='A UUID string identifying the institution. (Not implemented yer)',
+            description='A string that sets the output ordering.',
         ),
         *common_params
     ]
 )
+#cob_list_extension=extend_schema(
+#    tags=["market cob"],
+#    parameters=[
+#        OpenApiParameter(
+#            name='direction',
+#            type=str,
+#            location=OpenApiParameter.QUERY,
+#            description='A string identifying the order direction.',
+#        ),
+#        OpenApiParameter(
+#            name='origin',
+#            type=OpenApiTypes.UUID,
+#            location=OpenApiParameter.QUERY,
+#            description='A UUID string identifying the order origin.',
+#        ),
+#        OpenApiParameter(
+#            name='trader_id',
+#            # TODO: modify type from str to OpenApiTypes.UUID
+#            type=str,
+#            location=OpenApiParameter.QUERY,
+#            description='A string identifying the trader.',
+#        ),
+#        OpenApiParameter(
+#            name='institution',
+#            type=OpenApiTypes.UUID,
+#            location=OpenApiParameter.QUERY,
+#            description='A UUID string identifying the institution. (Not implemented yer)',
+#        ),
+#        *common_params
+#    ]
+#)
 
 cob_retrieve_extension=extend_schema(
     tags=["market cob"],
