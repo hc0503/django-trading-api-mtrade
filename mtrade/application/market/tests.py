@@ -1,53 +1,53 @@
 # python imports
-from time import sleep
 
 # django imports
 from django.test import TestCase
 from django.db.models.query import QuerySet
 
-# local imports
-
-from .services import MarketAppServices as mas
-from mtrade.domain.market.models import Market, MarketID, ISIN
+# app imoprts
+from mtrade.domain.market.models import Market
 from mtrade.domain.market.services import MarketServices as ms
+
+# local imports
+from .services import MarketAppServices as mas
 
 class MarketAppServicesTests(TestCase):
 
     def test_list_markets(self):
-        mq = mas.list_markets(None)
-        self.assertEquals(type(mq), QuerySet)
+        mqs = mas.list_markets(None)
+        self.assertEqual(type(mqs), QuerySet)
 
     def test_create_market(self):
         data = {
             "isin":"123456789012",
             "open":True
         }
-        m = mas.create_market_from_dict(None, data)
-        self.assertEquals(type(m), Market)
+        mkt = mas.create_market_from_dict(None, data)
+        self.assertEqual(type(mkt), Market)
 
         # Test market was stored
-        stored_market = ms.get_market_repo().get(id=m.id)
-        self.assertEquals(type(stored_market), Market)
+        stored_market = ms.get_market_repo().get(id=mkt.id)
+        self.assertEqual(type(stored_market), Market)
 
     def test_update_market(self):
         data = {
             "isin":"123456789012",
             "open":True
         }
-        m = mas.create_market_from_dict(None, data)
+        mkt = mas.create_market_from_dict(None, data)
 
-        pre_update_created_at = m.created_at
-        pre_update_modified_at = m.modified_at
+        pre_update_created_at = mkt.created_at
+        pre_update_modified_at = mkt.modified_at
 
         updated_data = {
             "isin":"123456789012",
             "open":False
         }
 
-        mu = mas.update_market_from_dict(None, m, updated_data)
+        mas.update_market_from_dict(None, mkt, updated_data)
 
-        m.refresh_from_db()
-        self.assertEquals(m.open, False)
+        mkt.refresh_from_db()
+        self.assertEqual(mkt.open, False)
 
-        self.assertEquals(m.created_at, pre_update_created_at)
-        self.assertNotEqual(m.modified_at, pre_update_modified_at)
+        self.assertEqual(mkt.created_at, pre_update_created_at)
+        self.assertNotEqual(mkt.modified_at, pre_update_modified_at)

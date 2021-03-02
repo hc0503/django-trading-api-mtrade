@@ -25,5 +25,3 @@ def generate_random_markets(num_of_markets: int) -> typing.List[Market]:
     for _ in range(num_of_markets):
         markets.append(generate_random_market())
     return markets
-
-

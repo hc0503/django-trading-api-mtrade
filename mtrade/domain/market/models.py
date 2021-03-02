@@ -1,6 +1,6 @@
 # python imports
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 # django imports
 from django.db import models
@@ -49,11 +49,11 @@ class Market(custom_models.DatedModel):
     def get_open(self) -> bool:
         return self.open
 
-    def update_entity(self, isin:ISIN, open:bool):
+    def update_entity(self, isin:ISIN, is_open:bool):
         if isin is not None:
             self.isin = isin.value
-        if open is not None:
-            self.open = open
+        if is_open is not None:
+            self.open = is_open
 
     class Meta:
         ordering = ['id']

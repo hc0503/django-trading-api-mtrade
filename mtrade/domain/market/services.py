@@ -1,5 +1,4 @@
 # django imports
-from django.db.models.query import QuerySet
 from django.db.models.manager import Manager
 
 # local imports

@@ -1,6 +1,5 @@
-from lib.django.custom_models import ModelDates
 from lib.django.custom_serializers import ApplicationModelSerializer
-from mtrade.domain.market.models import Market, MarketID, ISIN
+from mtrade.domain.market.models import Market
 from mtrade.application.market.services import MarketAppServices
 
 

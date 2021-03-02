@@ -10,14 +10,14 @@ class COBAppServices():
     dummy_orders = None
 
     path = Path(__file__).parent / "dummy_data/coborder.json"
-    with path.open(mode='r') as f:
-        dummy_orders = json.load(f)
+    with path.open(mode='r') as data_file:
+        dummy_orders = json.load(data_file)
 
     mock_models = []
     for order in dummy_orders:
         order["mock_name"] = order["id"]
-        m = MockModel(order)
-        mock_models.append(m)
+        mock = MockModel(order)
+        mock_models.append(mock)
         #print(m)
 
     mock_cob_queryset = MockSet(*mock_models)

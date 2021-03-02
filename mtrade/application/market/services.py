@@ -2,9 +2,8 @@
 from django.db.models.query import QuerySet
 
 # app imports
-from lib.django.custom_models import ModelDates
 from mtrade.domain.market.services import MarketServices as ms
-from mtrade.domain.market.models import Market, MarketID, ISIN, MarketFactory
+from mtrade.domain.market.models import Market, ISIN, MarketFactory
 
 class MarketAppServices():
     @staticmethod
@@ -14,6 +13,7 @@ class MarketAppServices():
         # If controller does not exist propagate or handle exception
         return ms.get_market_repo().all()
 
+    @staticmethod
     def create_market_from_dict(user, data: dict) -> Market:
         # TODO:
         # Fetch controller by user id
@@ -25,6 +25,7 @@ class MarketAppServices():
         market.save()
         return market
 
+    @staticmethod
     def update_market_from_dict(user, instance: Market, data: dict) -> Market:
         # TODO:
         # Fetch controller by user id
@@ -33,8 +34,8 @@ class MarketAppServices():
 
         # This is an update so we expect to fail if any of the required fields is not present.
         isin = ISIN(data['isin'])
-        open = data['open']
+        is_open = data['open']
 
-        instance.update_entity(isin, open)
+        instance.update_entity(isin, is_open)
         instance.save()
         return instance
