@@ -32,10 +32,13 @@ class MarketAppServices():
         # If controller does not exist propagate or handle exception
         # get market by id
 
-        # This is an update so we expect to fail if any of the required fields is not present.
-        isin = ISIN(data['isin'])
-        is_open = data['open']
+        data_isin = data.get('isin', None)
+        data_is_open = data.get('open', None)
 
-        instance.update_entity(isin, is_open)
+        isin = None
+        if data_isin:
+            isin = ISIN(data['isin'])
+
+        instance.update_entity(isin, data_is_open)
         instance.save()
         return instance

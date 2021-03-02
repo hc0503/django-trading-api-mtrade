@@ -15,7 +15,7 @@ class MarketSerializer(ApplicationModelSerializer):
         # This method links the interface layer with the application layer
         # The returned instance comes from the application layer, not the
         # domain layer
-        return MarketAppServices.update_market(user, instance, validated_data)
+        return MarketAppServices.update_market_from_dict(user, instance, validated_data)
 
     class Meta:
         model = Market
