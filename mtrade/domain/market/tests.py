@@ -47,3 +47,7 @@ class MarketServicesTests(TestCase):
     def test_get_market_repo(self):
         repo = MarketServices.get_market_repo()
         self.assertEqual(Manager, type(repo))
+
+    def test_get_market_factory(self):
+        factory = MarketServices.get_market_factory()
+        self.assertEqual(MarketFactory, factory)
