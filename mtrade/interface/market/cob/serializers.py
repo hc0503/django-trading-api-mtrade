@@ -8,3 +8,4 @@ class COBSerializer(serializers.ModelSerializer):
     class Meta:
         model = COBOrder
         fields = '__all__'
+        # exclude isin field, this comes from path

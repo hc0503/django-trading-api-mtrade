@@ -6,20 +6,11 @@ from dataclasses import dataclass, field
 from django.db import models
 
 # app imports
+from lib.django import custom_models
 from lib.ddd.exceptions import VOValidationExcpetion
 #from lib.data_manipulation.type_conversion import asdict
 
 # local imports
-
-
-class Market(models.Model):
-    """
-    A Market represents the entrypoint for any type of trades of a given security
-    """
-    id = models.UUIDField(primary_key=True, editable=False)
-    isin = models.CharField(max_length=24, unique=True)
-    open = models.BooleanField()
-
 
 @dataclass(frozen=True)
 class MarketID():
@@ -39,6 +30,34 @@ class ISIN():
     def validate_length(self):
         if len(self.value) < 12:
             raise VOValidationExcpetion("isin", "Invalid length")
+
+
+class Market(custom_models.DatedModel):
+    """
+    A Market represents the entrypoint for any type of trades of a given security
+    """
+    id = models.UUIDField(primary_key=True, editable=False)
+    isin = models.CharField(max_length=24, unique=True)
+    open = models.BooleanField()
+
+    def get_market_id(self) -> MarketID:
+        return MarketID(self.id)
+
+    def get_isin(self) -> ISIN:
+        return ISIN(self.isin)
+
+    def get_open(self) -> bool:
+        return self.open
+
+    def update_entity(self, isin:ISIN, open:bool):
+        if isin is not None:
+            self.isin = isin.value
+        if open is not None:
+            self.open = open
+
+    class Meta:
+        ordering = ['id']
+
 
 class MarketFactory():
     @staticmethod

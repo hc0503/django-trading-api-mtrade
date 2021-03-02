@@ -1,24 +1,30 @@
+# python imports
 import traceback
 
+# django imports
 from rest_framework import serializers
 from rest_framework.utils import model_meta
+from rest_framework.exceptions import APIException
 
+# app imports
 from lib.ddd.exceptions import VOValidationExcpetion
-from mtrade.interface.lib.base_responses import BadRequest
+
+# local imports
+from .custom_responses import BadRequest
 
 
 class ApplicationModelSerializer(serializers.ModelSerializer):
 
     def create_from_app_service(self, validated_data):
         """
-        The build_instance method should transform validated data into domain
+        This method should transform validated data into domain
         value objects that should be passed to an application service
         """
         raise NotImplementedError('`create_from_app_service()` must be implemented.')
 
-    def update_from_app_service(self, instance, validated_data):
+    def update_from_app_service(self, instance):
         """
-        The build_instance method should transform validated data into domain
+        This method should transform validated data into domain
         value objects that should be passed to an application service
         """
         raise NotImplementedError('`update_from_app_service()` must be implemented.')
@@ -73,7 +79,6 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
             )
             raise TypeError(msg)
 
-        # TODO: Verify this doesn't write directly to models
         if many_to_many:
             for field_name, value in many_to_many.items():
                 field = getattr(instance, field_name)
@@ -91,20 +96,21 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
         info = model_meta.get_field_info(instance)
 
         m2m_fields = []
-        for attr, value in validated_data.items():
-            if attr in info.relations and info.relations[attr].to_many:
-                m2m_fields.append((attr, value))
-            else:
-                setattr(instance, attr, value)
+        #for attr, value in validated_data.items():
+        #    if attr in info.relations and info.relations[attr].to_many:
+        #        m2m_fields.append((attr, value))
 
-        # Original block
-        # instance.save()
-        # Replacement block
+        for field_name, relation_info in info.relations.items():
+            if relation_info.to_many and (field_name in validated_data):
+                m2m_fields[field_name] = validated_data.pop(field_name)
+
         updated_instance = None
         try:
             updated_instance = self.update_from_app_service(instance, validated_data)
         except VOValidationExcpetion as ve:
             raise BadRequest(ve)
+        except Exception as ve:
+            raise APIException(ve)
 
         for attr, value in m2m_fields:
             field = getattr(updated_instance, attr)

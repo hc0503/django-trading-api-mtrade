@@ -3,14 +3,12 @@ from uuid import uuid4
 
 # django imports
 from django.test import TestCase
-
 from rest_framework.test import force_authenticate, APIRequestFactory
 from rest_framework.test import APITestCase, APIClient
 
 # app imports
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.application.users.services import UserAppServices
-from mtrade.interface.lib.base_responses import BadRequest
 
 # local imports
 from . import views
@@ -56,26 +54,26 @@ class COBViewSetTest(TestCase):
 
         self.user_01 = UserAppServices.create_user(self.u_data_01, self.u_permissions_01)
 
-    #def test_list_cob_dummy_data(self):
-    #    request = self.factory.get('/api/v0/market/{}/cob'.format(self.market_id_01))
-    #    force_authenticate(request, user=self.user_01)
-    #    response = self.cob_collection_view(request, market_pk=self.market_id_01)
+    def test_list_cob_dummy_data(self):
+        request = self.factory.get('/api/v0/market/{}/cob'.format(self.market_id_01))
+        force_authenticate(request, user=self.user_01)
+        response = self.cob_collection_view(request, market_pk=self.market_id_01)
 
-    #    self.assertIs(response.status_code, 200)
+        self.assertIs(response.status_code, 200)
 
-    #    request = self.factory.get('/api/v0/market/{}/cob'.format(self.market_id_01), {"direction":"buy"})
-    #    force_authenticate(request, user=self.user_01)
-    #    response = self.cob_collection_view(request, market_pk=self.market_id_01)
+        request = self.factory.get('/api/v0/market/{}/cob'.format(self.market_id_01), {"direction":"buy"})
+        force_authenticate(request, user=self.user_01)
+        response = self.cob_collection_view(request, market_pk=self.market_id_01)
 
-    #    self.assertIs(response.status_code, 200)
+        self.assertIs(response.status_code, 200)
 
-    #def test_retrieve_cob_dummy_data(self):
-    #    request = self.factory.get('/api/v0/market/{}/cob/{}'.format(self.market_id_01, self.order_id))
-    #    force_authenticate(request, user=self.user_01)
+    def test_retrieve_cob_dummy_data(self):
+        request = self.factory.get('/api/v0/market/{}/cob/{}'.format(self.market_id_01, self.order_id))
+        force_authenticate(request, user=self.user_01)
 
-    #    response = self.cob_resource_view(request, pk=self.order_id, market_pk=self.market_id_01)
+        response = self.cob_resource_view(request, pk=self.order_id, market_pk=self.market_id_01)
 
-    #    self.assertIs(response.status_code, 200)
+        self.assertIs(response.status_code, 200)
 
     #def test_create_cob_dummy_data(self):
     #    payload = {

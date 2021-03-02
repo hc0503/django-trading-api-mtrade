@@ -15,5 +15,7 @@ class MarketServices():
 
     @staticmethod
     def get_market_repo() -> Manager:
-        # We expose the whole repository as a service to avoid making a service for each repo action. If some repo action is used constantly in multiple places consider exposing it as a service.
+        # We expose the whole repository as a service to avoid making a service
+        # for each repo action. If some repo action is used constantly in
+        # multiple places consider exposing it as a service.
         return Market.objects
