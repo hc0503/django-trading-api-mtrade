@@ -15,6 +15,7 @@ django-extensions = "*"
 json-log-formatter = "*"
 ujson = "*"
 logging-utilities = "*"
+django-structlog = "*"
 
 [dev-packages]
 autopep8 = "*"

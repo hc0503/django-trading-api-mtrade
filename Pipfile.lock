@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8b630e84bcbe830ff4f8dfd73af74ac15068188b0bfd0ac27a89cabe105a8943"
+            "sha256": "3d91fb7bfe1a88f6d90a9f078adf92f91e8cb6507f633b271912653b154b45ea"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -106,12 +106,26 @@
             "index": "pypi",
             "version": "==3.1.1"
         },
+        "django-ipware": {
+            "hashes": [
+                "sha256:c7df8e1410a8e5d6b1fbae58728402ea59950f043c3582e033e866f0f0cf5e94"
+            ],
+            "version": "==3.0.2"
+        },
         "django-mock-queries": {
             "hashes": [
                 "sha256:60eac2b7e4edddd6db500e138588a2459cd511cde0c3db2e5c93c665b81988c7"
             ],
             "index": "pypi",
             "version": "==2.1.6"
+        },
+        "django-structlog": {
+            "hashes": [
+                "sha256:3c482bdce8b8c6f01a459198063cece14617d190fb54ddf2457bf1f88e7b38d2",
+                "sha256:6c37d7e1dabc9dc3136bd02c0fb551976511d4bc43a88c303aabffedde8a8cea"
+            ],
+            "index": "pypi",
+            "version": "==2.1.0"
         },
         "djangorestframework": {
             "hashes": [
@@ -269,7 +283,7 @@
                 "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259",
                 "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.15.0"
         },
         "sqlparse": {
@@ -279,6 +293,14 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==0.4.1"
+        },
+        "structlog": {
+            "hashes": [
+                "sha256:62f06fc0ee32fb8580f0715eea66cb87271eb7efb0eaf9af6b639cba8981de47",
+                "sha256:d9d2d890532e8db83c6977a2a676fb1889922ff0c26ad4dc0ecac26f9fafbc57"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==21.1.0"
         },
         "ujson": {
             "hashes": [
@@ -332,14 +354,6 @@
             ],
             "index": "pypi",
             "version": "==1.5.5"
-        },
-        "colorama": {
-            "hashes": [
-                "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b",
-                "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"
-            ],
-            "markers": "sys_platform == 'win32'",
-            "version": "==0.4.4"
         },
         "et-xmlfile": {
             "hashes": [
@@ -480,7 +494,7 @@
                 "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c",
                 "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.8.1"
         },
         "pytz": {
@@ -495,7 +509,7 @@
                 "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259",
                 "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.15.0"
         },
         "toml": {
@@ -503,7 +517,7 @@
                 "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b",
                 "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"
             ],
-            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==0.10.2"
         },
         "wrapt": {
