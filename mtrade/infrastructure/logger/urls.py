@@ -5,5 +5,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-	path('logger/', views.testLogger),
+	path('loggers/debug', views.debugLogger),
+	path('loggers/info', views.infoLogger),
+	path('loggers/warning', views.warningLogger),
+	path('loggers/error', views.errorLogger),
+	path('loggers/fatal', views.fatalLogger),
 ]
