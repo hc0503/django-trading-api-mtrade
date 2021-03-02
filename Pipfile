@@ -14,6 +14,7 @@ django-mock-queries = "*"
 django-extensions = "*"
 json-log-formatter = "*"
 ujson = "*"
+logging-utilities = "*"
 
 [dev-packages]
 autopep8 = "*"

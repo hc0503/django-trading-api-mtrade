@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from mtrade.infrastructure.logger.services import CustomisedJSONFormatter
+from logging_utilities.formatters.extra_formatter import ExtraFormatter
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -159,6 +160,9 @@ STATIC_URL = '/static/'
 # Logging (export log to JSON)
 # https://pypi.org/project/JSON-log-formatter/
 
+# Loggin (export log to text with extra)
+# https://pypi.org/project/logging-utilities/
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -167,7 +171,9 @@ LOGGING = {
 			'()': CustomisedJSONFormatter,
 		},
         'app': {
-            'format': '%(message)s\t[%(levelname)s]\t[%(name)s.%(funcName)s]\t[%(asctime)s]',
+            '()': ExtraFormatter,
+            'format': 'level: "%(levelname)s"\t msg: "%(message)s"\t module: "%(name)s.%(funcName)s"\t time: "%(asctime)s"',
+            'extra_fmt': '\t extra: %s',
         },
     },
     'handlers': {
