@@ -41,5 +41,5 @@ urlpatterns = [
     path('api/v0/', include(market_router.urls)),
     path('api/v0/', include(market_cob_router.urls)),
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/v0/', include(logger_router.urls)),
+    path('api/v0/', include('mtrade.infrastructure.logger.urls')),
 ]
