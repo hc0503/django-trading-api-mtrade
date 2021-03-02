@@ -22,7 +22,7 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
         """
         raise NotImplementedError('`create_from_app_service()` must be implemented.')
 
-    def update_from_app_service(self, user, instance):
+    def update_from_app_service(self, user, instance, validated_data):
         """
         This method should transform validated data into domain
         value objects that should be passed to an application service

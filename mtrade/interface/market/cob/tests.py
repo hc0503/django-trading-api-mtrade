@@ -1,10 +1,8 @@
 # python imports
-from uuid import uuid4
 
 # django imports
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from rest_framework.test import force_authenticate, APIRequestFactory
-from rest_framework.test import APITestCase, APIClient
 
 # app imports
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
@@ -31,7 +29,7 @@ BASIC_COLLECTION_ACTIONS = {
     'get': 'list',
 }
 
-class COBViewSetTest(TestCase):
+class COBViewSetTest(APITestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.cob_resource_view = views.COBViewSet.as_view(BASIC_RESOURCE_ACTIONS)
@@ -61,14 +59,19 @@ class COBViewSetTest(TestCase):
 
         self.assertIs(response.status_code, 200)
 
-        request = self.factory.get('/api/v0/market/{}/cob'.format(self.market_id_01), {"direction":"buy"})
+        request = self.factory.get(
+            '/api/v0/market/{}/cob'.format(self.market_id_01),
+            {"direction":"buy"}
+        )
         force_authenticate(request, user=self.user_01)
         response = self.cob_collection_view(request, market_pk=self.market_id_01)
 
         self.assertIs(response.status_code, 200)
 
     def test_retrieve_cob_dummy_data(self):
-        request = self.factory.get('/api/v0/market/{}/cob/{}'.format(self.market_id_01, self.order_id))
+        request = self.factory.get(
+            '/api/v0/market/{}/cob/{}'.format(self.market_id_01, self.order_id)
+        )
         force_authenticate(request, user=self.user_01)
 
         response = self.cob_resource_view(request, pk=self.order_id, market_pk=self.market_id_01)

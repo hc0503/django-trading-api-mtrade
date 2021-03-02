@@ -1,13 +1,11 @@
 # django imports
-from django.test import TestCase
 from rest_framework.test import force_authenticate, APIRequestFactory
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase
 
 # app imports
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.application.users.services import UserAppServices
 from mtrade.application.market.services import MarketAppServices as mas
-from mtrade.domain.market.models import ISIN
 
 # local imports
 from . import views
@@ -23,7 +21,7 @@ COLLECTION_ACTIONS = {
     'get': 'list',
 }
 
-class MarketViewSetTest(TestCase):
+class MarketViewSetTest(APITestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.market_resource_view = views.MarketViewSet.as_view(RESOURCE_ACTIONS)
@@ -56,7 +54,10 @@ class MarketViewSetTest(TestCase):
         self.assertIs(response.status_code, 201)
 
     def test_update_markets(self):
-        request = self.factory.put('/api/v0/market/{}'.format(self.mkt.id), {"isin":"123456789012", "open": False})
+        request = self.factory.put(
+            '/api/v0/market/{}'.format(self.mkt.id),
+            {"isin":"123456789012", "open": False}
+        )
         force_authenticate(request, user=self.user_01)
         response = self.market_resource_view(request, pk=self.mkt.id)
 

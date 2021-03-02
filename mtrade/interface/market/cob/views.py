@@ -1,20 +1,13 @@
 # python imports
-import json
-from pathlib import Path
 
 # django imports
-from rest_framework import viewsets
-from rest_framework import permissions
 from drf_spectacular.utils import extend_schema_view
+from rest_framework import permissions
 from rest_framework.response import Response
 
 # app imports
-from lib.django.custom_responses import BadRequest
 from lib.django.custom_views import CreateListRetrieveViewSet
-from mtrade.interface.lib.open_api import paginate
 from mtrade.application.market.cob.services import COBAppServices
-from mtrade.domain.market.models import Market
-from mtrade.domain.market.cob.models import COBOrder
 
 # local imports
 from . import open_api
@@ -40,10 +33,10 @@ class COBViewSet(CreateListRetrieveViewSet):
         # TODO: replace following block with django-filter
         filtered_qs = base_queryset
         params = self.request.query_params.lists()
-        for qp, val in params:
-            if qp == 'page':
+        for q_param, val in params:
+            if q_param == 'page':
                 continue
-            filtered_qs = filtered_qs.filter(**{qp:val[0]})
+            filtered_qs = filtered_qs.filter(**{q_param:val[0]})
         return filtered_qs
 
     # TODO: Remove this method once model is implemented

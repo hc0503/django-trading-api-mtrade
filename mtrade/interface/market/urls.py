@@ -3,11 +3,11 @@ from rest_framework_nested import routers
 from . import views
 from .cob import views as cob_views
 
-market_pattern = r'market'
-cob_pattern = r'cob'
+MARKET_PATTERN = r'market'
+COB_PATTERN = r'cob'
 
 router = routers.SimpleRouter()
-router.register(market_pattern, views.MarketViewSet, basename='market')
+router.register(MARKET_PATTERN, views.MarketViewSet, basename='market')
 
-cob_router = routers.NestedSimpleRouter(router, market_pattern, lookup='market')
-cob_router.register(cob_pattern, cob_views.COBViewSet, basename='market-cob')
+cob_router = routers.NestedSimpleRouter(router, MARKET_PATTERN, lookup='market')
+cob_router.register(COB_PATTERN, cob_views.COBViewSet, basename='market-cob')
