@@ -12,6 +12,8 @@ psycopg2-binary = "*"
 drf-nested-routers = "*"
 django-mock-queries = "*"
 django-extensions = "*"
+json-log-formatter = "*"
+ujson = "*"
 
 [dev-packages]
 autopep8 = "*"
