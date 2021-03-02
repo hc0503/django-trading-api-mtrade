@@ -25,7 +25,7 @@ from .market.urls import (
     router as market_router,
     cob_router as market_cob_router
 )
-from mtrade.infrastructure.logger.urls import router as logger_router
+from mtrade.infrastructure.logger.urls import urlpatterns as logger_urlpatterns
 
 
 
@@ -41,5 +41,5 @@ urlpatterns = [
     path('api/v0/', include(market_router.urls)),
     path('api/v0/', include(market_cob_router.urls)),
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/v0/', include('mtrade.infrastructure.logger.urls')),
+    path('api/v0/', include(logger_urlpatterns)),
 ]
