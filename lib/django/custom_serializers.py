@@ -15,14 +15,14 @@ from .custom_responses import BadRequest
 
 class ApplicationModelSerializer(serializers.ModelSerializer):
 
-    def create_from_app_service(self, validated_data):
+    def create_from_app_service(self, user, validated_data):
         """
         This method should transform validated data into domain
         value objects that should be passed to an application service
         """
         raise NotImplementedError('`create_from_app_service()` must be implemented.')
 
-    def update_from_app_service(self, instance):
+    def update_from_app_service(self, user, instance):
         """
         This method should transform validated data into domain
         value objects that should be passed to an application service
@@ -55,7 +55,7 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
 
         instance = None
         try:
-            instance = self.create_from_app_service(validated_data)
+            instance = self.create_from_app_service(self.get_user(), validated_data)
         except VOValidationExcpetion as ve:
             raise BadRequest(ve)
         #TODO: Check if handling for TypeError is still necessary
@@ -106,7 +106,7 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
 
         updated_instance = None
         try:
-            updated_instance = self.update_from_app_service(instance, validated_data)
+            updated_instance = self.update_from_app_service(self.get_user(), instance, validated_data)
         except VOValidationExcpetion as ve:
             raise BadRequest(ve)
         except Exception as ve:
