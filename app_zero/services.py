@@ -34,7 +34,7 @@ class DefaultAppZeroServices():
                 )
             )
             raise TypeError(msg)
-        return market
+        return instance
 
     def update_resource_from_dict(self, user, instance, data: dict):
         for attr, value in data.items():
