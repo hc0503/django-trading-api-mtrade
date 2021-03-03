@@ -2,10 +2,11 @@
 
 # django imports
 from rest_framework import permissions
-from rest_framework import viewsets
+#from rest_framework import viewsets
 from drf_spectacular.utils import extend_schema_view
 
 # app imports
+from lib.django.custom_views import CreateListUpdateRetrieveViewSet
 
 # TODO: Remove app zero
 from app_zero.models import InstitutionManager
@@ -22,9 +23,12 @@ INST_MANAGER_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(InstitutionManager,
 
 @extend_schema_view(
     list=open_api.inst_manager_list_extension,
-    retrieve=open_api.inst_manager_retrieve_extension
+    retrieve=open_api.inst_manager_retrieve_extension,
+    create=open_api.inst_manager_create_extension,
+    update=open_api.inst_manager_update_extension,
+    partial_update=open_api.inst_manager_partial_update_extension,
 )
-class InstitutionManagerViewSet(viewsets.ReadOnlyModelViewSet):
+class InstitutionManagerViewSet(CreateListUpdateRetrieveViewSet):
     """
     API endpoint that allows the client to interact with securities.
     """

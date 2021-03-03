@@ -19,7 +19,7 @@ from . import open_api
 
 
 TRADER_ZERO_SERVICES = DefaultAppZeroServices(Trader)
-TRADER_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(Institution, TRADER_ZERO_SERVICES)
+TRADER_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(Trader, TRADER_ZERO_SERVICES)
 
 
 #@extend_schema_view(

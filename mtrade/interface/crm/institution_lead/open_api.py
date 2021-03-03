@@ -15,3 +15,15 @@ inst_lead_list_extension=extend_schema(
 inst_lead_retrieve_extension=extend_schema(
     tags=["crm institution lead"],
 )
+
+inst_lead_create_extension=extend_schema(
+    tags=["crm institution lead"],
+)
+
+inst_lead_update_extension=extend_schema(
+    tags=["crm institution lead"],
+)
+
+inst_lead_partial_update_extension=extend_schema(
+    tags=["crm institution lead"],
+)
