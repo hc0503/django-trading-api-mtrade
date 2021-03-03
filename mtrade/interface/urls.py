@@ -25,6 +25,7 @@ from .institution.urls import (
     settlement_instruction_router as institution_settlement_instruction_router
 )
 from .user.urls import router as user_router
+from .crm.urls import router as crm_router
 from .market.urls import (
     router as market_router,
     cob_router as market_cob_router
@@ -41,6 +42,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v0/', include(user_router.urls)),
+    path('api/v0/', include(crm_router.urls)),
     path('api/v0/', include(institution_router.urls)),
     path('api/v0/', include(institution_settlement_instruction_router.urls)),
     path('api/v0/', include(security_router.urls)),
