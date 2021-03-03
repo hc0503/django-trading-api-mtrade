@@ -1,38 +1,38 @@
 # python imports
-import json
-from pathlib import Path
 
 # django imports
-from rest_framework.response import Response
-from rest_framework.exceptions import APIException
 from rest_framework import permissions
 from rest_framework import viewsets
+from drf_spectacular.utils import extend_schema_view
 
 # app imports
-from lib.django.custom_responses import BadRequest
-from mtrade.interface.lib.open_api import paginate
+
+# TODO: Remove app zero
+from app_zero.models import Security
+from app_zero.services import DefaultAppZeroServices
+from app_zero.serializers import buildDefaultAppZeroSerializer
+
+# local imports
+from . import open_api
+#from . serializers import COBSerializer
 
 
-class SecurityViewSet(viewsets.ViewSet):
+SECURITY_ZERO_SERVICES = DefaultAppZeroServices(Security)
+SECURITY_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(Security, SECURITY_ZERO_SERVICES)
+
+
+@extend_schema_view(
+    list=open_api.security_list_extension,
+)
+class SecurityViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows the client to interact with securities.
     """
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SECURITY_ZERO_SERIALIZER
+    # TODO: add missing filetr fields: 'institution'
 
-    dummy_securities = None
-
-    path = Path(__file__).parent / "dummy_data/securities.json"
-    with path.open(mode='r') as f:
-        dummy_securities = json.load(f)
-
-    def list(self, request):
-        resp = paginate(self.dummy_securities)
-        return Response(resp)
-
-    def retrieve(self, request, pk=None):
-        try:
-            resp = next(
-                item for item in self.dummy_securities if item["id"] == pk)
-        except:
-            raise BadRequest()
-        return Response(resp)
+    def get_queryset(self):
+    # TODO: handle request path properly by filtering orders by market path
+        order_by_string=self.request.query_params.get('order_by', 'id')
+        return SECURITY_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
