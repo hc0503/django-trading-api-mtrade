@@ -142,7 +142,7 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
         number of iterations for loop
 
     create_new_instance:
-        a function in charge of creating a new instance. Must return created instance
+        a function in charge of creating a new instance. If it does not manage model saving and validation, it must return the instance to be validated
 
     Model:
         models.Model instance
@@ -169,7 +169,7 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
                 f'There was a problem while trying to create a {Model.__name__} instance -- {e.args}')
             traceback.print_exc()
 
-    logger.info(
+    print(
         f'{num_created} of {n} {Model.__name__} instances were created')
 
 
@@ -578,7 +578,7 @@ def create_securities():
     def create_random_string(n=12):
         return ''.join(random.choice(string.ascii_lowercase) for i in range(n))
 
-    logger.info('Creating securities...')
+    print('Creating securities...')
     try:
         # get general security info
         _data = pd.read_csv(path_to_general_info, index_col='isin')
@@ -605,7 +605,7 @@ def create_securities():
         traceback.print_exc()
         logger.error('There was a problem importing security data')
 
-    logger.info(f'Creating {len(list(data.keys()))} securities...')
+    print(f'Creating {len(list(data.keys()))} securities...')
     num_created = 0
     for isin, content in data.items():
         try:
@@ -670,7 +670,7 @@ def create_securities():
             logger.error('There was a problem creating a security', e.args)
             break
 
-    logger.info(f'Created {num_created} securities')
+    print(f'Created {num_created} securities')
 
 
 def create_settlement_instructions(n: int = 100):
@@ -725,6 +725,56 @@ def create_alarms(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
+def create_order_groups(n: int = 100):
+    """
+    Arguments
+    ----------
+    n : int
+        Number of instances to be created
+    """
+    Model = OrderGroup
+
+    def create_new_instance():
+        volume = create_random_number_of_securities()
+        price = create_random_price(return_type='number')
+        yield_value = create_random_yield()
+        notional = str(volume * price)
+        spread = create_random_spread()
+        submission = create_random_datetime(
+            '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
+        expiration = create_random_datetime(
+            '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
+        new_instance = Model(
+            security=select_random_fk_reference(Security),
+            orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
+            order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
+            direction=select_random_model_choice(Model.DIRECTION_CHOICES),
+            volume=volume,
+            notional=notional,
+            weighted_avg_price=str(price),
+            weighted_avg_yield=yield_value,
+            weighted_avg_spread=spread,
+            fx=str(random.random()*10 + 15),
+            status=select_random_model_choice(Model.STATUS_CHOICES),
+            submission=submission,
+            expiration=expiration,
+            responded_by=select_random_model_choice(
+                Model.RESPONDED_BY_CHOICES),
+            settlement_currency=select_random_model_choice(
+                Model.CURRENCY_CHOICES),
+            requestor_type=select_random_model_choice(
+                Model.REQUESTOR_TYPE_CHOICES),
+            requestor=select_random_fk_reference(Institution),
+            resp_received=random.randint(0, 10),
+            trader=select_random_fk_reference(Trader)
+        )
+
+        return new_instance
+
+    create_instances(
+        n=n, create_new_instance=create_new_instance, Model=Model)
+
+
 def create_cob_orders(n: int = 100):
     """
     Arguments
@@ -740,30 +790,28 @@ def create_cob_orders(n: int = 100):
         volume = create_random_number_of_securities()
         price = create_random_price()
         dirty_price = float(price) + 1.1
-        security = random.choice(Security.objects.all())
 
-        new_instance = {
-            "trader": select_random_fk_reference(Trader),
-            "security": select_random_fk_reference(Security),
-            "submission": submission,
-            "expiration": create_random_datetime('20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
-            "volume": volume,
-            "status": select_random_model_choice(Model.STATUS_CHOICES),
-            "dirty_price": str(dirty_price),
-            "notional": str(float(volume) * float(dirty_price)),
-            "price": price,
-            "spread": create_random_spread(),
-            "discount_margin": create_random_dm(),
-            "yield_value": create_random_yield(),
-            "parent": None,
-            "origin": None,
-            "direction": select_random_model_choice(Model.DIRECTION_CHOICES)
-        }
-
-        CobOrder.create_new_cob_order(**new_instance)
+        new_instance = Model(
+            trader=select_random_fk_reference(Trader),
+            security=select_random_fk_reference(Security),
+            submission=submission,
+            expiration=create_random_datetime(
+                '20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
+            volume=volume,
+            status=select_random_model_choice(Model.STATUS_CHOICES),
+            dirty_price=str(dirty_price),
+            notional=str(float(volume) * float(dirty_price)),
+            price=price,
+            spread=create_random_spread(),
+            discount_margin=create_random_dm(),
+            yield_value=create_random_yield(),
+            direction=select_random_model_choice(Model.DIRECTION_CHOICES),
+            order_group=select_random_fk_reference(OrderGroup)
+        )
+        return new_instance
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
+        n=n, create_new_instance=create_new_instance, Model=Model)
 
 
 def create_cob_auto_refreshers(n: int = 100):
@@ -776,7 +824,6 @@ def create_cob_auto_refreshers(n: int = 100):
     Model = CobAutoRefresher
 
     def create_new_instance():
-        random_str = create_random_string()
         new_instance = Model(
             cob_order=select_random_fk_reference(CobOrder),
             autorefresh_type=select_random_model_choice(Model.TYPE_CHOICES),
@@ -802,8 +849,8 @@ def create_cob_streams(n: int = 100):
         random_str = create_random_string()
         new_instance = Model(
             cob_order=select_random_fk_reference(CobOrder),
-            status=select_random_model_choice(Model.STATUS_CHOICES)
-
+            status=select_random_model_choice(Model.STATUS_CHOICES),
+            order_group=select_random_fk_reference(OrderGroup)
         )
 
         return new_instance
@@ -835,7 +882,8 @@ def create_rfqs(n: int = 100):
             status=select_random_model_choice(Model.STATUS_CHOICES),
             direction=select_random_model_choice(Model.DIRECTION_CHOICES),
             volume=create_random_number_of_securities(),
-            settlement_currency=Model.MXN_CURRENCY
+            settlement_currency=Model.MXN_CURRENCY,
+            order_group=select_random_fk_reference(OrderGroup)
         )
         new_instance.full_clean()
         new_instance.save()
@@ -1142,7 +1190,7 @@ def run(interactive: bool = True):
             selected_option = '9'
 
         try:
-            logger.info('CREATING CORE MODELS')
+            print('CREATING CORE MODELS')
             create_addresses()
             create_files()
             create_user_settings()
@@ -1161,7 +1209,7 @@ def run(interactive: bool = True):
             create_securities()
             create_settlement_instructions()
             create_alarms()
-
+            create_order_groups()
             create_cob_orders()
             create_cob_auto_refreshers()
             create_cob_streams()
@@ -1177,4 +1225,4 @@ def run(interactive: bool = True):
         except Exception as e:
             logger.error(f'ERR! -- {e}')
 
-    logger.info('Exiting dummy data generator...')
+    print('Exiting dummy data generator...')
