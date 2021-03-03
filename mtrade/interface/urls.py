@@ -20,7 +20,13 @@ from rest_framework import routers
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from .security.urls import router as security_router
+from .institution.urls import (
+    router as institution_router,
+    settlement_instruction_router as institution_settlement_instruction_router
+)
 from .user.urls import router as user_router
+from .crm.urls import router as crm_router
+from .trader.urls import router as trader_router
 from .market.urls import (
     router as market_router,
     cob_router as market_cob_router
@@ -37,6 +43,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v0/', include(user_router.urls)),
+    path('api/v0/', include(crm_router.urls)),
+    path('api/v0/', include(trader_router.urls)),
+    path('api/v0/', include(institution_router.urls)),
+    path('api/v0/', include(institution_settlement_instruction_router.urls)),
     path('api/v0/', include(security_router.urls)),
     path('api/v0/', include(market_router.urls)),
     path('api/v0/', include(market_cob_router.urls)),

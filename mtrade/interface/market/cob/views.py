@@ -9,12 +9,16 @@ from rest_framework.response import Response
 from lib.django.custom_views import CreateListRetrieveViewSet
 
 # TODO: Remove app zero
-from mtrade.application.market.cob.services import COB_ZERO_SERVICES
+from app_zero.models import CobOrder
+from app_zero.services import DefaultAppZeroServices
+from app_zero.serializers import buildDefaultAppZeroSerializer
 
 # local imports
 from . import open_api
-from . serializers import COBSerializer
+#from . serializers import COBSerializer
 
+COB_ZERO_SERVICES = DefaultAppZeroServices(CobOrder)
+COB_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(CobOrder, COB_ZERO_SERVICES)
 
 @extend_schema_view(
     list=open_api.cob_list_extension,
@@ -26,12 +30,12 @@ class COBViewSet(CreateListRetrieveViewSet):
     Allows clients to perform order operations
     """
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = COBSerializer
+    serializer_class = COB_ZERO_SERIALIZER
     filterset_fields = ('direction','security__isin', 'trader', 'origin')
     # TODO: add missing filetr fields: 'institution'
 
     def get_queryset(self):
-    # TODO: handle request path properly by filtering orders by market path
+        # TODO: handle request path properly by filtering orders by market path
         order_by_string=self.request.query_params.get('order_by', 'id')
         return COB_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
 

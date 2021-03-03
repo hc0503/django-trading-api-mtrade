@@ -4,11 +4,12 @@ from typing import Tuple
 # django imports
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from rest_framework import viewsets
+#from rest_framework import viewsets
 from rest_framework import permissions
 from drf_spectacular.utils import extend_schema, extend_schema_view, inline_serializer
 
 # app imports
+from lib.django.custom_views import CreateListUpdateRetrieveViewSet
 from lib.django.custom_responses import BadRequest
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.application.users.services import UserAppServices
@@ -21,7 +22,7 @@ from . import open_api
 @extend_schema_view(
     list=open_api.user_list_extension
 )
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(CreateListUpdateRetrieveViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -55,7 +56,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return UserAppServices.create_user(u_data, u_permissions)
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(CreateListUpdateRetrieveViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """

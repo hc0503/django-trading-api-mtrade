@@ -1,6 +1,7 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
-institution_list_extension=extend_schema(
+settlement_instruction_list_extension=extend_schema(
+    tags=["institution settlement instruction"],
     parameters=[
         OpenApiParameter(
             name='order_by',
@@ -9,4 +10,8 @@ institution_list_extension=extend_schema(
             description='A string that sets the output ordering.',
         )
     ]
+)
+
+settlement_instruction_retrieve_extension=extend_schema(
+    tags=["institution settlement instruction"],
 )
