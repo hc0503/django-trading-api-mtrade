@@ -13,11 +13,9 @@ from app_zero.models import CobOrder
 from app_zero.services import DefaultAppZeroServices
 from app_zero.serializers import buildDefaultAppZeroSerializer
 
-
 # local imports
 from . import open_api
 #from . serializers import COBSerializer
-
 
 COB_ZERO_SERVICES = DefaultAppZeroServices(CobOrder)
 COB_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(CobOrder, COB_ZERO_SERVICES)
@@ -37,7 +35,7 @@ class COBViewSet(CreateListRetrieveViewSet):
     # TODO: add missing filetr fields: 'institution'
 
     def get_queryset(self):
-    # TODO: handle request path properly by filtering orders by market path
+        # TODO: handle request path properly by filtering orders by market path
         order_by_string=self.request.query_params.get('order_by', 'id')
         return COB_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
 
