@@ -1,13 +1,13 @@
 from rest_framework_nested import routers
 
 from . import views
-#from .cob import views as cob_views
+from .settlement_instruction import views as si_views
 
 INSTITUTION_PATTERN = r'institution'
-#COB_PATTERN = r'cob'
+SETTLEMENT_INSTRUCTION_PATTERN = r'settlement-instruction'
 
 router = routers.SimpleRouter()
 router.register(INSTITUTION_PATTERN, views.InstitutionViewSet, basename='institution')
 
-#cob_router = routers.NestedSimpleRouter(router, MARKET_PATTERN, lookup='market')
-#cob_router.register(COB_PATTERN, cob_views.COBViewSet, basename='market-cob')
+settlement_instruction_router = routers.NestedSimpleRouter(router, INSTITUTION_PATTERN, lookup='institution')
+settlement_instruction_router.register(SETTLEMENT_INSTRUCTION_PATTERN, si_views.SettlementInstructionViewSet, basename='institution-settlement-instruction')
