@@ -559,6 +559,94 @@ class Alarm(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class OrderGroup(models.Model):
+    """
+    Represents an overview of all trades related to a Cob origin order or an Rfq
+    """
+    # order history
+    ORDERBOOK_COB = 'cob'
+    ORDERBOOK_RFQ = 'rfq'
+    ORDERBOOK_CHOICES = [
+        (ORDERBOOK_COB, 'COB'),
+        (ORDERBOOK_RFQ, 'RFQ')
+    ]
+    ORDER_TYPE_STREAM = 'stream'
+    ORDER_TYPE_CHOICES = [
+        (ORDER_TYPE_STREAM, 'Stream')
+    ]
+
+    DIRECTION_BUY = 'buy'
+    DIRECTION_SELL = 'sell'
+    DIRECTION_MARKET = 'market'
+    DIRECTION_CHOICES = [
+        (DIRECTION_BUY, 'Buy'),
+        (DIRECTION_SELL, 'Sell'),
+        (DIRECTION_MARKET, 'Market')
+    ]
+
+    ACTIVE_STATUS = 'active'
+    CANCELLED_STATUS = 'cancelled'
+    EXPIRED_STATUS = 'expired'
+    PENDING_STATUS = 'pending'
+    FULL_ALLOCATION_STATUS = 'full-allocation'
+    STATUS_CHOICES = [
+        (ACTIVE_STATUS, 'Active'),
+        (CANCELLED_STATUS, 'Cancelled'),
+        (EXPIRED_STATUS, 'Expired'),
+        (PENDING_STATUS, 'Pending'),
+        (FULL_ALLOCATION_STATUS, 'Full Allocation')
+    ]
+    RESPONDED_BY_AUTORESPONDER = 'autoresponder'
+    RESPONDED_BY_MANUAL = 'manual'
+    RESPONDED_BY_NA = 'na'  # for cases where this category is not applicable
+    RESPONDED_BY_CHOICES = [
+        (RESPONDED_BY_AUTORESPONDER, 'Autoresponder'),
+        (RESPONDED_BY_MANUAL, 'Manual'),
+        (RESPONDED_BY_NA, 'N. A.')
+    ]
+
+    CURRENCY_USD = 'usd'
+    CURRENCY_MXN = 'mxn'
+    CURRENCY_CHOICES = [
+        (CURRENCY_USD, 'US Dollars'),
+        (CURRENCY_MXN, 'Mexican Peso')
+    ]
+
+    REQUESTOR_TYPE_ANONYMOUS = 'anonymous'
+    REQUESTOR_TYPE_NOT_ANONYMOUS = 'not-anonymous'
+    REQUESTOR_TYPE_CHOICES = [
+        (REQUESTOR_TYPE_ANONYMOUS, 'Anonymous'),
+        (REQUESTOR_TYPE_NOT_ANONYMOUS, 'Not Anonymous')
+    ]
+
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    security = models.ForeignKey(
+        Security, on_delete=models.SET_NULL, null=True)
+    orderbook = models.CharField(max_length=150, choices=ORDERBOOK_CHOICES)
+    order_type = models.CharField(max_length=150, choices=ORDER_TYPE_CHOICES)
+    direction = models.CharField(max_length=150, choices=DIRECTION_CHOICES)
+    volume = models.PositiveIntegerField()
+    notional = models.DecimalField(max_digits=40, decimal_places=20)
+    weighted_avg_price = models.DecimalField(max_digits=40, decimal_places=20)
+    weighted_avg_yield = models.DecimalField(max_digits=40, decimal_places=20)
+    weighted_avg_spread = models.DecimalField(max_digits=40, decimal_places=20)
+    fx = models.DecimalField(max_digits=40, decimal_places=20)
+    status = models.CharField(max_length=150, choices=STATUS_CHOICES)
+    submission = models.DateTimeField()
+    expiration = models.DateTimeField()
+    responded_by = models.CharField(
+        max_length=150, choices=RESPONDED_BY_CHOICES)
+    settlement_currency = models.CharField(
+        max_length=150, choices=CURRENCY_CHOICES)
+    # NOTE: queries must take into account that, if requestor_typ is anonymous, counterparties must not know who requestor is
+    requestor_type = models.CharField(
+        max_length=150, choices=REQUESTOR_TYPE_CHOICES)
+    requestor = models.ForeignKey(
+        Institution, on_delete=models.SET_NULL, null=True)
+    resp_received = models.PositiveIntegerField()
+    trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
+
+
 class CobOrder(models.Model):
 
     ACTIVE_STATUS = 'active'
@@ -598,45 +686,11 @@ class CobOrder(models.Model):
     discount_margin = models.DecimalField(
         max_digits=40, decimal_places=20, null=True, blank=True)
     yield_value = models.DecimalField(max_digits=40, decimal_places=20)
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL,
-                               null=True, blank=True, related_name='child')
-    origin = models.ForeignKey('self', on_delete=models.SET_NULL,
-                               null=True, blank=True)
     direction = models.CharField(
         max_length=150, choices=DIRECTION_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    @ classmethod
-    def create_new_cob_order(cls, *args, **kwargs):
-        """
-        Description
-        ----
-        Creates a new cob order. If parent or origin are not provided, it will self reference them
-        ** kwargs: data for creating new cob order
-
-        Returns
-        ---
-        created cob order
-
-        """
-        new_order = cls(**kwargs)
-        new_order.full_clean()
-        new_order.save()
-
-        # if parent and origin are null, self reference them
-        if (new_order.parent == None or new_order.origin == None):
-            if (new_order.parent == None):
-                logger.debug('parent field is None. Self referencing...')
-                new_order.parent = new_order
-
-            if (new_order.origin == None):
-                logger.debug('origin field is None. Self referencing...')
-                new_order.origin = new_order
-
-            new_order.full_clean()
-            new_order.save()
-
-        return new_order
+    order_group = models.ForeignKey(
+        OrderGroup, on_delete=models.SET_NULL, null=True)
 
 
 class CobAutoRefresher(models.Model):
@@ -670,6 +724,7 @@ class CobStream(models.Model):
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     deactivated_at = models.DateTimeField(null=True, blank=True)
+    order_group = models.ForeignKey(OrderGroup, on_delete=models.SET_NULL, null=True)
 
 
 class Rfq(models.Model):
@@ -716,6 +771,8 @@ class Rfq(models.Model):
     settlement_currency = models.CharField(
         max_length=150, choices=SETTLEMENT_CURRENCY_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    order_group = models.ForeignKey(
+        OrderGroup, on_delete=models.SET_NULL, null=True)
 
 
 class RfqResponse(models.Model):
