@@ -28,3 +28,6 @@ market_cob_subrouter = routers.NestedSimpleRouter(
     market_subrouter, COB_PATTERN, lookup='cob_order')
 market_cob_subrouter.register(
     COB_TRANSACTION_PATTERN, CobTransactionViewSet, basename='market-cob-transaction')
+
+market_rfq_subrouter = routers.NestedSimpleRouter(
+    market_subrouter, RFQ_PATTERN, lookup='rfq')

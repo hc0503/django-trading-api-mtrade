@@ -9,11 +9,15 @@ from rest_framework.response import Response
 from lib.django.custom_views import CreateListRetrieveViewSet
 
 # TODO: Remove app zero
-from mtrade.application.market.rfq.services import RFQ_ZERO_SERVICES
+from app_zero.models import Rfq
+from app_zero.services import DefaultAppZeroServices
+from app_zero.serializers import buildDefaultAppZeroSerializer
+
 
 # local imports
 from . import open_api
-from . serializers import RfqSerializer
+RFQ_ZERO_SERVICES = DefaultAppZeroServices(Rfq)
+RFQ_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(Rfq, RFQ_ZERO_SERVICES)
 
 
 @extend_schema_view(
@@ -26,8 +30,9 @@ class RfqViewSet(CreateListRetrieveViewSet):
     Allows clients to perform order operations
     """
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = RfqSerializer
-    filterset_fields = ('direction', 'security__isin', 'trader', 'status')
+    serializer_class = RFQ_ZERO_SERIALIZER
+    filterset_fields = ('direction', 'security__isin',
+                        'trader', 'status', 'order_group')
     # TODO: add missing filetr fields: 'institution'
 
     def get_queryset(self):

@@ -5,6 +5,7 @@ from django.db.models.query import QuerySet
 from mtrade.domain.market.services import MarketServices as ms
 from mtrade.domain.market.models import Market, ISIN, MarketFactory
 
+
 class MarketAppServices():
     @staticmethod
     def list_markets(user) -> QuerySet:
