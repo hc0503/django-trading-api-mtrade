@@ -32,12 +32,14 @@ from .trader.urls import (
     trader_subrouter
 )
 from .market.urls import (
+
     market_base_router,
     market_subrouter,
-    market_cob_subrouter
+    market_cob_subrouter,
+    market_rfq_subrouter
+
 )
 from mtrade.infrastructure.logger.urls import urlpatterns as logger_urlpatterns
-
 
 
 # Wire up our API using automatic URL routing.
@@ -46,7 +48,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', RedirectView.as_view(url='api/v0/', permanent=False)),
     path('admin/', admin.site.urls),
-    path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'),
+         name='swagger-ui'),
     path('api/v0/', include(user_router.urls)),
     path('api/v0/', include(crm_router.urls)),
     path('api/v0/', include(trader_base_router.urls)),
@@ -54,10 +57,14 @@ urlpatterns = [
     path('api/v0/', include(institution_router.urls)),
     path('api/v0/', include(institution_settlement_instruction_router.urls)),
     path('api/v0/', include(security_router.urls)),
+
     path('api/v0/', include(security_issuer_router.urls)),
     path('api/v0/', include(market_base_router.urls)),
     path('api/v0/', include(market_subrouter.urls)),
     path('api/v0/', include(market_cob_subrouter.urls)),
+    path('api/v0/', include(market_rfq_subrouter.urls)),
+
+
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v0/', include(logger_urlpatterns)),
 ]
