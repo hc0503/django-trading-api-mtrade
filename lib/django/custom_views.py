@@ -13,3 +13,9 @@ class CreateListUpdateRetrieveViewSet(mixins.CreateModelMixin,
                                 mixins.RetrieveModelMixin,
                                 viewsets.GenericViewSet):
     pass
+
+class ListUpdateRetrieveViewSet(mixins.ListModelMixin,
+                                mixins.UpdateModelMixin,
+                                mixins.RetrieveModelMixin,
+                                viewsets.GenericViewSet):
+    pass
