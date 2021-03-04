@@ -31,7 +31,7 @@ class COBViewSet(CreateListRetrieveViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = COB_ZERO_SERIALIZER
-    filterset_fields = ('direction','security__isin', 'trader', 'origin')
+    filterset_fields = ('direction','security__isin', 'trader', 'order_group')
     # TODO: add missing filetr fields: 'institution'
 
     def get_queryset(self):
