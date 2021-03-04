@@ -40,7 +40,7 @@ from .market.urls import (
 
 )
 from mtrade.infrastructure.logger.urls import urlpatterns as logger_urlpatterns
-
+from mtrade.infrastructure.emailer.urls import urlpatterns as emailer_urlpatterns
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -67,4 +67,5 @@ urlpatterns = [
 
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v0/', include(logger_urlpatterns)),
+    path('api/v0/', include(emailer_urlpatterns)),
 ]
