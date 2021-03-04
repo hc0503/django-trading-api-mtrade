@@ -3,16 +3,22 @@ from rest_framework_nested import routers
 from . import views
 from .cob import views as cob_views
 from .rfq import views as rfq_views
+from .order_group import views as order_group_views
 from .cob.transaction.views import CobTransactionViewSet
 from .rfq.transaction.views import RfqTransactionViewSet
 from .rfq.response.views import RfqResponseViewSet
 
+
 MARKET_PATTERN = r'market'
+
 COB_PATTERN = r'cob'
 COB_TRANSACTION_PATTERN = r'transaction'
+
 RFQ_PATTERN = r'rfq'
 RFQ_TRANSACTION_PATTERN = r'transaction'
 RFQ_RESPONSE_PATTERN = r'response'
+
+ORDER_GROUP_PATTERN = r'order-group'
 
 
 market_base_router = routers.SimpleRouter()
@@ -26,6 +32,9 @@ market_subrouter.register(
     COB_PATTERN, cob_views.COBViewSet, basename='market-cob')
 market_subrouter.register(
     RFQ_PATTERN, rfq_views.RfqViewSet, basename='market-rfq')
+market_subrouter.register(
+    ORDER_GROUP_PATTERN, order_group_views.OrderGroupViewSet, basename='order-group'
+)
 
 
 market_cob_subrouter = routers.NestedSimpleRouter(
