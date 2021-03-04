@@ -6,7 +6,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 
 # app imports
-from lib.django.custom_views import CreateListRetrieveViewSet
+from lib.django.custom_views import CreateListUpdateRetrieveViewSet
 
 # TODO: Remove app zero
 from app_zero.models import RfqResponse
@@ -24,9 +24,10 @@ RFQ_RESPONSE_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
 @extend_schema_view(
     list=open_api.rfq_response_list_extension,
     retrieve=open_api.rfq_response_retrieve_extension,
-    create=open_api.rfq_response_create_extension
+    create=open_api.rfq_response_create_extension,
+    partial_update=open_api.rfq_response_partial_update_extension
 )
-class RfqResponseViewSet(CreateListRetrieveViewSet):
+class RfqResponseViewSet(CreateListUpdateRetrieveViewSet):
     """
     Allows clients to perform RfqResponse operations
     """

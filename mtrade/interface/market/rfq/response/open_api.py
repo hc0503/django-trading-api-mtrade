@@ -43,3 +43,10 @@ rfq_response_create_extension = extend_schema(
         *common_params
     ]
 )
+
+rfq_response_partial_update_extension = extend_schema(
+    tags=["market rfq response"],
+    parameters=[
+        *common_params
+    ]
+)
