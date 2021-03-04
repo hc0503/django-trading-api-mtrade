@@ -29,8 +29,9 @@ from .user.urls import router as user_router
 from .crm.urls import router as crm_router
 from .trader.urls import router as trader_router
 from .market.urls import (
-    router as market_router,
-    cob_router as market_cob_router
+    market_base_router,
+    market_subrouter,
+    market_cob_subrouter
 )
 from mtrade.infrastructure.logger.urls import urlpatterns as logger_urlpatterns
 
@@ -50,8 +51,9 @@ urlpatterns = [
     path('api/v0/', include(institution_settlement_instruction_router.urls)),
     path('api/v0/', include(security_router.urls)),
     path('api/v0/', include(security_issuer_router.urls)),
-    path('api/v0/', include(market_router.urls)),
-    path('api/v0/', include(market_cob_router.urls)),
+    path('api/v0/', include(market_base_router.urls)),
+    path('api/v0/', include(market_subrouter.urls)),
+    path('api/v0/', include(market_cob_subrouter.urls)),
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v0/', include(logger_urlpatterns)),
 ]
