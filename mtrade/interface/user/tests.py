@@ -17,7 +17,6 @@ DEFAULT_ACTIONS = {
     'post': 'create',
     'put': 'update',
     'patch': 'partial_update',
-    'delete': 'destroy'
 }
 
 class UserViewSetTest(TestCase):
