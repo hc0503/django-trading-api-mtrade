@@ -20,13 +20,11 @@ market_subrouter = routers.NestedSimpleRouter(
     market_base_router, MARKET_PATTERN, lookup='market')
 market_subrouter.register(
     COB_PATTERN, cob_views.COBViewSet, basename='market-cob')
+market_subrouter.register(
+    RFQ_PATTERN, rfq_views.RfqViewSet, basename='market-rfq')
+
 
 market_cob_subrouter = routers.NestedSimpleRouter(
     market_subrouter, COB_PATTERN, lookup='cob_order')
 market_cob_subrouter.register(
     COB_TRANSACTION_PATTERN, CobTransactionViewSet, basename='market-cob-transaction')
-
-market_rfq_subrouter = routers.NestedDefaultRouter(
-    market_subrouter, MARKET_PATTERN, lookup='market')
-market_rfq_subrouter.register(
-    RFQ_PATTERN, rfq_views.RfqViewSet, basename='market-rfq')
