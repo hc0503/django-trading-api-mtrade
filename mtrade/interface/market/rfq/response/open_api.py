@@ -1,6 +1,7 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 
+
 common_params = [
     OpenApiParameter(
         name='market_pk',
