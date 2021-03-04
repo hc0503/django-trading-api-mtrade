@@ -73,7 +73,3 @@ cob_create_extension = extend_schema(
         *common_params
     ]
 )
-
-cob_partial_update_extension = extend_schema(
-    tags=["market cob"],
-)

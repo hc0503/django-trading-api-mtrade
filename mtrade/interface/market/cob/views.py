@@ -6,7 +6,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 
 # app imports
-from lib.django.custom_views import CreateListUpdateRetrieveViewSet
+from lib.django.custom_views import CreateListRetrieveViewSet
 
 # TODO: Remove app zero
 from app_zero.models import CobOrder
@@ -26,9 +26,8 @@ COB_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
     list=open_api.cob_list_extension,
     retrieve=open_api.cob_retrieve_extension,
     create=open_api.cob_create_extension,
-    partial_update=open_api.cob_partial_update_extension
 )
-class COBViewSet(CreateListUpdateRetrieveViewSet):
+class COBViewSet(CreateListRetrieveViewSet):
     """
     Allows clients to perform order operations
     """

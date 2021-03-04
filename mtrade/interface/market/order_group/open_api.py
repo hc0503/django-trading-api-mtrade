@@ -1,7 +1,9 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 
-base_tags = ["market rfq response"]
+
+base_tags = ['market order-group']
+
 common_params = [
     OpenApiParameter(
         name='market_pk',
@@ -17,7 +19,7 @@ common_params = [
     )
 ]
 
-rfq_response_list_extension = extend_schema(
+order_group_list_extension = extend_schema(
     tags=base_tags,
     parameters=[
         OpenApiParameter(
@@ -30,28 +32,29 @@ rfq_response_list_extension = extend_schema(
     ]
 )
 
-rfq_response_retrieve_extension = extend_schema(
+
+order_group_retrieve_extension = extend_schema(
     tags=base_tags,
     parameters=[
         *common_params
     ]
 )
 
-rfq_response_create_extension = extend_schema(
+order_group_create_extension = extend_schema(
     tags=base_tags,
     parameters=[
         *common_params
     ]
 )
 
-rfq_response_partial_update_extension = extend_schema(
+order_group_partial_update_extension = extend_schema(
     tags=base_tags,
     parameters=[
         *common_params
     ]
 )
 
-rfq_response_update_extension = extend_schema(
+order_group_update_extension = extend_schema(
     tags=base_tags,
     parameters=[
         *common_params
