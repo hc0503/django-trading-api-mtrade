@@ -41,7 +41,7 @@ class EmailerServices():
         
         return True
     
-    def sendBcc(self, toEmails=[], bccEmails=[]):
+    def sendBCC(self, toEmails=[], bccEmails=[]):
         msg = EmailMessage(
             from_email = self.fromEmail,
             to = toEmails,
