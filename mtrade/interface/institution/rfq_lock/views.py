@@ -15,7 +15,8 @@ from . import open_api
 #from . serializers import COBSerializer
 
 RFQ_LOCK_ZERO_SERVICES = DefaultAppZeroServices(RfqLock)
-RFQ_LOCK_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(RfqLock, RFQ_LOCK_ZERO_SERVICES)
+RFQ_LOCK_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
+    RfqLock, RFQ_LOCK_ZERO_SERVICES)
 
 
 @extend_schema_view(
@@ -24,7 +25,7 @@ RFQ_LOCK_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(RfqLock, RFQ_LOCK_ZERO_
     create=open_api.rfq_lock_create_extension,
     update=open_api.rfq_lock_update_extension,
     partial_update=open_api.rfq_lock_partial_update_extension,
-    destroy=open_api.rfq_lock_destroy_extension,
+    # destroy=open_api.rfq_lock_destroy_extension,
 )
 class RfqLockManagerViewSet(viewsets.ModelViewSet):
     """
@@ -35,5 +36,5 @@ class RfqLockManagerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # TODO: handle request path properly by filtering orders by institution path
-        order_by_string=self.request.query_params.get('order_by', 'id')
+        order_by_string = self.request.query_params.get('order_by', 'id')
         return RFQ_LOCK_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
