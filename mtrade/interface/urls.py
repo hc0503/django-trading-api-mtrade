@@ -35,7 +35,8 @@ from .market.urls import (
 
     market_base_router,
     market_subrouter,
-    market_cob_subrouter
+    market_cob_subrouter,
+    market_rfq_subrouter
 
 )
 from mtrade.infrastructure.logger.urls import urlpatterns as logger_urlpatterns
@@ -61,6 +62,8 @@ urlpatterns = [
     path('api/v0/', include(market_base_router.urls)),
     path('api/v0/', include(market_subrouter.urls)),
     path('api/v0/', include(market_cob_subrouter.urls)),
+    path('api/v0/', include(market_rfq_subrouter.urls)),
+
 
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v0/', include(logger_urlpatterns)),

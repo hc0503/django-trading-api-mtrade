@@ -4,11 +4,13 @@ from . import views
 from .cob import views as cob_views
 from .rfq import views as rfq_views
 from .cob.transaction.views import CobTransactionViewSet
+from .rfq.transaction.views import RfqTransactionViewSet
 
 MARKET_PATTERN = r'market'
 COB_PATTERN = r'cob'
 COB_TRANSACTION_PATTERN = r'transaction'
 RFQ_PATTERN = r'rfq'
+RFQ_TRANSACTION_PATTERN = r'transaction'
 
 
 market_base_router = routers.SimpleRouter()
@@ -31,3 +33,6 @@ market_cob_subrouter.register(
 
 market_rfq_subrouter = routers.NestedSimpleRouter(
     market_subrouter, RFQ_PATTERN, lookup='rfq')
+market_rfq_subrouter.register(
+    RFQ_TRANSACTION_PATTERN, RfqTransactionViewSet, basename='market-rfq-transacrtion'
+)
