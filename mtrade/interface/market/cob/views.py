@@ -26,7 +26,7 @@ COB_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
     list=open_api.cob_list_extension,
     retrieve=open_api.cob_retrieve_extension,
     create=open_api.cob_create_extension,
-    patial_update=open_api.cob_partial_update_extension
+    partial_update=open_api.cob_partial_update_extension
 )
 class COBViewSet(CreateListUpdateRetrieveViewSet):
     """
