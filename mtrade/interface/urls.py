@@ -27,7 +27,10 @@ from .institution.urls import (
 )
 from .user.urls import router as user_router
 from .crm.urls import router as crm_router
-from .trader.urls import router as trader_router
+from .trader.urls import (
+    trader_base_router,
+    trader_subrouter
+)
 from .market.urls import (
     market_base_router,
     market_subrouter,
@@ -46,7 +49,8 @@ urlpatterns = [
     path('api/v0/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v0/', include(user_router.urls)),
     path('api/v0/', include(crm_router.urls)),
-    path('api/v0/', include(trader_router.urls)),
+    path('api/v0/', include(trader_base_router.urls)),
+    path('api/v0/', include(trader_subrouter.urls)),
     path('api/v0/', include(institution_router.urls)),
     path('api/v0/', include(institution_settlement_instruction_router.urls)),
     path('api/v0/', include(security_router.urls)),
