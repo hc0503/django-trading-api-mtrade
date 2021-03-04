@@ -16,7 +16,7 @@ common_params = [
     )
 ]
 
-cob_list_extension=extend_schema(
+cob_list_extension = extend_schema(
     tags=["market cob"],
     parameters=[
         OpenApiParameter(
@@ -28,7 +28,7 @@ cob_list_extension=extend_schema(
         *common_params
     ]
 )
-#cob_list_extension=extend_schema(
+# cob_list_extension=extend_schema(
 #    tags=["market cob"],
 #    parameters=[
 #        OpenApiParameter(
@@ -58,18 +58,22 @@ cob_list_extension=extend_schema(
 #        ),
 #        *common_params
 #    ]
-#)
+# )
 
-cob_retrieve_extension=extend_schema(
+cob_retrieve_extension = extend_schema(
     tags=["market cob"],
     parameters=[
         *common_params
     ]
 )
 
-cob_create_extension=extend_schema(
+cob_create_extension = extend_schema(
     tags=["market cob"],
     parameters=[
         *common_params
     ]
+)
+
+cob_partial_update_extension = extend_schema(
+    tags=["market cob"],
 )
