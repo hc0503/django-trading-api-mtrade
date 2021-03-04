@@ -205,3 +205,10 @@ LOGGING = {
 		},
     },
 }
+
+# SendGrid emailer setting
+# https://github.com/sklarsa/django-sendgrid-v5
+
+EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
+SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
+SENDGRID_SANDBOX_MODE_IN_DEBUG = os.environ["SENDGRID_SANDBOX_MODE_IN_DEBUG"]
