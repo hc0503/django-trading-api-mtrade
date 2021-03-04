@@ -25,7 +25,8 @@ RFQ_RESPONSE_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
     list=open_api.rfq_response_list_extension,
     retrieve=open_api.rfq_response_retrieve_extension,
     create=open_api.rfq_response_create_extension,
-    partial_update=open_api.rfq_response_partial_update_extension
+    partial_update=open_api.rfq_response_partial_update_extension,
+    update=open_api.rfq_response_update_extension
 )
 class RfqResponseViewSet(CreateListUpdateRetrieveViewSet):
     """
