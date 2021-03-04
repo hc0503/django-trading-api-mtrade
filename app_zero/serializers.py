@@ -2,7 +2,7 @@ from lib.django.custom_serializers import ApplicationModelSerializer
 
 def buildDefaultAppZeroSerializer(model_class, services_class):
 
-    class DefaultAppZeroSerializer(ApplicationModelSerializer):
+    class cls(ApplicationModelSerializer):
 
         def create_from_app_service(self, user, validated_data):
             # this method links the interface layer with the application layer
@@ -20,4 +20,6 @@ def buildDefaultAppZeroSerializer(model_class, services_class):
             model = model_class
             fields = '__all__'
 
-    return DefaultAppZeroSerializer
+    cls.__name__ = model_class.__name__+'AppZeroSerializer'
+
+    return cls
