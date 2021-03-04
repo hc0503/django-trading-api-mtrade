@@ -10,6 +10,8 @@ from app_zero.models import RfqLock
 from app_zero.services import DefaultAppZeroServices
 from app_zero.serializers import buildDefaultAppZeroSerializer
 
+from lib.django.custom_views import CreateListUpdateRetrieveViewSet
+
 # local imports
 from . import open_api
 #from . serializers import COBSerializer
@@ -27,7 +29,7 @@ RFQ_LOCK_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
     partial_update=open_api.rfq_lock_partial_update_extension,
     # destroy=open_api.rfq_lock_destroy_extension,
 )
-class RfqLockManagerViewSet(viewsets.ModelViewSet):
+class RfqLockManagerViewSet(CreateListUpdateRetrieveViewSet):
     """
     API endpoint that allows the client to interact with securities.
     """

@@ -5,7 +5,7 @@ from rest_framework import permissions
 from rest_framework import viewsets
 from drf_spectacular.utils import extend_schema_view
 
-from lib.django.custom_views import CreateListRetrieveViewSet
+from lib.django.custom_views import CreateListUpdateRetrieveViewSet
 
 # app imports
 
@@ -27,9 +27,11 @@ SETTLEMENT_INSTRUCTION_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
 @extend_schema_view(
     list=open_api.settlement_instruction_list_extension,
     retrieve=open_api.settlement_instruction_retrieve_extension,
-    create=open_api.settlement_instruction_create_extension
+    create=open_api.settlement_instruction_create_extension,
+    update=open_api.settlement_instruction_update_extension,
+    partial_update=open_api.settlement_instruction_partial_update_extension
 )
-class SettlementInstructionViewSet(CreateListRetrieveViewSet):
+class SettlementInstructionViewSet(CreateListUpdateRetrieveViewSet):
     """
     API endpoint that allows the client to interact with securities.
     """
