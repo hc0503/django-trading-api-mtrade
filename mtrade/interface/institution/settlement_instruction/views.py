@@ -37,8 +37,8 @@ class SettlementInstructionViewSet(CreateListUpdateRetrieveViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SETTLEMENT_INSTRUCTION_ZERO_SERIALIZER
+    ordering = ['-created_at']
 
     def get_queryset(self):
         # TODO: handle request path properly by filtering orders by institution path
-        order_by_string = self.request.query_params.get('order_by', 'id')
-        return SETTLEMENT_INSTRUCTION_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
+        return SETTLEMENT_INSTRUCTION_ZERO_SERVICES.list_resources(self.request.user)

@@ -22,16 +22,16 @@ TRADER_ZERO_SERVICES = DefaultAppZeroServices(Trader)
 TRADER_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(Trader, TRADER_ZERO_SERVICES)
 
 
-#@extend_schema_view(
-#    list=open_api.trader_list_extension,
-#)
+@extend_schema_view(
+    list=open_api.trader_list_extension,
+)
 class TraderViewSet(CreateListUpdateRetrieveViewSet):
     """
     API endpoint that allows the client to interact with securities.
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = TRADER_ZERO_SERIALIZER
+    ordering = ['-created_at']
 
     def get_queryset(self):
-        order_by_string=self.request.query_params.get('order_by', 'id')
-        return TRADER_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
+        return TRADER_ZERO_SERVICES.list_resources(self.request.user)

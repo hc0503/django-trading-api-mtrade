@@ -1,16 +1,13 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.utils import extend_schema
 
-base_tags = ["institution settlement instruction"]
+from lib.open_api.custom_params import default_cursor_param
+
+base_tags = ["institution - settlement instruction"]
 
 settlement_instruction_list_extension = extend_schema(
     tags=base_tags,
-    parameters=[
-        OpenApiParameter(
-            name='order_by',
-            type=str,
-            location=OpenApiParameter.QUERY,
-            description='A string that sets the output ordering.',
-        )
+    parameters = [
+        default_cursor_param
     ]
 )
 

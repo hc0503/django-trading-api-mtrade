@@ -1,8 +1,9 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
-from drf_spectacular.types import OpenApiTypes
+
+from lib.open_api.custom_params import default_cursor_param
 
 
-base_tags = ['market order-group']
+base_tags = ['market - order-group']
 
 common_params = [
     OpenApiParameter(
@@ -21,13 +22,8 @@ common_params = [
 
 order_group_list_extension = extend_schema(
     tags=base_tags,
-    parameters=[
-        OpenApiParameter(
-            name='order_by',
-            type=str,
-            location=OpenApiParameter.QUERY,
-            description='A string that sets the output ordering.',
-        ),
+    parameters = [
+        default_cursor_param,
         *common_params
     ]
 )

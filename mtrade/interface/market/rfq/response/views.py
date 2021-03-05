@@ -25,8 +25,8 @@ RFQ_RESPONSE_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
     list=open_api.rfq_response_list_extension,
     retrieve=open_api.rfq_response_retrieve_extension,
     create=open_api.rfq_response_create_extension,
-    partial_update=open_api.rfq_response_partial_update_extension,
-    update=open_api.rfq_response_update_extension
+    update=open_api.rfq_response_update_extension,
+    partial_update=open_api.rfq_response_partial_update_extension
 )
 class RfqResponseViewSet(CreateListUpdateRetrieveViewSet):
     """
@@ -35,22 +35,10 @@ class RfqResponseViewSet(CreateListUpdateRetrieveViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = RFQ_RESPONSE_ZERO_SERIALIZER
     filterset_fields = ('trader',)
+    ordering = ['-created_at']
+
     # TODO: add missing filetr fields: 'institution'
 
     def get_queryset(self):
         # TODO: handle request path properly by filtering orders by market path
-        order_by_string = self.request.query_params.get('order_by', 'id')
-        return RFQ_RESPONSE_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
-
-    # TODO: Remove this method once model is implemented
-    # def retrieve(self, request, pk=None, market_pk=None):
-    #    serializer = COBSerializer(self.get_queryset().get(id=pk))
-    #    return Response(serializer.data)
-
-    # TODO: Replace with call to service
-    # TODO: Ensure only resources of current market path are allowed
-    # def create(self, request, market_pk=None):
-    #    serializer = COBSerializer(data=request.data)
-    #    if not serializer.is_valid():
-    #        raise BadRequest(serializer.errors)
-    #    return Response(serializer.data)
+        return RFQ_RESPONSE_ZERO_SERVICES.list_resources(self.request.user)
