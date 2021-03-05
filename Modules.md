@@ -26,35 +26,24 @@ send_mail(
 First, create a [dynamic template](https://mc.sendgrid.com/dynamic-templates) and copy the ID.
 
 ```python
-from mtrade.infrastructure.emailer.services import EmailerServices
+from mtrade.infrastructure.emailer.services import Mail
 
-emailer = EmailerServices(
+mail = Mail(
+	'from@mtrade.com',
+	['to@mtrade.com'],
+	# SendGrid template ID
 	'sendgrid_template_id',
 	# SendGrid template data
 	{
-		'title': 'testTitle',
-		'name': 'testName',
+		'title': 'Mtrade Title',
+		'name': 'Mtrade Name',
 	},
-	# Reply email, the default is None
-	'reply@example.com',
+	# Default value of reply , cc and bcc emails are none.
+	reply_to = 'reply@mtrade.com',
+	cc = ['cc@mtrade.com'],
+	bcc = ['bcc@mtrade.com']
 )
 
-# Email send with to
-emailer.sendTo([
-	'to1@example.com',
-	'to2@example.com',
-])
-
-# Email send with cc
-emailer.sendCC([
-	'to1@example.com',
-	'to2@example.com',
-])
-
-# Email send with bcc
-emailer.sendBCC([
-	'to1@example.com',
-	'to2@example.com',
-])
+mail.send()
 ```
 
