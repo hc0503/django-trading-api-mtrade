@@ -1,8 +1,25 @@
-# import django
-from django.core import mail
+# django import
 from django.test import TestCase
+from django.core import mail
 
-class EmailTest(TestCase):
+# local import
+from .services import Mail
+
+
+class MailTest(TestCase):
 	def test_send(self):
-		mail.send_mail('subject', 'body.', 'no-reply@mtrade.mx', ['no-reply@mtrade.mx'])
+		mailer = Mail(
+			'This is the subject',
+			from_email = 'no-reply@mtrade.mx',
+			to = ['no-reply@mtrade.mx'],
+			bcc = ['bcc@mtrade.mx'],
+		)
+		mailer.template_id = 'd-59254528bee54e53852235bc6f769a46'
+		mailer.dynamic_template_data = {
+			'title': 'testTitle',
+			'name': 'testName'
+		}
+		mailer.send()
+
 		assert len(mail.outbox) == 1
+	
