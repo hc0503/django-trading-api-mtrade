@@ -56,6 +56,9 @@ class UserViewSet(CreateListUpdateRetrieveViewSet):
         return UserAppServices.create_user(u_data, u_permissions)
 
 
+@extend_schema_view(
+    list=open_api.group_list_extension
+)
 class GroupViewSet(CreateListUpdateRetrieveViewSet):
     """
     API endpoint that allows groups to be viewed or edited.

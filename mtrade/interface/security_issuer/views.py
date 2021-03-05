@@ -30,7 +30,7 @@ class SecurityIssuerViewSet(viewsets.ReadOnlyModelViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SECURITY_ISSUER_ZERO_SERIALIZER
+    ordering = ['-created_at']
 
     def get_queryset(self):
-        order_by_string=self.request.query_params.get('order_by', 'id')
-        return SECURITY_ISSUER_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
+        return SECURITY_ISSUER_ZERO_SERVICES.list_resources(self.request.user)

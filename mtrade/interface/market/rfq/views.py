@@ -33,22 +33,10 @@ class RfqViewSet(CreateListRetrieveViewSet):
     serializer_class = RFQ_ZERO_SERIALIZER
     filterset_fields = ('direction', 'security__isin',
                         'trader', 'status', 'order_group')
+    ordering = ['-created_at']
+
     # TODO: add missing filetr fields: 'institution'
 
     def get_queryset(self):
         # TODO: handle request path properly by filtering orders by market path
-        order_by_string = self.request.query_params.get('order_by', 'id')
-        return RFQ_ZERO_SERVICES.list_resources(self.request.user).order_by(order_by_string)
-
-    # TODO: Remove this method once model is implemented
-    # def retrieve(self, request, pk=None, market_pk=None):
-    #    serializer = COBSerializer(self.get_queryset().get(id=pk))
-    #    return Response(serializer.data)
-
-    # TODO: Replace with call to service
-    # TODO: Ensure only resources of current market path are allowed
-    # def create(self, request, market_pk=None):
-    #    serializer = COBSerializer(data=request.data)
-    #    if not serializer.is_valid():
-    #        raise BadRequest(serializer.errors)
-    #    return Response(serializer.data)
+        return RFQ_ZERO_SERVICES.list_resources(self.request.user)

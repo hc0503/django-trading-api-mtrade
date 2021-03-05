@@ -1,19 +1,16 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.utils import extend_schema
 
-group_tags = ["market cob transaction"]
+from lib.open_api.custom_params import default_cursor_param
+
+base_tags = ["market - cob transaction"]
 
 cob_transaction_list_extension=extend_schema(
-    tags=group_tags,
-    parameters=[
-        OpenApiParameter(
-            name='order_by',
-            type=str,
-            location=OpenApiParameter.QUERY,
-            description='A string that sets the output ordering.',
-        )
+    tags = base_tags,
+    parameters = [
+        default_cursor_param
     ]
 )
 
 cob_transaction_retrieve_extension=extend_schema(
-    tags=group_tags,
+    tags = base_tags,
 )

@@ -1,16 +1,13 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.utils import extend_schema
 
-group_tags = ["institution manager"]
+from lib.open_api.custom_params import default_cursor_param
+
+group_tags = ["institution - institution manager"]
 
 inst_manager_list_extension=extend_schema(
     tags=group_tags,
-    parameters=[
-        OpenApiParameter(
-            name='order_by',
-            type=str,
-            location=OpenApiParameter.QUERY,
-            description='A string that sets the output ordering.',
-        )
+    parameters = [
+        default_cursor_param
     ]
 )
 
