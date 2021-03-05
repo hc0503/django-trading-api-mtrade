@@ -1,12 +1,12 @@
 # django import
 from django.test import TestCase
 from django.core import mail
+from rest_framework.test import APITestCase
 
 # local import
 from .services import Mail
 
-
-class MailTest(TestCase):
+class EmailerServiceTest(TestCase):
 	def test_send(self):
 		mailer = Mail(
 			'This is the subject',
@@ -22,4 +22,12 @@ class MailTest(TestCase):
 		mailer.send()
 
 		assert len(mail.outbox) == 1
-	
+
+class EmailerViewTest(APITestCase):
+	def setUp(self):
+		self.url = '/api/v0/emailers/send'
+		self.status_code = 200
+
+	def test_send_mail(self):
+		response = self.client.get(self.url)
+		self.assertEqual(response.status_code, self.status_code)
