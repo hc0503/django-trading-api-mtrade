@@ -11,15 +11,16 @@ def sendEmail(request):
 	API endpoint that tests Emailer module with test SendGrid template_id (d-59254528bee54e53852235bc6f769a46).
 	"""
 	mail = Mail(
-		'no-reply@mtrade.mx',
-		['no-reply@mtrade.mx'],
-		'd-59254528bee54e53852235bc6f769a46',
-		{
-			'title': 'testTitle',
-			'name' : 'testName',
-		},
-		reply_to = 'no-reply@mtrade.mx',
+		'testSubject',
+		from_email = 'no-reply@mtrade.mx',
+		to = ['no-reply@mtrade.mx', 'admin@mtrade.mx'],
+		bcc = ['bcc@mtrade.mx'],
 	)
+	mail.template_id = 'd-59254528bee54e53852235bc6f769a46'
+	mail.dynamic_template_data = {
+		'title': 'testTitle',
+		'name': 'testName'
+	}
 	
 	try:
 		mail.send()
