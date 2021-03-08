@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from django.db import models
 
 from app_zero.models import *
+from mtrade.domain.market.order_group.models import OrderGroup
 
 from mtrade.settings import TIME_ZONE
 pd.options.display.max_columns = 500
@@ -118,11 +119,31 @@ def create_random_number_of_securities():
     return random.randint(0, 10000000)
 
 
-def select_random_fk_reference(Model: models.Model):
+def select_random_fk_reference(Model: models.Model, return_type='model_instance'):
     """
+    Description
+    -----
     Creates a reference to an instance of provided model
+
+    Arguments
+    ----
+    Model: 
+        a model class from which selection is to be performed
+    return_type: str
+        model_instance -> if return value is a models.Model instance
+        uuid -> if return value is a uuid.uuid4 instance
+
+
+
     """
-    return random.choice(Model.objects.all())
+    instance = random.choice(Model.objects.all())
+
+    if return_type == 'model_instance':
+        return instance
+    elif return_type == 'uuid':
+        return instance.id
+    else:
+        print('Provided return_type is incorrect')
 
 
 def select_random_model_choice(choices: List[Tuple], many=False):
@@ -165,7 +186,7 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
 
             num_created += 1
         except Exception as e:
-            logger.error(
+            print(
                 f'There was a problem while trying to create a {Model.__name__} instance -- {e.args}')
             traceback.print_exc()
 
@@ -745,7 +766,7 @@ def create_order_groups(n: int = 100):
         expiration = create_random_datetime(
             '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
         new_instance = Model(
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
             order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
             direction=select_random_model_choice(Model.DIRECTION_CHOICES),
@@ -758,15 +779,17 @@ def create_order_groups(n: int = 100):
             status=select_random_model_choice(Model.STATUS_CHOICES),
             submission=submission,
             expiration=expiration,
+            allocation_pct=str(random.random()),
             responded_by=select_random_model_choice(
                 Model.RESPONDED_BY_CHOICES),
             settlement_currency=select_random_model_choice(
                 Model.CURRENCY_CHOICES),
             requestor_type=select_random_model_choice(
                 Model.REQUESTOR_TYPE_CHOICES),
-            requestor=select_random_fk_reference(Institution),
+            requestor=select_random_fk_reference(
+                Institution, return_type='uuid'),
             resp_received=random.randint(0, 10),
-            trader=select_random_fk_reference(Trader)
+            trader=select_random_fk_reference(Trader, return_type='uuid')
         )
 
         return new_instance
@@ -806,7 +829,8 @@ def create_cob_orders(n: int = 100):
             discount_margin=create_random_dm(),
             yield_value=create_random_yield(),
             direction=select_random_model_choice(Model.DIRECTION_CHOICES),
-            order_group=select_random_fk_reference(OrderGroup)
+            order_group=select_random_fk_reference(
+                OrderGroup, return_type='uuid')
         )
         return new_instance
 
@@ -850,7 +874,8 @@ def create_cob_streams(n: int = 100):
         new_instance = Model(
             cob_order=select_random_fk_reference(CobOrder),
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            order_group=select_random_fk_reference(OrderGroup)
+            order_group=select_random_fk_reference(
+                OrderGroup, return_type='uuid')
         )
 
         return new_instance
@@ -883,7 +908,8 @@ def create_rfqs(n: int = 100):
             direction=select_random_model_choice(Model.DIRECTION_CHOICES),
             volume=create_random_number_of_securities(),
             settlement_currency=Model.MXN_CURRENCY,
-            order_group=select_random_fk_reference(OrderGroup)
+            order_group=select_random_fk_reference(
+                OrderGroup, return_type='uuid')
         )
         new_instance.full_clean()
         new_instance.save()
@@ -1029,7 +1055,8 @@ def create_cob_transactions(n: int = 100):
         price = create_random_price(return_type='number')
         dirty_price = price * (1 + random.random() * 0.1)
         volume = random.randint(1, 10000)
-        notional = volume * dirty_price
+        notional = volume * 100
+        cash_amount = volume * dirty_price
         vat = notional * 0.007
         yield_value = create_random_yield()
 
@@ -1050,7 +1077,8 @@ def create_cob_transactions(n: int = 100):
             fee_buyer='100',
             fee_seller='100',
             vat=str(vat),
-            total_cash=str(notional + vat),
+            cash_amount=str(cash_amount),
+            total_cash=str(cash_amount + vat),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,
@@ -1085,7 +1113,9 @@ def create_rfq_transactions(n: int = 100):
         price = create_random_price(return_type='number')
         dirty_price = price * (1 + random.random() * 0.1)
         volume = random.randint(1, 10000)
-        notional = volume * dirty_price
+        cash_amount = volume * dirty_price
+        notional = volume * 100
+
         vat = notional * 0.007
         yield_value = create_random_yield()
 
@@ -1106,7 +1136,8 @@ def create_rfq_transactions(n: int = 100):
             fee_buyer='100',
             fee_seller='100',
             vat=str(vat),
-            total_cash=str(notional + vat),
+            cash_amount=str(cash_amount),
+            total_cash=str(cash_amount + vat),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,

@@ -12,6 +12,7 @@ from lib.ddd.exceptions import VOValidationExcpetion
 
 # local imports
 
+
 @dataclass(frozen=True)
 class MarketID():
     """
@@ -19,6 +20,7 @@ class MarketID():
     """
     #value: uuid.UUID = field(init=False, default_factory=uuid.uuid4)
     value: uuid.UUID
+
 
 @dataclass(frozen=True)
 class ISIN():
@@ -40,7 +42,7 @@ class Market(custom_models.DatedModel):
     isin = models.CharField(max_length=24, unique=True)
     open = models.BooleanField()
 
-    def update_entity(self, isin:ISIN, is_open:bool):
+    def update_entity(self, isin: ISIN, is_open: bool):
         if isin is not None:
             self.isin = isin.value
         if is_open is not None:
@@ -52,10 +54,10 @@ class Market(custom_models.DatedModel):
 
 class MarketFactory():
     @staticmethod
-    def build_entity(market_id: MarketID, isin: ISIN, is_open:bool) -> Market:
-        return Market(id = market_id.value, isin = isin.value, open=is_open)
+    def build_entity(market_id: MarketID, isin: ISIN, is_open: bool) -> Market:
+        return Market(id=market_id.value, isin=isin.value, open=is_open)
 
     @classmethod
-    def build_entity_with_id(cls, isin: ISIN, is_open:bool) -> Market:
+    def build_entity_with_id(cls, isin: ISIN, is_open: bool) -> Market:
         market_id = MarketID(uuid.uuid4())
         return cls.build_entity(market_id, isin, is_open)
