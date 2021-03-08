@@ -117,6 +117,7 @@ class OrderGroup(custom_models.DatedModel):
     # TODO: when possible make sure trader makes reference to Trader
     # trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
     trader = models.UUIDField()
+    priority = models.DateTimeField()
 
     def update_entity(self):
         # TODO: implement this method (check MArket example)
