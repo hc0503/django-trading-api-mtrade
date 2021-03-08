@@ -90,6 +90,7 @@ class OrderGroup(custom_models.DatedModel):
     direction = models.CharField(max_length=150, choices=DIRECTION_CHOICES)
     volume = models.PositiveIntegerField()
     notional = models.DecimalField(max_digits=40, decimal_places=20)
+
     weighted_avg_price = models.DecimalField(
         max_digits=40, decimal_places=20, null=True)
     weighted_avg_yield = models.DecimalField(
@@ -119,9 +120,28 @@ class OrderGroup(custom_models.DatedModel):
     trader = models.UUIDField()
     priority = models.DateTimeField()
 
-    def update_entity(self):
-        # TODO: implement this method (check MArket example)
-        pass
+    def update_entity(self,
+                      weighted_avg_price: float = None,
+                      weighted_avg_yield: float = None,
+                      weighted_avg_spread: float = None,
+                      fx: float = None,
+                      status: str = None,
+                      allocation_pct: float = None,
+                      resp_received: float = None):
+        if weighted_avg_price is not None:
+            self.weighted_avg_price = weighted_avg_price
+        if weighted_avg_yield is not None:
+            self.weighted_avg_yield = weighted_avg_yield
+        if weighted_avg_spread is not None:
+            self.weighted_avg_spread = weighted_avg_spread
+        if fx is not None:
+            self.fx = fx
+        if status is not None:
+            self.status = status
+        if allocation_pct is not None:
+            self.allocation_pct = allocation_pct
+        if resp_received is not None:
+            self.resp_received = resp_received
 
     class Meta:
         ordering = ['id']

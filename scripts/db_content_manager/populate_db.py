@@ -127,7 +127,7 @@ def select_random_fk_reference(Model: models.Model, return_type='model_instance'
 
     Arguments
     ----
-    Model: 
+    Model:
         a model class from which selection is to be performed
     return_type: str
         model_instance -> if return value is a models.Model instance
@@ -197,7 +197,7 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
 """             MAIN MODEL INSTANCE GENERATORS     """
 
 
-def create_addresses(n: int = 100):
+def create_addresses(n: int = 5):
     """
     Arguments
     ----------
@@ -223,7 +223,7 @@ def create_addresses(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_files(n: int = 50):
+def create_files(n: int = 5):
     """
     Arguments
     ----------
@@ -244,7 +244,7 @@ def create_files(n: int = 50):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_user_settings(n: int = 200):
+def create_user_settings(n: int = 5):
     """
     Arguments
     ----------
@@ -301,7 +301,7 @@ def create_users(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_institution_managers(n: int = 20):
+def create_institution_managers(n: int = 5):
     """
     Arguments
     ----------
@@ -321,7 +321,7 @@ def create_institution_managers(n: int = 20):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_controllers(n: int = 20):
+def create_controllers(n: int = 5):
     """
     Arguments
     ----------
@@ -342,7 +342,7 @@ def create_controllers(n: int = 20):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_compliance_officers(n: int = 50):
+def create_compliance_officers(n: int = 5):
     """
     Arguments
     ----------
@@ -366,7 +366,7 @@ def create_compliance_officers(n: int = 50):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_institution_leads(n: int = 50):
+def create_institution_leads(n: int = 5):
     """
     Arguments
     ----------
@@ -441,7 +441,7 @@ def create_institutions():
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_traders(n: int = 100):
+def create_traders(n: int = 5):
     """
     Arguments
     ----------
@@ -465,7 +465,7 @@ def create_traders(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_contact_persons(n: int = 100):
+def create_contact_persons(n: int = 5):
     """
     Arguments
     ----------
@@ -489,7 +489,7 @@ def create_contact_persons(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_leads(n: int = 100):
+def create_leads(n: int = 5):
     """
     Arguments
     ----------
@@ -513,7 +513,7 @@ def create_leads(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_concierges(n: int = 100):
+def create_concierges(n: int = 5):
     """
     Arguments
     ----------
@@ -694,7 +694,7 @@ def create_securities():
     print(f'Created {num_created} securities')
 
 
-def create_settlement_instructions(n: int = 100):
+def create_settlement_instructions(n: int = 5):
     """
     Arguments
     ----------
@@ -723,7 +723,7 @@ def create_settlement_instructions(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_alarms(n: int = 100):
+def create_alarms(n: int = 5):
     """
     Arguments
     ----------
@@ -746,7 +746,7 @@ def create_alarms(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_order_groups(n: int = 100):
+def create_order_groups(n: int = 5, get_test_data: bool = False):
     """
     Arguments
     ----------
@@ -755,7 +755,7 @@ def create_order_groups(n: int = 100):
     """
     Model = OrderGroup
 
-    def create_new_instance():
+    def create_new_instance(get_test_data: bool = False):
         volume = create_random_number_of_securities()
         price = create_random_price(return_type='number')
         yield_value = create_random_yield()
@@ -765,8 +765,9 @@ def create_order_groups(n: int = 100):
             '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
         expiration = create_random_datetime(
             '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
-        new_instance = Model(
-            security=select_random_fk_reference(Security, return_type='uuid'),
+        data = dict(
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
             order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
             direction=select_random_model_choice(Model.DIRECTION_CHOICES),
@@ -789,16 +790,27 @@ def create_order_groups(n: int = 100):
             requestor=select_random_fk_reference(
                 Institution, return_type='uuid'),
             resp_received=random.randint(0, 10),
-            trader=select_random_fk_reference(Trader, return_type='uuid')
+            trader=select_random_fk_reference(Trader, return_type='uuid'),
+            priority=create_random_datetime(
+                '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
         )
 
+        if get_test_data:
+            print('it is true')
+            return data
+
+        new_instance = Model(**data)
+
         return new_instance
+
+    if get_test_data == True:
+        return create_new_instance(get_test_data)
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_orders(n: int = 100):
+def create_cob_orders(n: int = 5):
     """
     Arguments
     ----------
@@ -838,7 +850,7 @@ def create_cob_orders(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_auto_refreshers(n: int = 100):
+def create_cob_auto_refreshers(n: int = 5):
     """
     Arguments
     ----------
@@ -860,7 +872,7 @@ def create_cob_auto_refreshers(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_streams(n: int = 100):
+def create_cob_streams(n: int = 5):
     """
     Arguments
     ----------
@@ -884,7 +896,7 @@ def create_cob_streams(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_rfqs(n: int = 100):
+def create_rfqs(n: int = 5):
     """
     Arguments
     ----------
@@ -922,7 +934,7 @@ def create_rfqs(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
-def create_rfq_responses(n: int = 100):
+def create_rfq_responses(n: int = 5):
     """
     Arguments
     ----------
@@ -971,7 +983,7 @@ def create_rfq_responses(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_rfq_auto_responders(n: int = 100):
+def create_rfq_auto_responders(n: int = 5):
     """
     Arguments
     ----------
@@ -1003,7 +1015,9 @@ def create_rfq_auto_responders(n: int = 100):
             bid_spread=str(ask_spread - random.random()*0.002),
             bid_fx=str(ask_fx),
             bid_notional=str(ask_notional),
-            status=select_random_model_choice(Model.STATUS_CHOICES)
+            status=select_random_model_choice(Model.STATUS_CHOICES),
+            priority=create_random_datetime(
+                '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
         )
 
         new_instance.full_clean()
@@ -1017,7 +1031,7 @@ def create_rfq_auto_responders(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
-def create_rfq_locks(n: int = 100):
+def create_rfq_locks(n: int = 5):
     """
     Arguments
     ----------
@@ -1040,7 +1054,7 @@ def create_rfq_locks(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_transactions(n: int = 100):
+def create_cob_transactions(n: int = 5):
     """
     Arguments
     ----------
@@ -1083,9 +1097,9 @@ def create_cob_transactions(n: int = 100):
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,
 
-
             spread=create_random_spread(),
-            buy_order=random.choice(CobOrder.objects.filter(direction='buy')),
+            buy_order=random.choice(
+                CobOrder.objects.filter(direction='buy')),
             sell_order=random.choice(
                 CobOrder.objects.filter(direction='sell')),
             created_at=execution_datetime,
@@ -1098,7 +1112,7 @@ def create_cob_transactions(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_rfq_transactions(n: int = 100):
+def create_rfq_transactions(n: int = 5):
     """
     Arguments
     ----------
@@ -1153,7 +1167,7 @@ def create_rfq_transactions(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_watchlists(n: int = 100):
+def create_watchlists(n: int = 5):
     """
     Arguments
     ----------
@@ -1180,7 +1194,7 @@ def create_watchlists(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
-def create_notifications(n: int = 300):
+def create_notifications(n: int = 5):
     """
     Arguments
     ----------
@@ -1222,36 +1236,36 @@ def run(interactive: bool = True):
 
         try:
             print('CREATING CORE MODELS')
-            create_addresses()
-            create_files()
-            create_user_settings()
-            create_users()
-            create_institution_managers()
-            create_controllers()
+            create_addresses(100)
+            create_files(50)
+            create_user_settings(50)
+            create_users(10)
+            create_institution_managers(10)
+            create_controllers(10)
 
-            create_compliance_officers()
-            create_institution_leads()
+            create_compliance_officers(10)
+            create_institution_leads(10)
             create_institutions()
-            create_traders()
-            create_contact_persons()
-            create_leads()
-            create_concierges()
+            create_traders(10)
+            create_contact_persons(10)
+            create_leads(10)
+            create_concierges(10)
             create_security_issuers()
             create_securities()
-            create_settlement_instructions()
-            create_alarms()
-            create_order_groups()
-            create_cob_orders()
-            create_cob_auto_refreshers()
-            create_cob_streams()
-            create_rfqs()
-            create_rfq_responses()
-            create_rfq_auto_responders()
-            create_rfq_locks()
-            create_cob_transactions()
-            create_rfq_transactions()
-            create_watchlists()
-            create_notifications()
+            create_settlement_instructions(10)
+            create_alarms(10)
+            create_order_groups(20)
+            create_cob_orders(20)
+            create_cob_auto_refreshers(20)
+            create_cob_streams(20)
+            create_rfqs(20)
+            create_rfq_responses(20)
+            create_rfq_auto_responders(20)
+            create_rfq_locks(20)
+            create_cob_transactions(20)
+            create_rfq_transactions(20)
+            create_watchlists(20)
+            create_notifications(20)
             break
         except Exception as e:
             logger.error(f'ERR! -- {e}')
