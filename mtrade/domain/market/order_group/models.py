@@ -81,7 +81,10 @@ class OrderGroup(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-
+    # TODO: when possible, make sure security makes reference to Security
+    # security = models.ForeignKey(
+    #     Security, on_delete=models.SET_NULL, null=True)
+    security = models.UUIDField()
     orderbook = models.CharField(max_length=150, choices=ORDERBOOK_CHOICES)
     order_type = models.CharField(max_length=150, choices=ORDER_TYPE_CHOICES)
     direction = models.CharField(max_length=150, choices=DIRECTION_CHOICES)
@@ -95,6 +98,7 @@ class OrderGroup(custom_models.DatedModel):
         max_digits=40, decimal_places=20, null=True)
     fx = models.DecimalField(max_digits=40, decimal_places=20)
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
+    allocation_pct = models.DecimalField(max_digits=40, decimal_places=20)
     submission = models.DateTimeField()
     expiration = models.DateTimeField()
     responded_by = models.CharField(
@@ -113,10 +117,6 @@ class OrderGroup(custom_models.DatedModel):
     # TODO: when possible make sure trader makes reference to Trader
     # trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
     trader = models.UUIDField()
-    # TODO: when possible, make sure security makes reference to Security
-    # security = models.ForeignKey(
-    #     Security, on_delete=models.SET_NULL, null=True)
-    security = models.UUIDField()
 
     def update_entity(self):
         # TODO: implement this method (check MArket example)

@@ -779,6 +779,7 @@ def create_order_groups(n: int = 100):
             status=select_random_model_choice(Model.STATUS_CHOICES),
             submission=submission,
             expiration=expiration,
+            allocation_pct=str(random.random()),
             responded_by=select_random_model_choice(
                 Model.RESPONDED_BY_CHOICES),
             settlement_currency=select_random_model_choice(
@@ -1054,7 +1055,8 @@ def create_cob_transactions(n: int = 100):
         price = create_random_price(return_type='number')
         dirty_price = price * (1 + random.random() * 0.1)
         volume = random.randint(1, 10000)
-        notional = volume * dirty_price
+        notional = volume * 100
+        cash_amount = volume * dirty_price
         vat = notional * 0.007
         yield_value = create_random_yield()
 
@@ -1075,7 +1077,8 @@ def create_cob_transactions(n: int = 100):
             fee_buyer='100',
             fee_seller='100',
             vat=str(vat),
-            total_cash=str(notional + vat),
+            cash_amount=str(cash_amount),
+            total_cash=str(cash_amount + vat),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,
@@ -1110,7 +1113,9 @@ def create_rfq_transactions(n: int = 100):
         price = create_random_price(return_type='number')
         dirty_price = price * (1 + random.random() * 0.1)
         volume = random.randint(1, 10000)
-        notional = volume * dirty_price
+        cash_amount = volume * dirty_price
+        notional = volume * 100
+
         vat = notional * 0.007
         yield_value = create_random_yield()
 
@@ -1131,7 +1136,8 @@ def create_rfq_transactions(n: int = 100):
             fee_buyer='100',
             fee_seller='100',
             vat=str(vat),
-            total_cash=str(notional + vat),
+            cash_amount=str(cash_amount),
+            total_cash=str(cash_amount + vat),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,

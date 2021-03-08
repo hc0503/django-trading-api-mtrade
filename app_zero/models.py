@@ -877,6 +877,9 @@ class CobTransaction(models.Model):
     fee_buyer = models.DecimalField(max_digits=40, decimal_places=20)
     fee_seller = models.DecimalField(max_digits=40, decimal_places=20)
     vat = models.DecimalField(max_digits=40, decimal_places=20)
+    # cash_amount refers to volume * price
+    cash_amount = models.DecimalField(max_digits=40, decimal_places=20)
+    # total_cash refers to the total amount that will be paid by user (includes fees and vat)
     total_cash = models.DecimalField(max_digits=40, decimal_places=20)
     settlement_date = models.DateTimeField()
     settlement_currency = models.CharField(
@@ -929,6 +932,9 @@ class RfqTransaction(models.Model):
     fee_buyer = models.DecimalField(max_digits=40, decimal_places=20)
     fee_seller = models.DecimalField(max_digits=40, decimal_places=20)
     vat = models.DecimalField(max_digits=40, decimal_places=20)
+    # cash_amount refers to volume * price
+    cash_amount = models.DecimalField(max_digits=40, decimal_places=20)
+    # total_cash refers to the total amount that will be paid by user (includes fees and vat)
     total_cash = models.DecimalField(max_digits=40, decimal_places=20)
     settlement_date = models.DateTimeField()
     settlement_currency = models.CharField(
