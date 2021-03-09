@@ -16,10 +16,13 @@ class OrderGroupAppServices():
 
     @staticmethod
     def create_order_group_from_dict(user, data: dict) -> OrderGroup:
-        # TODO: implement this method. Check market example
-        pass
+        # TODO: Check user or trader has permission to perform this action
+        order_group = OrderGroupFactory.build_entity(**data)
+        order_group.save()
 
     @staticmethod
     def update_order_group_from_dict(user, instance: OrderGroup, data: dict) -> OrderGroup:
-        # TODO: implement this method. Check market example
-        pass
+        # TODO: Check user or trader has permissions on this object
+        instance.update_entity(**data)
+        instance.save()
+        return instance
