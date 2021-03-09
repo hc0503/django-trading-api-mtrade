@@ -25,6 +25,15 @@ pd.options.display.max_columns = 500
 tz_aware_datetime_iso_format = "%Y-%m-%dT%H:%M:%S%z"
 
 
+def create_data_template() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = ''
+    data = dict()
+    return data
+
+
 def random_date(start, end):
     """
     Returns a random datetime between two datetime objects. Precision is in seconds
@@ -199,8 +208,28 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
 """             MAIN MODEL INSTANCE GENERATORS     """
 
 
+def create_adress_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Address
+
+    random_str = create_random_string()
+    data = dict(
+        address=f"Street {random_str}",
+        country=f"Country {random_str}",
+        state=f"State {random_str}",
+        municipality=f"Municipality {random_str}",
+        zip_code=create_random_string(n=6, only_numbers=True)
+    )
+
+    return data
+
+
 def create_addresses(n: int = 5):
     """
+    Creates sprecified instances 
+
     Arguments
     ----------
     n : int
@@ -209,20 +238,28 @@ def create_addresses(n: int = 5):
     Model = Address
 
     def create_new_instance():
-        random_str = create_random_string()
 
-        new_instance = Model(
-            address=f"Street {random_str}",
-            country=f"Country {random_str}",
-            state=f"State {random_str}",
-            municipality=f"Municipality {random_str}",
-            zip_code=create_random_string(n=6, only_numbers=True)
-        )
+        data = create_adress_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_file_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = File
+
+    random_str = create_random_string()
+    data = dict(
+        location=f"https://www.files.com/{random_str}"
+    )
+
+    return data
 
 
 def create_files(n: int = 5):
@@ -235,15 +272,30 @@ def create_files(n: int = 5):
     Model = File
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            location=f"https://www.files.com/{random_str}"
-        )
+        data = create_file_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_user_settings_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = UserSettings
+
+    random_str = create_random_string()
+    data = dict(
+        timezone='Test time zone',
+        date_format='Test date format',
+        language='Test language',
+        theme_preferences={'key': 'this is a theme preference'}
+    )
+
+    return data
 
 
 def create_user_settings(n: int = 5):
@@ -256,18 +308,40 @@ def create_user_settings(n: int = 5):
     Model = UserSettings
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            timezone='Test time zone',
-            date_format='Test date format',
-            language='Test language',
-            theme_preferences={'key': 'this is a theme preference'}
-        )
+        data = create_user_settings_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_user_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = User
+
+    random_str = create_random_string()
+    data = dict(
+        first_name=f'Name {random_str}',
+        second_name=f'Second Name {random_str}',
+        last_name=f'Last Name {random_str}',
+        password=make_password(f'password'),
+        email=f"email_{random_str}" + "@mail.com",
+        image=select_random_fk_reference(File),
+        telephone='55555555',
+        cell_phone='55555555',
+        rfc=f'RFC {random_str}',
+        curp=f'CURP {random_str}',
+        address=select_random_fk_reference(Address),
+        status=select_random_model_choice(Model.STATUS_CHOICES),
+        mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
+        settings=select_random_fk_reference(UserSettings)
+    )
+
+    return data
 
 
 def create_users(n: int = 5):
@@ -281,26 +355,21 @@ def create_users(n: int = 5):
 
     def create_new_instance():
         random_str = create_random_string()
-        new_instance = Model(
-            first_name=f'Name {random_str}',
-            second_name=f'Second Name {random_str}',
-            last_name=f'Last Name {random_str}',
-            password=make_password(f'password'),
-            email=f"email_{random_str}" + "@mail.com",
-            image=select_random_fk_reference(File),
-            telephone='55555555',
-            cell_phone='55555555',
-            rfc=f'RFC {random_str}',
-            curp=f'CURP {random_str}',
-            address=select_random_fk_reference(Address),
-            status=select_random_model_choice(Model.STATUS_CHOICES),
-            mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
-            settings=select_random_fk_reference(UserSettings)
-        )
+        data = create_user_data()
+        new_instance = Model(**data)
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_instituion_manager_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = InstitutionManager
+    data = dict(user=select_random_fk_reference(User))
+    return data
 
 
 def create_institution_managers(n: int = 5):
@@ -313,14 +382,22 @@ def create_institution_managers(n: int = 5):
     Model = InstitutionManager
 
     def create_new_instance():
-        new_instance = Model(
-            user=select_random_fk_reference(User)
-        )
+        data = create_instituion_manager_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_controller_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Controller
+    data = dict(user=select_random_fk_reference(User))
+    return data
 
 
 def create_controllers(n: int = 5):
@@ -333,15 +410,26 @@ def create_controllers(n: int = 5):
     Model = Controller
 
     def create_new_instance():
-
-        new_instance = Model(
-            user=select_random_fk_reference(User)
-        )
+        data = create_controller_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_compliance_officer_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = ComplianceOfficer
+    random_str = create_random_string()
+    data = dict(first_name=f"Name {random_str}",
+                last_name=f"Last Name {random_str}",
+                telephone=f"{create_random_string(n=10, only_numbers=True)}",
+                email=f"{random_str}@mail.com")
+    return data
 
 
 def create_compliance_officers(n: int = 5):
@@ -354,18 +442,30 @@ def create_compliance_officers(n: int = 5):
     Model = ComplianceOfficer
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            first_name=f"Name {random_str}",
-            last_name=f"Last Name {random_str}",
-            telephone=f"{create_random_string(n=10, only_numbers=True)}",
-            email=f"{random_str}@mail.com"
-        )
+        data = create_compliance_officer_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_institution_leads_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = InstitutionLead
+    random_str = create_random_string()
+    data = dict(contract=select_random_fk_reference(File),
+                rfc=f"RFC {random_str}",
+                logo=select_random_fk_reference(File),
+                contact_user=select_random_fk_reference(User),
+                status=select_random_model_choice(Model.STATUS_CHOICES),
+                compliance_officer=select_random_fk_reference(
+                    ComplianceOfficer),
+                address=select_random_fk_reference(Address))
+    return data
 
 
 def create_institution_leads(n: int = 5):
@@ -378,21 +478,21 @@ def create_institution_leads(n: int = 5):
     Model = InstitutionLead
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            contract=select_random_fk_reference(File),
-            rfc=f"RFC {random_str}",
-            logo=select_random_fk_reference(File),
-            contact_user=select_random_fk_reference(User),
-            status=select_random_model_choice(Model.STATUS_CHOICES),
-            compliance_officer=select_random_fk_reference(ComplianceOfficer),
-            address=select_random_fk_reference(Address)
-        )
+
+        data = create_institution_leads_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_institution_data():
+    """
+    No test data here yet.
+    """
+    pass
 
 
 def create_institutions():
@@ -443,6 +543,19 @@ def create_institutions():
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
+def create_trader_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Trader
+    random_str = create_random_string()
+    data = dict(user=select_random_fk_reference(User),
+                license_type=select_random_model_choice(
+                Model.LICENSE_CHOICES, many=True),
+                institution=select_random_fk_reference(Institution))
+    return data
+
+
 def create_traders(n: int = 5):
     """
     Arguments
@@ -453,18 +566,26 @@ def create_traders(n: int = 5):
     Model = Trader
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            user=select_random_fk_reference(User),
-            license_type=select_random_model_choice(
-                Model.LICENSE_CHOICES, many=True),
-            institution=select_random_fk_reference(Institution)
-        )
+        data = create_trader_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_contact_person_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = ContactPerson
+    random_str = create_random_string()
+    data = dict(first_name=f"Name {random_str}",
+                last_name=f"Last Name {random_str}",
+                telephone=f"{create_random_string(n=10, only_numbers=True)}",
+                email=f"{random_str}@mail.com")
+    return data
 
 
 def create_contact_persons(n: int = 5):
@@ -477,18 +598,26 @@ def create_contact_persons(n: int = 5):
     Model = ContactPerson
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            first_name=f"Name {random_str}",
-            last_name=f"Last Name {random_str}",
-            telephone=f"{create_random_string(n=10, only_numbers=True)}",
-            email=f"{random_str}@mail.com"
-        )
+        data = create_contact_person_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_lead_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Lead
+    random_str = create_random_string()
+    data = dict(institution_lead=select_random_fk_reference(InstitutionLead),
+                institution=select_random_fk_reference(Institution),
+                contact_person=select_random_fk_reference(ContactPerson),
+                comments='This is a comment.')
+    return data
 
 
 def create_leads(n: int = 5):
@@ -501,13 +630,8 @@ def create_leads(n: int = 5):
     Model = Lead
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            institution_lead=select_random_fk_reference(InstitutionLead),
-            institution=select_random_fk_reference(Institution),
-            contact_person=select_random_fk_reference(ContactPerson),
-            comments='This is a comment.'
-        )
+        data = create_lead_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -748,7 +872,7 @@ def create_alarms(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_order_groups_test_data() -> dict:
+def create_order_group_data() -> dict:
     """
     Returns a dict to be used in instance creation or for testing purposes
     """
@@ -808,7 +932,7 @@ def create_order_groups(n: int = 5):
     Model = OrderGroup
 
     def create_new_instance():
-        data = create_order_groups_test_data()
+        data = create_order_group_data()
         new_instance = Model(**data)
         return new_instance
 

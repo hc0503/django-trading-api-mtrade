@@ -45,7 +45,7 @@ class OrderGroupAppServicesTests(TestCase):
         self.assertEqual(type(order_groups), QuerySet)
 
     def test_create_order_group(self):
-        data = pdb.create_order_groups(get_test_data=True)
+        data = pdb.create_order_group_data()
         order_group = ogas.create_order_group_from_dict(None, data)
         self.assertEqual(type(order_group), OrderGroup)
 
@@ -54,13 +54,13 @@ class OrderGroupAppServicesTests(TestCase):
         self.assertEqual(type(stored_order_group), OrderGroup)
 
     def test_update_order_group(self):
-        data = pdb.create_order_groups(get_test_data=True)
+        data = pdb.create_order_group_data()
         order_group = ogas.create_order_group_from_dict(None, data)
 
         pre_update_created_at = order_group.created_at
         pre_update_modified_at = order_group.modified_at
 
-        updated_data = pdb.create_order_groups(get_test_data=True)
+        updated_data = pdb.create_order_group_data()
 
         ogas.update_order_group_from_dict(None, order_group, updated_data)
 
