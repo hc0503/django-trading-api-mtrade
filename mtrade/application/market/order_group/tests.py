@@ -45,8 +45,35 @@ class OrderGroupAppServicesTests(TestCase):
         self.assertEqual(type(order_groups), QuerySet)
 
     def test_create_order_group(self):
+        data = pdb.create_order_groups(get_test_data=True)
+        order_group = ogas.create_order_group_from_dict(None, data)
+        self.assertEqual(type(order_group), OrderGroup)
 
-        pass
+        # Test order group was stored
+        stored_order_group = ogs.get_order_group_repo().get(id=order_group.id)
+        self.assertEqual(type(stored_order_group), OrderGroup)
 
-    def test_update_market(self):
-        pass
+    def test_update_order_group(self):
+        data = pdb.create_order_groups(get_test_data=True)
+        order_group = ogas.create_order_group_from_dict(None, data)
+
+        pre_update_created_at = order_group.created_at
+        pre_update_modified_at = order_group.modified_at
+
+        updated_data = pdb.create_order_groups(get_test_data=True)
+
+        ogas.update_order_group_from_dict(None, order_group, updated_data)
+
+        order_group.refresh_from_db()
+        self.assertEqual(order_group.resp_received,
+                         updated_data['resp_received'])
+        self.assertEqual(order_group.weighted_avg_price,
+                         updated_data['weighted_avg_price'])
+        self.assertEqual(order_group.weighted_avg_yield,
+                         updated_data['weighted_avg_yield'])
+        self.assertEqual(order_group.status, updated_data['status'])
+        self.assertEqual(order_group.allocation_pct,
+                         updated_data['allocation_pct'])
+
+        self.assertEqual(order_group.created_at, pre_update_created_at)
+        self.assertNotEqual(order_group.modified_at, pre_update_modified_at)

@@ -11,6 +11,7 @@ from mtrade.domain.market.services import MarketServices as ms
 # local imports
 from .services import MarketAppServices as mas
 
+
 class MarketAppServicesTests(TestCase):
 
     def test_list_markets(self):
@@ -19,8 +20,8 @@ class MarketAppServicesTests(TestCase):
 
     def test_create_market(self):
         data = {
-            "isin":"123456789012",
-            "open":True
+            "isin": "123456789012",
+            "open": True
         }
         mkt = mas.create_market_from_dict(None, data)
         self.assertEqual(type(mkt), Market)
@@ -31,8 +32,8 @@ class MarketAppServicesTests(TestCase):
 
     def test_update_market(self):
         data = {
-            "isin":"123456789012",
-            "open":True
+            "isin": "123456789012",
+            "open": True
         }
         mkt = mas.create_market_from_dict(None, data)
 
@@ -40,8 +41,8 @@ class MarketAppServicesTests(TestCase):
         pre_update_modified_at = mkt.modified_at
 
         updated_data = {
-            "isin":"123456789012",
-            "open":False
+            "isin": "123456789012",
+            "open": False
         }
 
         mas.update_market_from_dict(None, mkt, updated_data)

@@ -19,9 +19,11 @@ class OrderGroupAppServices():
         # TODO: Check user or trader has permission to perform this action
         order_group = OrderGroupFactory.build_entity(**data)
         order_group.save()
+        return order_group
 
     @staticmethod
     def update_order_group_from_dict(user, instance: OrderGroup, data: dict) -> OrderGroup:
+        # Only certain fields may be updated
         # TODO: Check user or trader has permissions on this object
         instance.update_entity(**data)
         instance.save()

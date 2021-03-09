@@ -127,7 +127,8 @@ class OrderGroup(custom_models.DatedModel):
                       fx: float = None,
                       status: str = None,
                       allocation_pct: float = None,
-                      resp_received: float = None):
+                      resp_received: float = None, **kwargs):
+        """Update entity. Only the following fields may be updated"""
         if weighted_avg_price is not None:
             self.weighted_avg_price = weighted_avg_price
         if weighted_avg_yield is not None:

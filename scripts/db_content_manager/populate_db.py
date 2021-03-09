@@ -5,6 +5,8 @@ import traceback
 import pandas as pd
 import pytz
 
+from decimal import Decimal
+
 from typing import Tuple, List, Callable
 from dateutil import tz
 
@@ -751,11 +753,18 @@ def create_order_groups(n: int = 5, get_test_data: bool = False):
     Arguments
     ----------
     n : int
-        Number of instances to be created
+        Number of instances to be created. Relevant only if get_test_data = False
+
+    get_test_data: bool
+        If true, does not create instances. Only returns a dict that may be used to create a new test instance
+
+    Returns
+    -----
+    if get_test_data = True: returns a dict that may be used to create a new test instance
     """
     Model = OrderGroup
 
-    def create_new_instance(get_test_data: bool = False):
+    def create_test_data():
         volume = create_random_number_of_securities()
         price = create_random_price(return_type='number')
         yield_value = create_random_yield()
@@ -773,14 +782,14 @@ def create_order_groups(n: int = 5, get_test_data: bool = False):
             direction=select_random_model_choice(Model.DIRECTION_CHOICES),
             volume=volume,
             notional=notional,
-            weighted_avg_price=str(price),
-            weighted_avg_yield=yield_value,
-            weighted_avg_spread=spread,
-            fx=str(random.random()*10 + 15),
+            weighted_avg_price=Decimal(str(price)),
+            weighted_avg_yield=Decimal(str(yield_value)),
+            weighted_avg_spread=Decimal(spread),
+            fx=Decimal(str(random.random()*10 + 15)),
             status=select_random_model_choice(Model.STATUS_CHOICES),
             submission=submission,
             expiration=expiration,
-            allocation_pct=str(random.random()),
+            allocation_pct=Decimal(str(random.random())),
             responded_by=select_random_model_choice(
                 Model.RESPONDED_BY_CHOICES),
             settlement_currency=select_random_model_choice(
@@ -795,16 +804,15 @@ def create_order_groups(n: int = 5, get_test_data: bool = False):
                 '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
         )
 
-        if get_test_data:
-            print('it is true')
-            return data
+        return data
 
+    def create_new_instance(get_test_data: bool = False):
+        data = create_test_data()
         new_instance = Model(**data)
-
         return new_instance
 
-    if get_test_data == True:
-        return create_new_instance(get_test_data)
+    if get_test_data:
+        return create_test_data()
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
@@ -834,8 +842,8 @@ def create_cob_orders(n: int = 5):
                 '20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
             volume=volume,
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            dirty_price=str(dirty_price),
-            notional=str(float(volume) * float(dirty_price)),
+            dirty_price=Decimal(str(dirty_price)),
+            notional=Decimal(str(float(volume) * float(dirty_price))),
             price=price,
             spread=create_random_spread(),
             discount_margin=create_random_dm(),
@@ -960,18 +968,18 @@ def create_rfq_responses(n: int = 5):
             submission=submission_datetime,
             rfq=select_random_fk_reference(Rfq),
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            bid_price=str(bid_price),
-            bid_yield=str(_yield),
-            bid_spread=str(spread),
-            bid_notional=str(bid_price*bid_volume),
-            bid_discount_margin=str(dm),
+            bid_price=Decimal(str(bid_price)),
+            bid_yield=Decimal(str(_yield)),
+            bid_spread=Decimal(str(spread)),
+            bid_notional=Decimal(str(bid_price*bid_volume)),
+            bid_discount_margin=Decimal(str(dm)),
             bid_volume=bid_volume,
             bid_fx='1',
-            ask_price=str(ask_price),
-            ask_yield=str(_yield + random.random()*0.01),
-            ask_spread=str(spread + random.random()*30),
-            ask_notional=str(ask_price*ask_volume),
-            ask_discount_margin=str(dm),
+            ask_price=Decimal(str(ask_price)),
+            ask_yield=Decimal(str(_yield + random.random()*0.01)),
+            ask_spread=Decimal(str(spread + random.random()*30)),
+            ask_notional=Decimal(str(ask_price*ask_volume)),
+            ask_discount_margin=Decimal(str(dm)),
             ask_fx='1',
             ask_volume=ask_volume,
             autoresponded=random.choice([False, True])
@@ -1007,14 +1015,14 @@ def create_rfq_auto_responders(n: int = 5):
             max_volume=min_volume + random.randint(100, 1000000),
             public=random.choice([False, True]),
             settlement_currency=Model.MXN_CURRENCY,
-            ask_price=str(ask_price),
-            ask_spread=str(ask_spread),
-            ask_fx=str(ask_fx),
-            ask_notional=str(ask_notional),
-            bid_price=str(ask_price+random.random()),
-            bid_spread=str(ask_spread - random.random()*0.002),
-            bid_fx=str(ask_fx),
-            bid_notional=str(ask_notional),
+            ask_price=Decimal(str(ask_price)),
+            ask_spread=Decimal(str(ask_spread)),
+            ask_fx=Decimal(str(ask_fx)),
+            ask_notional=Decimal(str(ask_notional)),
+            bid_price=Decimal(str(ask_price+random.random())),
+            bid_spread=Decimal(str(ask_spread - random.random()*0.002)),
+            bid_fx=Decimal(str(ask_fx)),
+            bid_notional=Decimal(str(ask_notional)),
             status=select_random_model_choice(Model.STATUS_CHOICES),
             priority=create_random_datetime(
                 '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
@@ -1078,21 +1086,21 @@ def create_cob_transactions(n: int = 5):
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
             security=select_random_fk_reference(Security),
-            volume=str(volume),
-            notional=str(notional),
+            volume=Decimal(str(volume)),
+            notional=Decimal(str(notional)),
             accrued_interest='0.002',
-            price=str(price),
-            all_in_price=str(price),
+            price=Decimal(str(price)),
+            all_in_price=Decimal(str(price)),
             all_in_yield=yield_value,
             discount_margin=create_random_dm(),
             yield_value=yield_value,
-            dirty_price=str(dirty_price),
+            dirty_price=Decimal(str(dirty_price)),
             status=select_random_model_choice(Model.STATUS_CHOICES),
             fee_buyer='100',
             fee_seller='100',
-            vat=str(vat),
-            cash_amount=str(cash_amount),
-            total_cash=str(cash_amount + vat),
+            vat=Decimal(str(vat)),
+            cash_amount=Decimal(str(cash_amount)),
+            total_cash=Decimal(str(cash_amount + vat)),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,
@@ -1137,21 +1145,21 @@ def create_rfq_transactions(n: int = 5):
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
             security=select_random_fk_reference(Security),
-            volume=str(volume),
-            notional=str(notional),
+            volume=Decimal((volume)),
+            notional=Decimal(str(notional)),
             accrued_interest='0.002',
-            price=str(price),
-            all_in_price=str(price),
+            price=Decimal(str(price)),
+            all_in_price=Decimal(str(price)),
             all_in_yield=yield_value,
             discount_margin=create_random_dm(),
             yield_value=yield_value,
-            dirty_price=str(dirty_price),
+            dirty_price=Decimal(str(dirty_price)),
             status=select_random_model_choice(Model.STATUS_CHOICES),
             fee_buyer='100',
             fee_seller='100',
-            vat=str(vat),
-            cash_amount=str(cash_amount),
-            total_cash=str(cash_amount + vat),
+            vat=Decimal(str(vat)),
+            cash_amount=Decimal(str(cash_amount)),
+            total_cash=Decimal(str(cash_amount + vat)),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,
