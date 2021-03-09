@@ -17,6 +17,7 @@ ujson = "*"
 logging-utilities = "*"
 django-structlog = "*"
 django-filter = "*"
+django-sendgrid-v5 = "*"
 
 [dev-packages]
 autopep8 = "*"
