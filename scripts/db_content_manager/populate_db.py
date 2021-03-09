@@ -748,71 +748,69 @@ def create_alarms(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_order_groups(n: int = 5, get_test_data: bool = False):
+def create_order_groups_test_data() -> dict:
     """
-    Arguments
-    ----------
-    n : int
-        Number of instances to be created. Relevant only if get_test_data = False
-
-    get_test_data: bool
-        If true, does not create instances. Only returns a dict that may be used to create a new test instance
-
-    Returns
-    -----
-    if get_test_data = True: returns a dict that may be used to create a new test instance
+    Returns a dict to be used in instance creation or for testing purposes
     """
     Model = OrderGroup
 
-    def create_test_data():
-        volume = create_random_number_of_securities()
-        price = create_random_price(return_type='number')
-        yield_value = create_random_yield()
-        notional = str(volume * price)
-        spread = create_random_spread()
-        submission = create_random_datetime(
-            '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
-        expiration = create_random_datetime(
-            '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
-        data = dict(
-            security=select_random_fk_reference(
-                Security, return_type='uuid'),
-            orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
-            order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
-            direction=select_random_model_choice(Model.DIRECTION_CHOICES),
-            volume=volume,
-            notional=notional,
-            weighted_avg_price=Decimal(str(price)),
-            weighted_avg_yield=Decimal(str(yield_value)),
-            weighted_avg_spread=Decimal(spread),
-            fx=Decimal(str(random.random()*10 + 15)),
-            status=select_random_model_choice(Model.STATUS_CHOICES),
-            submission=submission,
-            expiration=expiration,
-            allocation_pct=Decimal(str(random.random())),
-            responded_by=select_random_model_choice(
-                Model.RESPONDED_BY_CHOICES),
-            settlement_currency=select_random_model_choice(
-                Model.CURRENCY_CHOICES),
-            requestor_type=select_random_model_choice(
-                Model.REQUESTOR_TYPE_CHOICES),
-            requestor=select_random_fk_reference(
-                Institution, return_type='uuid'),
-            resp_received=random.randint(0, 10),
-            trader=select_random_fk_reference(Trader, return_type='uuid'),
-            priority=create_random_datetime(
-                '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
-        )
+    volume = create_random_number_of_securities()
+    price = create_random_price(return_type='number')
+    yield_value = create_random_yield()
+    notional = str(volume * price)
+    spread = create_random_spread()
+    submission = create_random_datetime(
+        '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
+    expiration = create_random_datetime(
+        '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
+    data = dict(
+        security=select_random_fk_reference(
+            Security, return_type='uuid'),
+        orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
+        order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
+        direction=select_random_model_choice(Model.DIRECTION_CHOICES),
+        volume=volume,
+        notional=notional,
+        weighted_avg_price=Decimal(str(price)),
+        weighted_avg_yield=Decimal(str(yield_value)),
+        weighted_avg_spread=Decimal(spread),
+        fx=Decimal(str(random.random()*10 + 15)),
+        status=select_random_model_choice(Model.STATUS_CHOICES),
+        submission=submission,
+        expiration=expiration,
+        allocation_pct=Decimal(str(random.random())),
+        responded_by=select_random_model_choice(
+            Model.RESPONDED_BY_CHOICES),
+        settlement_currency=select_random_model_choice(
+            Model.CURRENCY_CHOICES),
+        requestor_type=select_random_model_choice(
+            Model.REQUESTOR_TYPE_CHOICES),
+        requestor=select_random_fk_reference(
+            Institution, return_type='uuid'),
+        resp_received=random.randint(0, 10),
+        trader=select_random_fk_reference(Trader, return_type='uuid'),
+        priority=create_random_datetime(
+            '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
+    )
 
-        return data
+    return data
 
-    def create_new_instance(get_test_data: bool = False):
-        data = create_test_data()
+
+def create_order_groups(n: int = 5):
+    """
+    Creates sprecified instances 
+
+    Arguments
+    ----------
+    n : int
+        Number of instances to be created
+    """
+    Model = OrderGroup
+
+    def create_new_instance():
+        data = create_order_groups_test_data()
         new_instance = Model(**data)
         return new_instance
-
-    if get_test_data:
-        return create_test_data()
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
