@@ -5,6 +5,8 @@ import traceback
 import pandas as pd
 import pytz
 
+from decimal import Decimal
+
 from typing import Tuple, List, Callable
 from dateutil import tz
 
@@ -21,6 +23,15 @@ pd.options.display.max_columns = 500
 
 # timezone aware datetime iso format
 tz_aware_datetime_iso_format = "%Y-%m-%dT%H:%M:%S%z"
+
+
+def create_data_template() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = ''
+    data = dict()
+    return data
 
 
 def random_date(start, end):
@@ -127,7 +138,7 @@ def select_random_fk_reference(Model: models.Model, return_type='model_instance'
 
     Arguments
     ----
-    Model: 
+    Model:
         a model class from which selection is to be performed
     return_type: str
         model_instance -> if return value is a models.Model instance
@@ -197,8 +208,28 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
 """             MAIN MODEL INSTANCE GENERATORS     """
 
 
-def create_addresses(n: int = 100):
+def create_adress_data() -> dict:
     """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Address
+
+    random_str = create_random_string()
+    data = dict(
+        address=f"Street {random_str}",
+        country=f"Country {random_str}",
+        state=f"State {random_str}",
+        municipality=f"Municipality {random_str}",
+        zip_code=create_random_string(n=6, only_numbers=True)
+    )
+
+    return data
+
+
+def create_addresses(n: int = 5):
+    """
+    Creates sprecified instances 
+
     Arguments
     ----------
     n : int
@@ -207,15 +238,9 @@ def create_addresses(n: int = 100):
     Model = Address
 
     def create_new_instance():
-        random_str = create_random_string()
 
-        new_instance = Model(
-            address=f"Street {random_str}",
-            country=f"Country {random_str}",
-            state=f"State {random_str}",
-            municipality=f"Municipality {random_str}",
-            zip_code=create_random_string(n=6, only_numbers=True)
-        )
+        data = create_adress_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -223,7 +248,21 @@ def create_addresses(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_files(n: int = 50):
+def create_file_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = File
+
+    random_str = create_random_string()
+    data = dict(
+        location=f"https://www.files.com/{random_str}"
+    )
+
+    return data
+
+
+def create_files(n: int = 5):
     """
     Arguments
     ----------
@@ -233,10 +272,8 @@ def create_files(n: int = 50):
     Model = File
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            location=f"https://www.files.com/{random_str}"
-        )
+        data = create_file_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -244,7 +281,24 @@ def create_files(n: int = 50):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_user_settings(n: int = 200):
+def create_user_settings_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = UserSettings
+
+    random_str = create_random_string()
+    data = dict(
+        timezone='Test time zone',
+        date_format='Test date format',
+        language='Test language',
+        theme_preferences={'key': 'this is a theme preference'}
+    )
+
+    return data
+
+
+def create_user_settings(n: int = 5):
     """
     Arguments
     ----------
@@ -254,18 +308,40 @@ def create_user_settings(n: int = 200):
     Model = UserSettings
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            timezone='Test time zone',
-            date_format='Test date format',
-            language='Test language',
-            theme_preferences={'key': 'this is a theme preference'}
-        )
+        data = create_user_settings_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_user_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = User
+
+    random_str = create_random_string()
+    data = dict(
+        first_name=f'Name {random_str}',
+        second_name=f'Second Name {random_str}',
+        last_name=f'Last Name {random_str}',
+        password=make_password(f'password'),
+        email=f"email_{random_str}" + "@mail.com",
+        image=select_random_fk_reference(File),
+        telephone='55555555',
+        cell_phone='55555555',
+        rfc=f'RFC {random_str}',
+        curp=f'CURP {random_str}',
+        address=select_random_fk_reference(Address),
+        status=select_random_model_choice(Model.STATUS_CHOICES),
+        mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
+        settings=select_random_fk_reference(UserSettings)
+    )
+
+    return data
 
 
 def create_users(n: int = 5):
@@ -279,29 +355,24 @@ def create_users(n: int = 5):
 
     def create_new_instance():
         random_str = create_random_string()
-        new_instance = Model(
-            first_name=f'Name {random_str}',
-            second_name=f'Second Name {random_str}',
-            last_name=f'Last Name {random_str}',
-            password=make_password(f'password'),
-            email=f"email_{random_str}" + "@mail.com",
-            image=select_random_fk_reference(File),
-            telephone='55555555',
-            cell_phone='55555555',
-            rfc=f'RFC {random_str}',
-            curp=f'CURP {random_str}',
-            address=select_random_fk_reference(Address),
-            status=select_random_model_choice(Model.STATUS_CHOICES),
-            mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
-            settings=select_random_fk_reference(UserSettings)
-        )
+        data = create_user_data()
+        new_instance = Model(**data)
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_institution_managers(n: int = 20):
+def create_instituion_manager_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = InstitutionManager
+    data = dict(user=select_random_fk_reference(User))
+    return data
+
+
+def create_institution_managers(n: int = 5):
     """
     Arguments
     ----------
@@ -311,9 +382,8 @@ def create_institution_managers(n: int = 20):
     Model = InstitutionManager
 
     def create_new_instance():
-        new_instance = Model(
-            user=select_random_fk_reference(User)
-        )
+        data = create_instituion_manager_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -321,7 +391,16 @@ def create_institution_managers(n: int = 20):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_controllers(n: int = 20):
+def create_controller_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Controller
+    data = dict(user=select_random_fk_reference(User))
+    return data
+
+
+def create_controllers(n: int = 5):
     """
     Arguments
     ----------
@@ -331,10 +410,8 @@ def create_controllers(n: int = 20):
     Model = Controller
 
     def create_new_instance():
-
-        new_instance = Model(
-            user=select_random_fk_reference(User)
-        )
+        data = create_controller_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -342,7 +419,20 @@ def create_controllers(n: int = 20):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_compliance_officers(n: int = 50):
+def create_compliance_officer_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = ComplianceOfficer
+    random_str = create_random_string()
+    data = dict(first_name=f"Name {random_str}",
+                last_name=f"Last Name {random_str}",
+                telephone=f"{create_random_string(n=10, only_numbers=True)}",
+                email=f"{random_str}@mail.com")
+    return data
+
+
+def create_compliance_officers(n: int = 5):
     """
     Arguments
     ----------
@@ -352,13 +442,8 @@ def create_compliance_officers(n: int = 50):
     Model = ComplianceOfficer
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            first_name=f"Name {random_str}",
-            last_name=f"Last Name {random_str}",
-            telephone=f"{create_random_string(n=10, only_numbers=True)}",
-            email=f"{random_str}@mail.com"
-        )
+        data = create_compliance_officer_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -366,7 +451,24 @@ def create_compliance_officers(n: int = 50):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_institution_leads(n: int = 50):
+def create_institution_leads_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = InstitutionLead
+    random_str = create_random_string()
+    data = dict(contract=select_random_fk_reference(File),
+                rfc=f"RFC {random_str}",
+                logo=select_random_fk_reference(File),
+                contact_user=select_random_fk_reference(User),
+                status=select_random_model_choice(Model.STATUS_CHOICES),
+                compliance_officer=select_random_fk_reference(
+                    ComplianceOfficer),
+                address=select_random_fk_reference(Address))
+    return data
+
+
+def create_institution_leads(n: int = 5):
     """
     Arguments
     ----------
@@ -376,21 +478,21 @@ def create_institution_leads(n: int = 50):
     Model = InstitutionLead
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            contract=select_random_fk_reference(File),
-            rfc=f"RFC {random_str}",
-            logo=select_random_fk_reference(File),
-            contact_user=select_random_fk_reference(User),
-            status=select_random_model_choice(Model.STATUS_CHOICES),
-            compliance_officer=select_random_fk_reference(ComplianceOfficer),
-            address=select_random_fk_reference(Address)
-        )
+
+        data = create_institution_leads_data()
+        new_instance = Model(**data)
 
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
+
+
+def create_institution_data():
+    """
+    No test data here yet.
+    """
+    pass
 
 
 def create_institutions():
@@ -441,7 +543,20 @@ def create_institutions():
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_traders(n: int = 100):
+def create_trader_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Trader
+    random_str = create_random_string()
+    data = dict(user=select_random_fk_reference(User),
+                license_type=select_random_model_choice(
+                Model.LICENSE_CHOICES, many=True),
+                institution=select_random_fk_reference(Institution))
+    return data
+
+
+def create_traders(n: int = 5):
     """
     Arguments
     ----------
@@ -451,13 +566,8 @@ def create_traders(n: int = 100):
     Model = Trader
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            user=select_random_fk_reference(User),
-            license_type=select_random_model_choice(
-                Model.LICENSE_CHOICES, many=True),
-            institution=select_random_fk_reference(Institution)
-        )
+        data = create_trader_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -465,7 +575,20 @@ def create_traders(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_contact_persons(n: int = 100):
+def create_contact_person_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = ContactPerson
+    random_str = create_random_string()
+    data = dict(first_name=f"Name {random_str}",
+                last_name=f"Last Name {random_str}",
+                telephone=f"{create_random_string(n=10, only_numbers=True)}",
+                email=f"{random_str}@mail.com")
+    return data
+
+
+def create_contact_persons(n: int = 5):
     """
     Arguments
     ----------
@@ -475,13 +598,8 @@ def create_contact_persons(n: int = 100):
     Model = ContactPerson
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            first_name=f"Name {random_str}",
-            last_name=f"Last Name {random_str}",
-            telephone=f"{create_random_string(n=10, only_numbers=True)}",
-            email=f"{random_str}@mail.com"
-        )
+        data = create_contact_person_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -489,7 +607,20 @@ def create_contact_persons(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_leads(n: int = 100):
+def create_lead_data() -> dict:
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = Lead
+    random_str = create_random_string()
+    data = dict(institution_lead=select_random_fk_reference(InstitutionLead),
+                institution=select_random_fk_reference(Institution),
+                contact_person=select_random_fk_reference(ContactPerson),
+                comments='This is a comment.')
+    return data
+
+
+def create_leads(n: int = 5):
     """
     Arguments
     ----------
@@ -499,13 +630,8 @@ def create_leads(n: int = 100):
     Model = Lead
 
     def create_new_instance():
-        random_str = create_random_string()
-        new_instance = Model(
-            institution_lead=select_random_fk_reference(InstitutionLead),
-            institution=select_random_fk_reference(Institution),
-            contact_person=select_random_fk_reference(ContactPerson),
-            comments='This is a comment.'
-        )
+        data = create_lead_data()
+        new_instance = Model(**data)
 
         return new_instance
 
@@ -513,7 +639,7 @@ def create_leads(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_concierges(n: int = 100):
+def create_concierges(n: int = 5):
     """
     Arguments
     ----------
@@ -694,7 +820,7 @@ def create_securities():
     print(f'Created {num_created} securities')
 
 
-def create_settlement_instructions(n: int = 100):
+def create_settlement_instructions(n: int = 5):
     """
     Arguments
     ----------
@@ -723,7 +849,7 @@ def create_settlement_instructions(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_alarms(n: int = 100):
+def create_alarms(n: int = 5):
     """
     Arguments
     ----------
@@ -746,8 +872,58 @@ def create_alarms(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_order_groups(n: int = 100):
+def create_order_group_data() -> dict:
     """
+    Returns a dict to be used in instance creation or for testing purposes
+    """
+    Model = OrderGroup
+
+    volume = create_random_number_of_securities()
+    price = create_random_price(return_type='number')
+    yield_value = create_random_yield()
+    notional = str(volume * price)
+    spread = create_random_spread()
+    submission = create_random_datetime(
+        '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
+    expiration = create_random_datetime(
+        '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
+    data = dict(
+        security=select_random_fk_reference(
+            Security, return_type='uuid'),
+        orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
+        order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
+        direction=select_random_model_choice(Model.DIRECTION_CHOICES),
+        volume=volume,
+        notional=notional,
+        weighted_avg_price=Decimal(str(price)),
+        weighted_avg_yield=Decimal(str(yield_value)),
+        weighted_avg_spread=Decimal(spread),
+        fx=Decimal(str(random.random()*10 + 15)),
+        status=select_random_model_choice(Model.STATUS_CHOICES),
+        submission=submission,
+        expiration=expiration,
+        allocation_pct=Decimal(str(random.random())),
+        responded_by=select_random_model_choice(
+            Model.RESPONDED_BY_CHOICES),
+        settlement_currency=select_random_model_choice(
+            Model.CURRENCY_CHOICES),
+        requestor_type=select_random_model_choice(
+            Model.REQUESTOR_TYPE_CHOICES),
+        requestor=select_random_fk_reference(
+            Institution, return_type='uuid'),
+        resp_received=random.randint(0, 10),
+        trader=select_random_fk_reference(Trader, return_type='uuid'),
+        priority=create_random_datetime(
+            '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
+    )
+
+    return data
+
+
+def create_order_groups(n: int = 5):
+    """
+    Creates sprecified instances 
+
     Arguments
     ----------
     n : int
@@ -756,49 +932,15 @@ def create_order_groups(n: int = 100):
     Model = OrderGroup
 
     def create_new_instance():
-        volume = create_random_number_of_securities()
-        price = create_random_price(return_type='number')
-        yield_value = create_random_yield()
-        notional = str(volume * price)
-        spread = create_random_spread()
-        submission = create_random_datetime(
-            '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
-        expiration = create_random_datetime(
-            '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
-        new_instance = Model(
-            security=select_random_fk_reference(Security, return_type='uuid'),
-            orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
-            order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
-            direction=select_random_model_choice(Model.DIRECTION_CHOICES),
-            volume=volume,
-            notional=notional,
-            weighted_avg_price=str(price),
-            weighted_avg_yield=yield_value,
-            weighted_avg_spread=spread,
-            fx=str(random.random()*10 + 15),
-            status=select_random_model_choice(Model.STATUS_CHOICES),
-            submission=submission,
-            expiration=expiration,
-            allocation_pct=str(random.random()),
-            responded_by=select_random_model_choice(
-                Model.RESPONDED_BY_CHOICES),
-            settlement_currency=select_random_model_choice(
-                Model.CURRENCY_CHOICES),
-            requestor_type=select_random_model_choice(
-                Model.REQUESTOR_TYPE_CHOICES),
-            requestor=select_random_fk_reference(
-                Institution, return_type='uuid'),
-            resp_received=random.randint(0, 10),
-            trader=select_random_fk_reference(Trader, return_type='uuid')
-        )
-
+        data = create_order_group_data()
+        new_instance = Model(**data)
         return new_instance
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_orders(n: int = 100):
+def create_cob_orders(n: int = 5):
     """
     Arguments
     ----------
@@ -822,8 +964,8 @@ def create_cob_orders(n: int = 100):
                 '20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
             volume=volume,
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            dirty_price=str(dirty_price),
-            notional=str(float(volume) * float(dirty_price)),
+            dirty_price=Decimal(str(dirty_price)),
+            notional=Decimal(str(float(volume) * float(dirty_price))),
             price=price,
             spread=create_random_spread(),
             discount_margin=create_random_dm(),
@@ -838,7 +980,7 @@ def create_cob_orders(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_auto_refreshers(n: int = 100):
+def create_cob_auto_refreshers(n: int = 5):
     """
     Arguments
     ----------
@@ -860,7 +1002,7 @@ def create_cob_auto_refreshers(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_streams(n: int = 100):
+def create_cob_streams(n: int = 5):
     """
     Arguments
     ----------
@@ -884,7 +1026,7 @@ def create_cob_streams(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_rfqs(n: int = 100):
+def create_rfqs(n: int = 5):
     """
     Arguments
     ----------
@@ -922,7 +1064,7 @@ def create_rfqs(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
-def create_rfq_responses(n: int = 100):
+def create_rfq_responses(n: int = 5):
     """
     Arguments
     ----------
@@ -948,18 +1090,18 @@ def create_rfq_responses(n: int = 100):
             submission=submission_datetime,
             rfq=select_random_fk_reference(Rfq),
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            bid_price=str(bid_price),
-            bid_yield=str(_yield),
-            bid_spread=str(spread),
-            bid_notional=str(bid_price*bid_volume),
-            bid_discount_margin=str(dm),
+            bid_price=Decimal(str(bid_price)),
+            bid_yield=Decimal(str(_yield)),
+            bid_spread=Decimal(str(spread)),
+            bid_notional=Decimal(str(bid_price*bid_volume)),
+            bid_discount_margin=Decimal(str(dm)),
             bid_volume=bid_volume,
             bid_fx='1',
-            ask_price=str(ask_price),
-            ask_yield=str(_yield + random.random()*0.01),
-            ask_spread=str(spread + random.random()*30),
-            ask_notional=str(ask_price*ask_volume),
-            ask_discount_margin=str(dm),
+            ask_price=Decimal(str(ask_price)),
+            ask_yield=Decimal(str(_yield + random.random()*0.01)),
+            ask_spread=Decimal(str(spread + random.random()*30)),
+            ask_notional=Decimal(str(ask_price*ask_volume)),
+            ask_discount_margin=Decimal(str(dm)),
             ask_fx='1',
             ask_volume=ask_volume,
             autoresponded=random.choice([False, True])
@@ -971,7 +1113,7 @@ def create_rfq_responses(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_rfq_auto_responders(n: int = 100):
+def create_rfq_auto_responders(n: int = 5):
     """
     Arguments
     ----------
@@ -995,15 +1137,17 @@ def create_rfq_auto_responders(n: int = 100):
             max_volume=min_volume + random.randint(100, 1000000),
             public=random.choice([False, True]),
             settlement_currency=Model.MXN_CURRENCY,
-            ask_price=str(ask_price),
-            ask_spread=str(ask_spread),
-            ask_fx=str(ask_fx),
-            ask_notional=str(ask_notional),
-            bid_price=str(ask_price+random.random()),
-            bid_spread=str(ask_spread - random.random()*0.002),
-            bid_fx=str(ask_fx),
-            bid_notional=str(ask_notional),
-            status=select_random_model_choice(Model.STATUS_CHOICES)
+            ask_price=Decimal(str(ask_price)),
+            ask_spread=Decimal(str(ask_spread)),
+            ask_fx=Decimal(str(ask_fx)),
+            ask_notional=Decimal(str(ask_notional)),
+            bid_price=Decimal(str(ask_price+random.random())),
+            bid_spread=Decimal(str(ask_spread - random.random()*0.002)),
+            bid_fx=Decimal(str(ask_fx)),
+            bid_notional=Decimal(str(ask_notional)),
+            status=select_random_model_choice(Model.STATUS_CHOICES),
+            priority=create_random_datetime(
+                '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
         )
 
         new_instance.full_clean()
@@ -1017,7 +1161,7 @@ def create_rfq_auto_responders(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
-def create_rfq_locks(n: int = 100):
+def create_rfq_locks(n: int = 5):
     """
     Arguments
     ----------
@@ -1040,7 +1184,7 @@ def create_rfq_locks(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_cob_transactions(n: int = 100):
+def create_cob_transactions(n: int = 5):
     """
     Arguments
     ----------
@@ -1064,28 +1208,28 @@ def create_cob_transactions(n: int = 100):
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
             security=select_random_fk_reference(Security),
-            volume=str(volume),
-            notional=str(notional),
+            volume=Decimal(str(volume)),
+            notional=Decimal(str(notional)),
             accrued_interest='0.002',
-            price=str(price),
-            all_in_price=str(price),
+            price=Decimal(str(price)),
+            all_in_price=Decimal(str(price)),
             all_in_yield=yield_value,
             discount_margin=create_random_dm(),
             yield_value=yield_value,
-            dirty_price=str(dirty_price),
+            dirty_price=Decimal(str(dirty_price)),
             status=select_random_model_choice(Model.STATUS_CHOICES),
             fee_buyer='100',
             fee_seller='100',
-            vat=str(vat),
-            cash_amount=str(cash_amount),
-            total_cash=str(cash_amount + vat),
+            vat=Decimal(str(vat)),
+            cash_amount=Decimal(str(cash_amount)),
+            total_cash=Decimal(str(cash_amount + vat)),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,
 
-
             spread=create_random_spread(),
-            buy_order=random.choice(CobOrder.objects.filter(direction='buy')),
+            buy_order=random.choice(
+                CobOrder.objects.filter(direction='buy')),
             sell_order=random.choice(
                 CobOrder.objects.filter(direction='sell')),
             created_at=execution_datetime,
@@ -1098,7 +1242,7 @@ def create_cob_transactions(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_rfq_transactions(n: int = 100):
+def create_rfq_transactions(n: int = 5):
     """
     Arguments
     ----------
@@ -1123,21 +1267,21 @@ def create_rfq_transactions(n: int = 100):
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
             security=select_random_fk_reference(Security),
-            volume=str(volume),
-            notional=str(notional),
+            volume=Decimal((volume)),
+            notional=Decimal(str(notional)),
             accrued_interest='0.002',
-            price=str(price),
-            all_in_price=str(price),
+            price=Decimal(str(price)),
+            all_in_price=Decimal(str(price)),
             all_in_yield=yield_value,
             discount_margin=create_random_dm(),
             yield_value=yield_value,
-            dirty_price=str(dirty_price),
+            dirty_price=Decimal(str(dirty_price)),
             status=select_random_model_choice(Model.STATUS_CHOICES),
             fee_buyer='100',
             fee_seller='100',
-            vat=str(vat),
-            cash_amount=str(cash_amount),
-            total_cash=str(cash_amount + vat),
+            vat=Decimal(str(vat)),
+            cash_amount=Decimal(str(cash_amount)),
+            total_cash=Decimal(str(cash_amount + vat)),
             settlement_date=create_random_datetime(
                 '20/4/2021 1:30 PM', '20/5/2021 1:30 PM'),
             settlement_currency=Model.MXN_CURRENCY,
@@ -1153,7 +1297,7 @@ def create_rfq_transactions(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_watchlists(n: int = 100):
+def create_watchlists(n: int = 5):
     """
     Arguments
     ----------
@@ -1180,7 +1324,7 @@ def create_watchlists(n: int = 100):
         n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
-def create_notifications(n: int = 300):
+def create_notifications(n: int = 5):
     """
     Arguments
     ----------
@@ -1222,36 +1366,36 @@ def run(interactive: bool = True):
 
         try:
             print('CREATING CORE MODELS')
-            create_addresses()
-            create_files()
-            create_user_settings()
-            create_users()
-            create_institution_managers()
-            create_controllers()
+            create_addresses(100)
+            create_files(50)
+            create_user_settings(50)
+            create_users(10)
+            create_institution_managers(10)
+            create_controllers(10)
 
-            create_compliance_officers()
-            create_institution_leads()
+            create_compliance_officers(10)
+            create_institution_leads(10)
             create_institutions()
-            create_traders()
-            create_contact_persons()
-            create_leads()
-            create_concierges()
+            create_traders(10)
+            create_contact_persons(10)
+            create_leads(10)
+            create_concierges(10)
             create_security_issuers()
             create_securities()
-            create_settlement_instructions()
-            create_alarms()
-            create_order_groups()
-            create_cob_orders()
-            create_cob_auto_refreshers()
-            create_cob_streams()
-            create_rfqs()
-            create_rfq_responses()
-            create_rfq_auto_responders()
-            create_rfq_locks()
-            create_cob_transactions()
-            create_rfq_transactions()
-            create_watchlists()
-            create_notifications()
+            create_settlement_instructions(10)
+            create_alarms(10)
+            create_order_groups(20)
+            create_cob_orders(20)
+            create_cob_auto_refreshers(20)
+            create_cob_streams(20)
+            create_rfqs(20)
+            create_rfq_responses(20)
+            create_rfq_auto_responders(20)
+            create_rfq_locks(20)
+            create_cob_transactions(20)
+            create_rfq_transactions(20)
+            create_watchlists(20)
+            create_notifications(20)
             break
         except Exception as e:
             logger.error(f'ERR! -- {e}')
