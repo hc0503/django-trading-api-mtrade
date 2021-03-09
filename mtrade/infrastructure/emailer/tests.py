@@ -16,12 +16,12 @@ class EmailerServiceTest(TestCase):
 			from_email = 'no-reply@mtrade.mx',
 			to = ['no-reply@mtrade.mx'],
 			bcc = ['bcc@mtrade.mx'],
+			template_id = 'd-59254528bee54e53852235bc6f769a46',
+			dynamic_template_data = {
+				'title': 'testTitle',
+				'name': 'testName'
+			},
 		)
-		mailer.template_id = 'd-59254528bee54e53852235bc6f769a46'
-		mailer.dynamic_template_data = {
-			'title': 'testTitle',
-			'name': 'testName'
-		}
 		mailer.send()
 
 		self.assertEqual(len(mail.outbox), 1)

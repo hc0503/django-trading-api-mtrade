@@ -18,12 +18,12 @@ def sendEmail(request):
 		from_email = 'no-reply@mtrade.mx',
 		to = ['no-reply@mtrade.mx', 'admin@mtrade.mx'],
 		bcc = ['bcc@mtrade.mx'],
+		template_id = 'd-59254528bee54e53852235bc6f769a46',
+		dynamic_template_data = {
+			'title': 'testTitle',
+			'name': 'testName'
+		},
 	)
-	mail.template_id = 'd-59254528bee54e53852235bc6f769a46'
-	mail.dynamic_template_data = {
-		'title': 'testTitle',
-		'name': 'testName'
-	}
 	
 	try:
 		mail.send()
