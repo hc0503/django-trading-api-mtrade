@@ -30,19 +30,24 @@ First, create a [dynamic template](https://mc.sendgrid.com/dynamic-templates) an
 from mtrade.infrastructure.emailer.services import Mail
 
 mail = Mail(
-	'Here is the subject',
+	subject = 'Here is the subject',
+	body = 'Here is the body.',
 	from_email = 'from@mtrade.mx',
 	to = ['to@mtrade.mx'],
 	bcc = ['bcc@mtrade.mx'],
+	connection = 'Here is connection',
+	attachments = 'Here is attachments',
+	headers = 'headers',
+	cc = ['cc@mtrade.mx'],
+	reply_to = 'reply-to@mtrade.mx',
+	# Transactional templates
+	# https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/
+	template_id = 'sendgrid_template_id',
+	dynamic_template_data = {
+		'title': 'testTitle',
+		'name': 'testName'
+	},
 )
-
-mail.template_id = 'sendgrid_template_id'
-# Dynamic SendGrid template data
-mail.dynamic_template_data = {
-	'title': 'testTitle',
-	'name': 'testName'
-}
-mail.reply_to = 'reply-to@mtrade.mx'
 
 mail.send(fail_silently=False)
 ```
@@ -52,29 +57,20 @@ mail.send(fail_silently=False)
 from mtrade.infrastructure.emailer.services import Mail
 
 mail = Mail(
-  from_email='from@mtrade.mx',
-  to=['to@mtrade.mx'],
-  cc=['cc@mtrade.mx'],
-  bcc=['bcc@mtrade.mx'],
+	from_email='from@mtrade.mx',
+	to=['to@mtrade.mx'],
+	cc=['cc@mtrade.mx'],
+	bcc=['bcc@mtrade.mx'],
 )
 
 # Personalization custom args
 # https://sendgrid.com/docs/for-developers/sending-email/personalizations/
 mail.custom_args = {'arg1': 'value1', 'arg2': 'value2'}
 
-# Reply to email address (sendgrid only supports 1 reply-to email address)
-mail.reply_to = 'reply-to@mtrade.mx'
-
 # Send at (accepts an integer per the sendgrid docs)
 # https://sendgrid.com/docs/API_Reference/SMTP_API/scheduling_parameters.html#-Send-At
 mail.send_at = 1600188812
 
-# Transactional templates
-# https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/
-mail.template_id = "your-dynamic-template-id"
-mail.dynamic_template_data = {  # Sendgrid v6+ only
-  "title": foo
-}
 mail.substitutions = {
   "title": bar
 }
