@@ -6,6 +6,7 @@ import pandas as pd
 import pytz
 
 from decimal import Decimal
+from dataclasses import asdict
 
 from typing import Tuple, List, Callable
 from dateutil import tz
@@ -353,6 +354,41 @@ def create_user_settings(n: int = 5):
 
 #     return data
 
+# we defined a large number of possible users. Must be sufficient
+_users_gen = (i for i in range(1000))
+
+
+def create_user_data(test_word=None):
+    """
+    Returns a dict to be used in instance creation or for testing purposes
+
+    If test_word (str) is provided. It will create a user with credentials `username_<test_word>`
+    ans password `password_<test_word>`
+
+    Note: provide test_word argument is recommended in case where a single instance is being created for testing purposes
+    """
+    num_user = next(_users_gen) + 1
+    personal_data = asdict(UserPersonalData(
+        username=f"username_{num_user}",
+        first_name=f"Name {num_user}",
+        last_name=f"Last Name {num_user}",
+        email=f"email_{num_user}@example.com"
+    ))
+    base_permissions = asdict(UserBasePermissions(
+        is_staff=False,
+        is_active=False
+    ))
+
+    additional_data = dict(id=uuid.uuid4(), password=f'password_{num_user}',
+
+                           )
+    data = dict()
+    data.update(personal_data)
+    data.update(base_permissions)
+    data.update(additional_data)
+
+    return data
+
 
 def create_users(n: int = 5):
     """
@@ -363,33 +399,13 @@ def create_users(n: int = 5):
     """
     Model = User
 
-    # def create_new_instance():
-    #     random_str = create_random_string()
-    #     data = create_user_data()
-    #     new_instance = Model(**data)
-    #     return new_instance
-
     def create_new_instance():
-        random_str = create_random_string()
-        personal_data = dict(
-            username=f"Tester_{random_str}",
-            first_name=f"Testerman {random_str}",
-            last_name=f"Testerson {random_str}",
-            email=f"{random_str}@example.com"
-        )
-        base_permissions = dict(
-            is_staff=False,
-            is_active=False
-        )
-
-        password = 'hola'
-        user = User(id=uuid.uuid4(), password=password,
-                    **personal_data, **base_permissions)
-        user.full_clean()
-        user.save()
+        data = create_user_data()
+        new_instance = Model(**data)
+        return new_instance
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
+        n=n, create_new_instance=create_new_instance, Model=Model)
 
 
 def create_instituion_manager_data() -> dict:
@@ -1403,7 +1419,7 @@ def run(interactive: bool = True):
             create_addresses(100)
             create_files(50)
             create_user_settings(50)
-            create_users(10)
+            create_users(2)
             create_institution_managers(10)
             create_controllers(10)
 
