@@ -57,39 +57,39 @@ class UserSettings(custom_models.DatedModel):
     theme_preferences = models.JSONField()
 
 
-class User(custom_models.DatedModel):
-    # username, first_name, last_name, email are inherited from AbstractUser
-    STATUS_ENABLED = 'enabled'
-    STATUS_DISABLED = 'disabled'
-    STATUS_CHOICES = (
-        (STATUS_ENABLED, 'Enabled'),
-        (STATUS_DISABLED, 'Disabled'),
-    )
+# class User(custom_models.DatedModel):
+#     # username, first_name, last_name, email are inherited from AbstractUser
+#     STATUS_ENABLED = 'enabled'
+#     STATUS_DISABLED = 'disabled'
+#     STATUS_CHOICES = (
+#         (STATUS_ENABLED, 'Enabled'),
+#         (STATUS_DISABLED, 'Disabled'),
+#     )
 
-    EMAIL_MFA_METHOD = 'email'
-    DUO_MFA_METHOD = 'duo'
-    MFA_METHOD_CHOICES = [
-        (EMAIL_MFA_METHOD, 'Email authentication'),
-        (DUO_MFA_METHOD, 'DUO authentication')
-    ]
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+#     EMAIL_MFA_METHOD = 'email'
+#     DUO_MFA_METHOD = 'duo'
+#     MFA_METHOD_CHOICES = [
+#         (EMAIL_MFA_METHOD, 'Email authentication'),
+#         (DUO_MFA_METHOD, 'DUO authentication')
+#     ]
+#     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
 
-    first_name = models.CharField(max_length=250, blank=True, null=True)
-    second_name = models.CharField(max_length=250, blank=True, null=True)
-    last_name = models.CharField(max_length=250, blank=True, null=True)
-    email = models.EmailField()
-    password = models.CharField(max_length=250, blank=True, null=True)
-    image = models.ForeignKey(File, on_delete=models.SET_NULL, null=True)
-    telephone = models.CharField(max_length=250, blank=True, null=True)
-    cell_phone = models.CharField(max_length=250, blank=True, null=True)
-    rfc = models.CharField(max_length=250, unique=True)
-    curp = models.CharField(max_length=250, unique=True)
-    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
-    status = models.CharField(max_length=250, choices=STATUS_CHOICES)
-    mfa_method = models.CharField(max_length=250, choices=MFA_METHOD_CHOICES)
-    locked = models.BooleanField(default=False)
-    settings = models.ForeignKey(
-        UserSettings, on_delete=models.SET_NULL, null=True)
+#     first_name = models.CharField(max_length=250, blank=True, null=True)
+#     second_name = models.CharField(max_length=250, blank=True, null=True)
+#     last_name = models.CharField(max_length=250, blank=True, null=True)
+#     email = models.EmailField()
+#     password = models.CharField(max_length=250, blank=True, null=True)
+#     image = models.ForeignKey(File, on_delete=models.SET_NULL, null=True)
+#     telephone = models.CharField(max_length=250, blank=True, null=True)
+#     cell_phone = models.CharField(max_length=250, blank=True, null=True)
+#     rfc = models.CharField(max_length=250, unique=True)
+#     curp = models.CharField(max_length=250, unique=True)
+#     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+#     status = models.CharField(max_length=250, choices=STATUS_CHOICES)
+#     mfa_method = models.CharField(max_length=250, choices=MFA_METHOD_CHOICES)
+#     locked = models.BooleanField(default=False)
+#     settings = models.ForeignKey(
+#         UserSettings, on_delete=models.SET_NULL, null=True)
 
 
 class InstitutionManager(custom_models.DatedModel):
@@ -97,12 +97,14 @@ class InstitutionManager(custom_models.DatedModel):
     Represents an Institution Manager
     """
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # ref to User
+    user = models.UUIDField()
 
 
 class Controller(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # ref to User
+    user = models.UUIDField()
 
 
 class ComplianceOfficer(custom_models.DatedModel):
@@ -132,8 +134,8 @@ class InstitutionLead(custom_models.DatedModel):
     rfc = models.CharField(max_length=250, default='Test RFC')
     logo = models.ForeignKey(File, on_delete=models.SET_NULL,
                              null=True, related_name='institution_lead_logo')
-    contact_user = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True)
+    # ref to User
+    contact_user = models.UUIDField()
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
     compliance_officer = models.ForeignKey(
         ComplianceOfficer, on_delete=models.SET_NULL, null=True)
@@ -192,7 +194,8 @@ class Trader(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # ref to User
+    user = models.UUIDField()
     license_type = ArrayField(models.CharField(
         max_length=150, choices=LICENSE_CHOICES))
     institution = models.ForeignKey(
@@ -220,7 +223,8 @@ class Lead(custom_models.DatedModel):
 
 class Concierge(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # ref to User
+    user = models.UUIDField()
     leads = models.ManyToManyField(Lead)
     institutions = models.ManyToManyField(Institution)
 
@@ -828,7 +832,8 @@ class Notification(custom_models.DatedModel):
     notification_type = models.CharField(max_length=250, choices=TYPE_CHOICES)
     body = models.JSONField(encoder=DjangoJSONEncoder)
     status = models.CharField(max_length=250, choices=STATUS_CHOICES)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # ref to User
+    user = models.UUIDField()
 
 
 class NotificationSettings(custom_models.DatedModel):
@@ -844,7 +849,8 @@ class NotificationSettings(custom_models.DatedModel):
         (NOTIFY_AS_INBOX, 'Notify as inbox'),
     ]
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # ref to User
+    user = models.UUIDField()
     notification_type = models.CharField(
         max_length=250, choices=Notification.TYPE_CHOICES)
     notify_as = ArrayField(models.CharField(
@@ -855,7 +861,6 @@ model_list = [
     Address,
     File,
     UserSettings,
-    User,
     InstitutionManager,
     Controller,
     ComplianceOfficer,

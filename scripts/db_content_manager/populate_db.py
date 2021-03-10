@@ -18,6 +18,7 @@ from django.db import models
 from app_zero.models import *
 from mtrade.domain.market.order_group.models import OrderGroup
 from mtrade.domain.security.models import SecurityIssuer, Security
+from mtrade.domain.users.models import UserPersonalData, UserBasePermissions, User
 
 from mtrade.settings import TIME_ZONE
 pd.options.display.max_columns = 500
@@ -326,31 +327,31 @@ def create_user_settings(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_user_data() -> dict:
-    """
-    Returns a dict to be used in instance creation or for testing purposes
-    """
-    Model = User
+# def create_user_data() -> dict:
+#     """
+#     Returns a dict to be used in instance creation or for testing purposes
+#     """
+#     Model = User
 
-    random_str = create_random_string()
-    data = dict(
-        first_name=f'Name {random_str}',
-        second_name=f'Second Name {random_str}',
-        last_name=f'Last Name {random_str}',
-        password=make_password(f'password'),
-        email=f"email_{random_str}" + "@mail.com",
-        image=select_random_fk_reference(File),
-        telephone='55555555',
-        cell_phone='55555555',
-        rfc=f'RFC {random_str}',
-        curp=f'CURP {random_str}',
-        address=select_random_fk_reference(Address),
-        status=select_random_model_choice(Model.STATUS_CHOICES),
-        mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
-        settings=select_random_fk_reference(UserSettings)
-    )
+#     random_str = create_random_string()
+#     data = dict(
+#         first_name=f'Name {random_str}',
+#         second_name=f'Second Name {random_str}',
+#         last_name=f'Last Name {random_str}',
+#         password=make_password(f'password'),
+#         email=f"email_{random_str}" + "@mail.com",
+#         image=select_random_fk_reference(File),
+#         telephone='55555555',
+#         cell_phone='55555555',
+#         rfc=f'RFC {random_str}',
+#         curp=f'CURP {random_str}',
+#         address=select_random_fk_reference(Address),
+#         status=select_random_model_choice(Model.STATUS_CHOICES),
+#         mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
+#         settings=select_random_fk_reference(UserSettings)
+#     )
 
-    return data
+#     return data
 
 
 def create_users(n: int = 5):
@@ -362,14 +363,33 @@ def create_users(n: int = 5):
     """
     Model = User
 
+    # def create_new_instance():
+    #     random_str = create_random_string()
+    #     data = create_user_data()
+    #     new_instance = Model(**data)
+    #     return new_instance
+
     def create_new_instance():
         random_str = create_random_string()
-        data = create_user_data()
-        new_instance = Model(**data)
-        return new_instance
+        personal_data = dict(
+            username=f"Tester_{random_str}",
+            first_name=f"Testerman {random_str}",
+            last_name=f"Testerson {random_str}",
+            email=f"{random_str}@example.com"
+        )
+        base_permissions = dict(
+            is_staff=False,
+            is_active=False
+        )
+
+        password = 'hola'
+        user = User(id=uuid.uuid4(), password=password,
+                    **personal_data, **base_permissions)
+        user.full_clean()
+        user.save()
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model)
+        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
 def create_instituion_manager_data() -> dict:
@@ -377,7 +397,7 @@ def create_instituion_manager_data() -> dict:
     Returns a dict to be used in instance creation or for testing purposes
     """
     Model = InstitutionManager
-    data = dict(user=select_random_fk_reference(User))
+    data = dict(user=select_random_fk_reference(User, return_type='uuid'))
     return data
 
 
@@ -405,7 +425,7 @@ def create_controller_data() -> dict:
     Returns a dict to be used in instance creation or for testing purposes
     """
     Model = Controller
-    data = dict(user=select_random_fk_reference(User))
+    data = dict(user=select_random_fk_reference(User, return_type='uuid'))
     return data
 
 
@@ -469,7 +489,8 @@ def create_institution_leads_data() -> dict:
     data = dict(contract=select_random_fk_reference(File),
                 rfc=f"RFC {random_str}",
                 logo=select_random_fk_reference(File),
-                contact_user=select_random_fk_reference(User),
+                contact_user=select_random_fk_reference(
+                    User, return_type='uuid'),
                 status=select_random_model_choice(Model.STATUS_CHOICES),
                 compliance_officer=select_random_fk_reference(
                     ComplianceOfficer),
@@ -558,7 +579,7 @@ def create_trader_data() -> dict:
     """
     Model = Trader
     random_str = create_random_string()
-    data = dict(user=select_random_fk_reference(User),
+    data = dict(user=select_random_fk_reference(User, return_type='uuid'),
                 license_type=select_random_model_choice(
                 Model.LICENSE_CHOICES, many=True),
                 institution=select_random_fk_reference(Institution))
@@ -660,7 +681,7 @@ def create_concierges(n: int = 5):
     def create_new_instance():
         random_str = create_random_string()
         new_instance = Model(
-            user=select_random_fk_reference(User),
+            user=select_random_fk_reference(User, return_type='uuid'),
         )
         new_instance.full_clean()
         new_instance.save()
@@ -1352,7 +1373,7 @@ def create_notifications(n: int = 5):
             notification_type=select_random_model_choice(Model.TYPE_CHOICES),
             body={"key": "this is a body"},
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            user=select_random_fk_reference(User)
+            user=select_random_fk_reference(User, return_type='uuid')
         )
 
         return new_instance
