@@ -6,6 +6,7 @@ import pandas as pd
 import pytz
 
 from decimal import Decimal
+from dataclasses import asdict
 
 from typing import Tuple, List, Callable
 from dateutil import tz
@@ -17,6 +18,8 @@ from django.db import models
 
 from app_zero.models import *
 from mtrade.domain.market.order_group.models import OrderGroup
+from mtrade.domain.security.models import SecurityIssuer, Security
+from mtrade.domain.users.models import UserPersonalData, UserBasePermissions, User
 
 from mtrade.settings import TIME_ZONE
 pd.options.display.max_columns = 500
@@ -147,11 +150,19 @@ def select_random_fk_reference(Model: models.Model, return_type='model_instance'
 
 
     """
-    instance = random.choice(Model.objects.all())
+    universe = Model.objects.all()
+    instance = random.choice(universe)
 
     if return_type == 'model_instance':
         return instance
     elif return_type == 'uuid':
+        # if many:
+        # try:
+        #     num_returned = random.randint(1, len(5))
+        #     return [i.id for i in random.choices(universe, k=num_returned)]
+        # except:
+        #     logger.error(
+        #         'There was a problem chosing. There are probably too little instances to chose from.')
         return instance.id
     else:
         print('Provided return_type is incorrect')
@@ -317,29 +328,66 @@ def create_user_settings(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_user_data() -> dict:
+# def create_user_data() -> dict:
+#     """
+#     Returns a dict to be used in instance creation or for testing purposes
+#     """
+#     Model = User
+
+#     random_str = create_random_string()
+#     data = dict(
+#         first_name=f'Name {random_str}',
+#         second_name=f'Second Name {random_str}',
+#         last_name=f'Last Name {random_str}',
+#         password=make_password(f'password'),
+#         email=f"email_{random_str}" + "@mail.com",
+#         image=select_random_fk_reference(File),
+#         telephone='55555555',
+#         cell_phone='55555555',
+#         rfc=f'RFC {random_str}',
+#         curp=f'CURP {random_str}',
+#         address=select_random_fk_reference(Address),
+#         status=select_random_model_choice(Model.STATUS_CHOICES),
+#         mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
+#         settings=select_random_fk_reference(UserSettings)
+#     )
+
+#     return data
+
+# we defined a large number of possible users. Must be sufficient
+_users_gen = (i for i in range(1000))
+
+
+def create_user_data(test_word=None):
     """
     Returns a dict to be used in instance creation or for testing purposes
-    """
-    Model = User
 
-    random_str = create_random_string()
-    data = dict(
-        first_name=f'Name {random_str}',
-        second_name=f'Second Name {random_str}',
-        last_name=f'Last Name {random_str}',
-        password=make_password(f'password'),
-        email=f"email_{random_str}" + "@mail.com",
-        image=select_random_fk_reference(File),
-        telephone='55555555',
-        cell_phone='55555555',
-        rfc=f'RFC {random_str}',
-        curp=f'CURP {random_str}',
-        address=select_random_fk_reference(Address),
-        status=select_random_model_choice(Model.STATUS_CHOICES),
-        mfa_method=select_random_model_choice(Model.MFA_METHOD_CHOICES),
-        settings=select_random_fk_reference(UserSettings)
-    )
+    If test_word (str) is provided. It will create a user with credentials `username_<test_word>`
+    ans password `password_<test_word>`
+
+    Note: provide test_word argument is recommended in case where a single instance is being created for testing purposes
+    """
+    num_user = next(_users_gen) + 1
+    personal_data = asdict(UserPersonalData(
+        username=f"username_{num_user}",
+        first_name=f"Name {num_user}",
+        last_name=f"Last Name {num_user}",
+        email=f"email_{num_user}@example.com"
+    ))
+    base_permissions = asdict(UserBasePermissions(
+        is_staff=False,
+        is_active=False
+    ))
+
+    password = make_password(f'password_{num_user}')
+
+    additional_data = dict(id=uuid.uuid4(), password=password,
+
+                           )
+    data = dict()
+    data.update(personal_data)
+    data.update(base_permissions)
+    data.update(additional_data)
 
     return data
 
@@ -354,7 +402,6 @@ def create_users(n: int = 5):
     Model = User
 
     def create_new_instance():
-        random_str = create_random_string()
         data = create_user_data()
         new_instance = Model(**data)
         return new_instance
@@ -368,7 +415,7 @@ def create_instituion_manager_data() -> dict:
     Returns a dict to be used in instance creation or for testing purposes
     """
     Model = InstitutionManager
-    data = dict(user=select_random_fk_reference(User))
+    data = dict(user=select_random_fk_reference(User, return_type='uuid'))
     return data
 
 
@@ -396,7 +443,7 @@ def create_controller_data() -> dict:
     Returns a dict to be used in instance creation or for testing purposes
     """
     Model = Controller
-    data = dict(user=select_random_fk_reference(User))
+    data = dict(user=select_random_fk_reference(User, return_type='uuid'))
     return data
 
 
@@ -460,7 +507,8 @@ def create_institution_leads_data() -> dict:
     data = dict(contract=select_random_fk_reference(File),
                 rfc=f"RFC {random_str}",
                 logo=select_random_fk_reference(File),
-                contact_user=select_random_fk_reference(User),
+                contact_user=select_random_fk_reference(
+                    User, return_type='uuid'),
                 status=select_random_model_choice(Model.STATUS_CHOICES),
                 compliance_officer=select_random_fk_reference(
                     ComplianceOfficer),
@@ -549,7 +597,7 @@ def create_trader_data() -> dict:
     """
     Model = Trader
     random_str = create_random_string()
-    data = dict(user=select_random_fk_reference(User),
+    data = dict(user=select_random_fk_reference(User, return_type='uuid'),
                 license_type=select_random_model_choice(
                 Model.LICENSE_CHOICES, many=True),
                 institution=select_random_fk_reference(Institution))
@@ -651,7 +699,7 @@ def create_concierges(n: int = 5):
     def create_new_instance():
         random_str = create_random_string()
         new_instance = Model(
-            user=select_random_fk_reference(User),
+            user=select_random_fk_reference(User, return_type='uuid'),
         )
         new_instance.full_clean()
         new_instance.save()
@@ -863,7 +911,7 @@ def create_alarms(n: int = 5):
         new_instance = Model(
             alarm_type=select_random_model_choice(Model.TYPE_CHOICES),
             value='100',
-            security=select_random_fk_reference(Security)
+            security=select_random_fk_reference(Security, return_type='uuid')
         )
 
         return new_instance
@@ -958,7 +1006,7 @@ def create_cob_orders(n: int = 5):
 
         new_instance = Model(
             trader=select_random_fk_reference(Trader),
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             submission=submission,
             expiration=create_random_datetime(
                 '20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
@@ -1039,7 +1087,10 @@ def create_rfqs(n: int = 5):
         submission = create_random_datetime(
             '20/1/2021 1:30 PM', '20/3/2021 1:30 PM')
         new_instance = Model(
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
+
+
+
             trader=select_random_fk_reference(Trader),
             anonymous=random.choice([True, False]),
             public=random.choice([True, False]),
@@ -1131,7 +1182,7 @@ def create_rfq_auto_responders(n: int = 5):
         ask_notional = ask_price*min_volume
 
         new_instance = Model(
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             trader=select_random_fk_reference(Trader),
             min_volume=min_volume,
             max_volume=min_volume + random.randint(100, 1000000),
@@ -1207,7 +1258,7 @@ def create_cob_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             volume=Decimal(str(volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',
@@ -1266,7 +1317,7 @@ def create_rfq_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             volume=Decimal((volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',
@@ -1313,15 +1364,16 @@ def create_watchlists(n: int = 5):
             trader=select_random_fk_reference(Trader),
             name=f'Watchlist {random_str}',
             description='This is a watchlist',
-            status=select_random_model_choice(Model.STATUS_CHOICES)
+            status=select_random_model_choice(Model.STATUS_CHOICES),
+            securities=[
+                select_random_fk_reference(Security, return_type='uuid'),
+                select_random_fk_reference(Security, return_type='uuid'),
+                select_random_fk_reference(Security, return_type='uuid')]
         )
-        new_instance.full_clean()
-        new_instance.save()
-        new_instance.securities.add(select_random_fk_reference(Security))
         return new_instance
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
+        n=n, create_new_instance=create_new_instance, Model=Model)
 
 
 def create_notifications(n: int = 5):
@@ -1339,7 +1391,7 @@ def create_notifications(n: int = 5):
             notification_type=select_random_model_choice(Model.TYPE_CHOICES),
             body={"key": "this is a body"},
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            user=select_random_fk_reference(User)
+            user=select_random_fk_reference(User, return_type='uuid')
         )
 
         return new_instance
@@ -1369,7 +1421,7 @@ def run(interactive: bool = True):
             create_addresses(100)
             create_files(50)
             create_user_settings(50)
-            create_users(10)
+            create_users(2)
             create_institution_managers(10)
             create_controllers(10)
 

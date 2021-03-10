@@ -1,7 +1,5 @@
 from lib.django.custom_serializers import ApplicationModelSerializer
 
-# TODO: remove app_zero
-from app_zero.models import Rfq
 from mtrade.domain.market.order_group.models import OrderGroup
 
 

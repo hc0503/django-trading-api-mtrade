@@ -5,8 +5,7 @@ from typing import Type
 from django.db.models.manager import Manager
 
 # local imports
-from .models import OrderGroupFactory
-from .models import OrderGroup
+from .models import OrderGroup, OrderGroupFactory
 
 
 class OrderGroupServices():

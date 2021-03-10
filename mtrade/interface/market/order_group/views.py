@@ -1,5 +1,3 @@
-# python imports
-
 # django imports
 from drf_spectacular.utils import extend_schema_view
 from rest_framework import permissions
@@ -7,21 +5,12 @@ from rest_framework.response import Response
 
 # app imports
 from lib.django.custom_views import CreateListUpdateRetrieveViewSet
-
-# TODO: Remove app zero
 from mtrade.domain.market.order_group.models import OrderGroup
-from .serializers import OrderGroupSerializer
 from mtrade.application.market.order_group.services import OrderGroupAppServices
-# from app_zero.services import DefaultAppZeroServices
-# from app_zero.serializers import buildDefaultAppZeroSerializer
 
 # local imports
 from . import open_api
-#from . serializers import COBSerializer
-
-# ORDER_GROUP_ZERO_SERVICES = DefaultAppZeroServices(OrderGroup)
-# ORDER_GROUP_ZERO_SERIALIZER = buildDefaultAppZeroSerializer(
-#    OrderGroup, ORDER_GROUP_ZERO_SERVICES)
+from .serializers import OrderGroupSerializer
 
 
 @extend_schema_view(

@@ -42,9 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'mtrade.domain.users',
     'mtrade.domain.market',
+    'mtrade.domain.security',
+
     'app_zero.apps.AppZeroConfig',
+
     'rest_framework',
     'drf_spectacular',
     'django_extensions',
@@ -174,8 +178,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'json': {
-			'()': CustomisedJSONFormatter,
-		},
+            '()': CustomisedJSONFormatter,
+        },
         'app': {
             '()': ExtraFormatter,
             'format': 'level: "%(levelname)s"\t msg: "%(message)s"\t module: "%(name)s.%(funcName)s"\t time: "%(asctime)s"',
@@ -188,7 +192,7 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': BASE_DIR / 'logs/log.json',
             'formatter': 'json',
-		},
+        },
         'app_file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
@@ -198,11 +202,11 @@ LOGGING = {
     },
     'loggers': {
         '': {
-			'handlers': ['json_file', 'app_file'],
+            'handlers': ['json_file', 'app_file'],
             'level': 'DEBUG',
             # required to avoid double logging with root logger
             'propagate': False,
-		},
+        },
     },
 }
 
