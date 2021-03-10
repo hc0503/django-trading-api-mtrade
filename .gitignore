@@ -13,6 +13,7 @@ obsolete
 .env
 
 .vscode
+.vim
 
 .DS_Store
 logs/
