@@ -20,14 +20,16 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
         This method should transform validated data into domain
         value objects that should be passed to an application service
         """
-        raise NotImplementedError('`create_from_app_service()` must be implemented.')
+        raise NotImplementedError(
+            '`create_from_app_service()` must be implemented.')
 
     def update_from_app_service(self, user, instance, validated_data):
         """
         This method should transform validated data into domain
         value objects that should be passed to an application service
         """
-        raise NotImplementedError('`update_from_app_service()` must be implemented.')
+        raise NotImplementedError(
+            '`update_from_app_service()` must be implemented.')
 
     def get_user(self):
         request = self.context.get('request', None)
@@ -43,7 +45,8 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
         replaces direct calls to model creation with calls that go through
         the application layer.
         """
-        serializers.raise_errors_on_nested_writes('create', self, validated_data)
+        serializers.raise_errors_on_nested_writes(
+            'create', self, validated_data)
 
         ModelClass = self.Meta.model
 
@@ -55,10 +58,11 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
 
         instance = None
         try:
-            instance = self.create_from_app_service(self.get_user(), validated_data)
+            instance = self.create_from_app_service(
+                self.get_user(), validated_data)
         except VOValidationExcpetion as ve:
             raise BadRequest(ve)
-        #TODO: Check if handling for TypeError is still necessary
+        # TODO: Check if handling for TypeError is still necessary
         except TypeError:
             tb = traceback.format_exc()
             msg = (
@@ -92,11 +96,12 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
         replaces direct calls to model creation with calls that go through
         the application layer.
         """
-        serializers.raise_errors_on_nested_writes('update', self, validated_data)
+        serializers.raise_errors_on_nested_writes(
+            'update', self, validated_data)
         info = model_meta.get_field_info(instance)
 
         m2m_fields = []
-        #for attr, value in validated_data.items():
+        # for attr, value in validated_data.items():
         #    if attr in info.relations and info.relations[attr].to_many:
         #        m2m_fields.append((attr, value))
 
@@ -106,7 +111,8 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
 
         updated_instance = None
         try:
-            updated_instance = self.update_from_app_service(self.get_user(), instance, validated_data)
+            updated_instance = self.update_from_app_service(
+                self.get_user(), instance, validated_data)
         except VOValidationExcpetion as ve:
             raise BadRequest(ve)
         except Exception as ve:

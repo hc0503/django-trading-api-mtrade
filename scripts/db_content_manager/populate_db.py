@@ -17,6 +17,7 @@ from django.db import models
 
 from app_zero.models import *
 from mtrade.domain.market.order_group.models import OrderGroup
+from mtrade.domain.security.models import SecurityIssuer, Security
 
 from mtrade.settings import TIME_ZONE
 pd.options.display.max_columns = 500
@@ -147,11 +148,19 @@ def select_random_fk_reference(Model: models.Model, return_type='model_instance'
 
 
     """
-    instance = random.choice(Model.objects.all())
+    universe = Model.objects.all()
+    instance = random.choice(universe)
 
     if return_type == 'model_instance':
         return instance
     elif return_type == 'uuid':
+        # if many:
+        # try:
+        #     num_returned = random.randint(1, len(5))
+        #     return [i.id for i in random.choices(universe, k=num_returned)]
+        # except:
+        #     logger.error(
+        #         'There was a problem chosing. There are probably too little instances to chose from.')
         return instance.id
     else:
         print('Provided return_type is incorrect')
@@ -863,7 +872,7 @@ def create_alarms(n: int = 5):
         new_instance = Model(
             alarm_type=select_random_model_choice(Model.TYPE_CHOICES),
             value='100',
-            security=select_random_fk_reference(Security)
+            security=select_random_fk_reference(Security, return_type='uuid')
         )
 
         return new_instance
@@ -958,7 +967,7 @@ def create_cob_orders(n: int = 5):
 
         new_instance = Model(
             trader=select_random_fk_reference(Trader),
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             submission=submission,
             expiration=create_random_datetime(
                 '20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
@@ -1039,7 +1048,10 @@ def create_rfqs(n: int = 5):
         submission = create_random_datetime(
             '20/1/2021 1:30 PM', '20/3/2021 1:30 PM')
         new_instance = Model(
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
+
+
+
             trader=select_random_fk_reference(Trader),
             anonymous=random.choice([True, False]),
             public=random.choice([True, False]),
@@ -1131,7 +1143,7 @@ def create_rfq_auto_responders(n: int = 5):
         ask_notional = ask_price*min_volume
 
         new_instance = Model(
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             trader=select_random_fk_reference(Trader),
             min_volume=min_volume,
             max_volume=min_volume + random.randint(100, 1000000),
@@ -1207,7 +1219,7 @@ def create_cob_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             volume=Decimal(str(volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',
@@ -1266,7 +1278,7 @@ def create_rfq_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader),
             seller=select_random_fk_reference(Trader),
-            security=select_random_fk_reference(Security),
+            security=select_random_fk_reference(Security, return_type='uuid'),
             volume=Decimal((volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',
@@ -1313,15 +1325,16 @@ def create_watchlists(n: int = 5):
             trader=select_random_fk_reference(Trader),
             name=f'Watchlist {random_str}',
             description='This is a watchlist',
-            status=select_random_model_choice(Model.STATUS_CHOICES)
+            status=select_random_model_choice(Model.STATUS_CHOICES),
+            securities=[
+                select_random_fk_reference(Security, return_type='uuid'),
+                select_random_fk_reference(Security, return_type='uuid'),
+                select_random_fk_reference(Security, return_type='uuid')]
         )
-        new_instance.full_clean()
-        new_instance.save()
-        new_instance.securities.add(select_random_fk_reference(Security))
         return new_instance
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
+        n=n, create_new_instance=create_new_instance, Model=Model)
 
 
 def create_notifications(n: int = 5):

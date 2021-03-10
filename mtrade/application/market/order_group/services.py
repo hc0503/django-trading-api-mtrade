@@ -4,7 +4,7 @@ from django.db.models.query import QuerySet
 # app imports
 from mtrade.domain.market.order_group.services import OrderGroupServices as ogs
 
-from mtrade.domain.market.order_group.services import OrderGroup, OrderGroupFactory
+from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory
 
 
 class OrderGroupAppServices():

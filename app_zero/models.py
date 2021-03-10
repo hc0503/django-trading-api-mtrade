@@ -17,20 +17,20 @@ from django.contrib.auth.models import AbstractUser
 from rest_framework.renderers import JSONRenderer
 
 from lib.data_manipulation.daydiff import daydiff
+from lib.django import custom_models
 
 
 logger = logging.getLogger(__name__)
 
 """
 NOTES ON DEVELOPMENT
-* created_at fields in each model should be auto_add_now=True, editable=False. Check every case, since this is not yet completely implemented (for data generation purposes)
 * check unique constraints for each model field
 * manage test dafault fields -> they are used for creating dummy data easily
 * all ForeignKey on_delete are set to models.SET_NULL -> check if this is OK in every case
 """
 
 
-class Address(models.Model):
+class Address(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     address = models.CharField(max_length=250, default='Test street 9-9')
     country = models.CharField(max_length=250, default='Test country')
@@ -38,19 +38,17 @@ class Address(models.Model):
     municipality = models.CharField(
         max_length=250, default='Test municipality')
     zip_code = models.CharField(max_length=250, default='Test zip code')
-    created_at = models.DateTimeField(auto_now_add=True)
 
 
-class File(models.Model):
+class File(custom_models.DatedModel):
     """
     Represents a File
     """
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     location = models.URLField(max_length=500)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class UserSettings(models.Model):
+class UserSettings(custom_models.DatedModel):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     timezone = models.CharField(max_length=250)
@@ -59,7 +57,7 @@ class UserSettings(models.Model):
     theme_preferences = models.JSONField()
 
 
-class User(models.Model):
+class User(custom_models.DatedModel):
     # username, first_name, last_name, email are inherited from AbstractUser
     STATUS_ENABLED = 'enabled'
     STATUS_DISABLED = 'disabled'
@@ -94,31 +92,28 @@ class User(models.Model):
         UserSettings, on_delete=models.SET_NULL, null=True)
 
 
-class InstitutionManager(models.Model):
+class InstitutionManager(custom_models.DatedModel):
     """
     Represents an Institution Manager
     """
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class Controller(models.Model):
+class Controller(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class ComplianceOfficer(models.Model):
+class ComplianceOfficer(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     first_name = models.CharField(max_length=250, default='Test first name')
     last_name = models.CharField(max_length=250, default='Test last name')
     telephone = models.CharField(max_length=250, default='Test 555555555')
     email = models.EmailField(max_length=250, default='test@mail.com')
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class InstitutionLead(models.Model):
+class InstitutionLead(custom_models.DatedModel):
     """
     Represents an Institution Lead
     """
@@ -143,10 +138,9 @@ class InstitutionLead(models.Model):
     compliance_officer = models.ForeignKey(
         ComplianceOfficer, on_delete=models.SET_NULL, null=True)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class Institution(models.Model):
+class Institution(custom_models.DatedModel):
 
     TRADING_LICENSE = 'trading'
     VIEW_ONLY_LICENSE = 'data'
@@ -182,10 +176,9 @@ class Institution(models.Model):
     compliance_officer = models.ForeignKey(
         ComplianceOfficer, on_delete=models.SET_NULL, null=True)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class Trader(models.Model):
+class Trader(custom_models.DatedModel):
     """
     Repredents a Trader 
     """
@@ -204,19 +197,17 @@ class Trader(models.Model):
         max_length=150, choices=LICENSE_CHOICES))
     institution = models.ForeignKey(
         Institution, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class ContactPerson(models.Model):
+class ContactPerson(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     first_name = models.CharField(max_length=250, default='Test first name')
     last_name = models.CharField(max_length=250, default='Test last name')
     telephone = models.CharField(max_length=250, default='Test 555555555')
     email = models.EmailField(max_length=250, default='test@mail.com')
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class Lead(models.Model):
+class Lead(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     institution_lead = models.ForeignKey(
         InstitutionLead, on_delete=models.SET_NULL, null=True)
@@ -225,285 +216,16 @@ class Lead(models.Model):
     contact_person = models.ForeignKey(
         ContactPerson, on_delete=models.SET_NULL, null=True)
     comments = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class Concierge(models.Model):
+class Concierge(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     leads = models.ManyToManyField(Lead)
     institutions = models.ManyToManyField(Institution)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class SecurityIssuer(models.Model):
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    name = models.CharField(max_length=250)
-
-
-class Security(models.Model):
-
-    class Meta:
-        verbose_name_plural = "Securities"
-
-    REG_CNBV = 'cnbv'
-    REG_144A = '144a'
-    REG_REG_S = 'reg-s'
-    REG_SEC_REG = 'sec-reg'
-    REG_MEX_PP = 'mex-pp'
-    REG_SOV = 'sov'
-    REG_SOV_GTEE = 'sov-gtee'
-    REGISTRATION_CHOICES = [
-        (REG_CNBV, 'CNBV'),
-        (REG_144A, '144A'),
-        (REG_REG_S, 'RegS'),
-        (REG_SEC_REG, 'SEC-Reg'),
-        (REG_MEX_PP, 'Mex PP'),
-        (REG_SOV, 'Sov'),
-        (REG_SOV_GTEE, 'Sov Gtee')
-    ]
-
-    TYPE_M_BONO = 'm-bono'
-    TYPE_MEX_CORP_CEBUR = 'mex-corp-cebur'
-    TYPE_MEX_CORP_ST_CEBUR_CP = 'mex-corp-st-cebur-cp'
-    TYPE_ASSET_BACKEND_CEBUR_F = 'asset-backend-cebur-f'
-    TYPE_CETE = 'cete'
-    TYPE_BONDE = 'bonde'
-    SECURITY_TYPE_CHOICES = [
-        (TYPE_M_BONO, 'MBono'),
-        (TYPE_MEX_CORP_CEBUR, 'Mex Corp (CEBUR)'),
-        (TYPE_MEX_CORP_ST_CEBUR_CP, 'Mex Corp St (CEBUR CP)'),
-        (TYPE_ASSET_BACKEND_CEBUR_F, 'Asset-Backed (CEBUR F)'),
-        (TYPE_CETE, 'CETE'),
-        (TYPE_BONDE, 'BONDE')
-    ]
-
-    SENIOR_SENIORITY = 'senior'
-    SUBORDINATE_SENIORITY = 'subordinate'
-    CONTINGENT_CAPITAL_AT1 = 'contingent-capital-at1'
-    CONTINGENT_CAPITAL_T2 = 'contingent-capital-t2'
-    SENIORITY_TYPE_CHOICES = [
-        (SENIOR_SENIORITY, 'Senior'),
-        (SUBORDINATE_SENIORITY, 'Subordinate'),
-        (CONTINGENT_CAPITAL_AT1, 'Contingent Capital AT1'),
-        (CONTINGENT_CAPITAL_T2, 'Contingent Capital T2')
-    ]
-
-    GUARANTEE_SECURED = 'secured'
-    GUARANTEE_UNSECURED = 'unsecured'
-    GUARANTEE_TYPE_CHOICES = [
-        (GUARANTEE_SECURED, 'Secured'),
-        (GUARANTEE_UNSECURED, 'Unsecured')
-    ]
-
-    AVERAGE_30_DAY = '30-day-avg'
-    REDEMPTION_TYPE_CHOICES = [
-        (AVERAGE_30_DAY, '30 day average')
-    ]
-
-    # NOTE: consider moving currency definition elsewhere
-    USD_CURRENCY = 'usd'
-    MXN_CURRENCY = 'mxn'
-    UDI_CURRENCY = 'udi'
-    CURRENCY_OF_PAYMENTS_CHOICES = [
-        (USD_CURRENCY, 'US Dollars'),
-        (MXN_CURRENCY, 'Mexican Peso')
-    ]
-    CURRENCY_RISK_CHOICES = (
-        (USD_CURRENCY, 'US Dollar'),
-        (MXN_CURRENCY, 'Mexican Peso'),
-        (UDI_CURRENCY, 'UDI')
-    )
-
-    DAY_COUNT_CONVENTION_MX_ACT_360 = 'mx-act-360'
-    DAY_COUNT_CONVENTION_US_30_360 = 'us-30-360'
-    DAY_COUNT_CONVENTION_CHOICES = (
-        (DAY_COUNT_CONVENTION_MX_ACT_360, 'MEX Conv (ACT/360)'),
-        (DAY_COUNT_CONVENTION_US_30_360, 'US Conv (30/360)')
-    )
-
-    PERIOD_7_DAYS = '7d'
-    PERIOD_28_DAYS = '28d'
-    PERIOD_182_DAYS = '182d'
-    PERIOD_360_DAYS = '360d'
-    COUPON_PERIOD_CHOICES = (
-        (PERIOD_7_DAYS, '7 days'),
-        (PERIOD_28_DAYS, '28 days'),
-        (PERIOD_182_DAYS, '182 days'),
-        (PERIOD_360_DAYS, '360 days'),
-    )
-
-    BULLET = 'bullet'
-    AMORTIZER = 'amortizer'
-    SOFT_BULLET = 'soft-bullet'
-    VARIABLE_AMORTIZER = 'variable-amortizer'
-    AMORTIZATION_STRUCTURE_CHOICES = (
-        (BULLET, 'Bullet'),
-        (AMORTIZER, 'Amortizer'),
-        (SOFT_BULLET, 'Soft bullet'),
-        (VARIABLE_AMORTIZER, 'Variable amortizer'),
-    )
-
-    INDEVAL_CLEARING = 'indeval'
-    DTC_CLEARING = 'dtc'
-    EUROCLEAR_CLEARING = 'euroclear'
-    CLEARSTREAM_CLEARING = 'clearstream'
-    CLEARING_CHOICES = (
-        (INDEVAL_CLEARING, 'Indeval'),
-        (DTC_CLEARING, 'DTC'),
-        (EUROCLEAR_CLEARING, 'Euroclear'),
-        (CLEARSTREAM_CLEARING, 'Clearstream')
-    )
-
-    BMV_LISTING = 'bmv'
-    LUX_LISTING = 'lux'
-    STG_LISTING = 'stg'
-    LISTING_CHOICES = [
-        (BMV_LISTING, 'BMV'),
-        (LUX_LISTING, 'LUX'),
-        (STG_LISTING, 'STG'),
-    ]
-
-    CATEGORY_FIXED_RATE = 'fixed-rate'
-    CATEGORY_CHOICES = [
-        (CATEGORY_FIXED_RATE, 'Fixed Rate')
-    ]
-
-    SECURITY_REMAINING_TENOR_FILTER_CHOICES = (
-        # NOTE: used for filtering remaining tenor
-        # codes for remaining tenor are provided in days. Structure for code must be:
-        # <lte>_<number_of_min_days>[_<gte>_<number_of_max_days>]
-        ("lte_30", "< 1month"),
-        ("gte_30__lte_90", "1-3 months"),
-        ("gte_90__lte_180", "3-6 months"),
-        ("gte_180__lte_365", "6-12 months"),
-        ("gte_365__lte_1095", "1-3 years"),
-        ("gte_1095__lte_1825", "3-5 years"),
-        ("gte_1825__lte_2920", "5-8 years"),
-        ("gte_2920__lte_4380", "8-12 years"),
-        ("gte_4380__lte_7300",  "12-20 years"),
-        ("gte_7300__lte_10950", "20-30 years")
-    )
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    isin = models.CharField(max_length=250, unique=True)
-    name = models.CharField(max_length=250)
-    ticker = models.CharField(max_length=250)
-    series = models.CharField(max_length=250, unique=True)
-    issuer = models.ForeignKey(
-        SecurityIssuer, on_delete=models.SET_NULL, null=True)
-    registration = models.CharField(
-        max_length=250, choices=REGISTRATION_CHOICES)
-    classification_mx = models.CharField(max_length=250)
-    # amortization_scheme must have following structure: {0:{ "date": "08/08/19", "amort": "0"}, 1:{"date": "06/02/20", "amort": "0"}, 2:{"date": "06/08/20", "amort": "1"}}
-    amortization_scheme = models.JSONField(encoder=DjangoJSONEncoder)
-
-    coupon_rate = models.DecimalField(max_digits=40, decimal_places=20)
-    initial_margin = models.DecimalField(max_digits=40, decimal_places=20)
-    issue_date = models.DateTimeField()
-    first_coupon_date = models.DateTimeField()
-    final_maturity_date = models.DateTimeField()
-    nominal_value = models.DecimalField(max_digits=40, decimal_places=20)
-    year_day_count = models.IntegerField()
-    redemption_price = models.DecimalField(max_digits=40, decimal_places=20)
-    security_notes = models.CharField(
-        max_length=250)
-    number_of_payments = models.PositiveIntegerField()
-    issued_amount = models.DecimalField(max_digits=40, decimal_places=20)
-    outstanding = models.DecimalField(max_digits=40, decimal_places=20)
-    category = models.CharField(
-        max_length=250, choices=CATEGORY_CHOICES)
-    listing = ArrayField(models.CharField(
-        max_length=150, choices=LISTING_CHOICES))
-    clearing = ArrayField(models.CharField(
-        max_length=150, choices=CLEARING_CHOICES))
-    amortization_structure = models.CharField(
-        max_length=150, choices=AMORTIZATION_STRUCTURE_CHOICES)
-    redemption_type = models.CharField(
-        max_length=150, choices=REDEMPTION_TYPE_CHOICES)
-    coupon_period = models.CharField(
-        max_length=150, choices=COUPON_PERIOD_CHOICES)
-    day_count_convention = models.CharField(
-        max_length=150, choices=DAY_COUNT_CONVENTION_CHOICES)
-    currency_risk = models.CharField(
-        max_length=150, choices=CURRENCY_RISK_CHOICES)
-    currency_of_payments = models.CharField(
-        max_length=150, choices=CURRENCY_OF_PAYMENTS_CHOICES)
-    security_type = models.CharField(
-        max_length=150, choices=SECURITY_TYPE_CHOICES)
-    seniority = models.CharField(
-        max_length=150, choices=SENIORITY_TYPE_CHOICES)
-    guarantee = models.CharField(
-        max_length=150, choices=GUARANTEE_TYPE_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def clean(self):
-        # validate amortization_scheme_data
-        amortization_scheme = self.amortization_scheme
-
-        # checar estructura de lo que see envió y de paso convertir a integer las keys
-        dict_with_int_keys = dict()
-        for key, val in amortization_scheme.items():
-            try:
-                int_key = int(key)
-
-            except Exception as e:
-                raise ValidationError(
-                    'Check amort scheme info for creating security')
-            if "date" not in val.keys():
-                raise ValidationError(
-                    "All amort scheme rows must have a 'date' value")
-            if "amort" not in val.keys():
-                raise ValidationError(
-                    "All amort scheme rows must have an 'amort' value")
-            if "outstanding" not in val.keys():
-                raise ValidationError(
-                    "All amort scheme rows must have an 'outstanding' value")
-            if "interest" not in val.keys():
-                raise ValidationError(
-                    "All amort scheme rows must have an 'interest' value")
-            dict_with_int_keys[int_key] = val
-
-        return
-
-    def get_remaining_tenor(self, settlement_date=datetime.now()):
-        """
-        Returns Security's remaining tenor as specified in spreadsheet
-        """
-        date_format = "%d/%m/%Y"
-        year_day_count = self.year_day_count
-        amortization_scheme = self.amortization_scheme
-
-        amortization_dict = dict()
-        # make sure keys are sorted chronologically
-        for key, val in amortization_scheme.items():
-            amortization_dict[int(key)] = {'amort': float(
-                val['amort']), 'date': val['date']}
-
-        for key in sorted(amortization_dict.keys()):
-            date_t = datetime.strptime(
-                amortization_dict[key]['date'], date_format)
-            amortization_dict[key]['years'] = (
-                daydiff(settlement_date, date_t, 'ACTUAL/365 FIXED')) / year_day_count
-            amortization_dict[key]['weight'] = amortization_dict[key]['years'] * \
-                amortization_dict[key]['amort'] if amortization_dict[key]['years'] > 0 else 0
-        # compute remaining tenor (wal)
-        remaining_tenor = sum([v['weight']
-                               for k, v in amortization_dict.items()])
-        # TODO: check if following expression is correct (should we multiply by something else other than 365?)
-        return remaining_tenor * 365
-
-    def get_outstanding_mxn(self):
-        # get currency exchange rate (note that an additional outstanding filter is performed in this case since outstanding_mxn may be reduced to outstanding, provided we have the currency exchange rate)
-        dolar_peso_exchange_rate = 20
-        return float(self.outstanding) * float(dolar_peso_exchange_rate)
-
-    # TODO: discuss
-    def get_issued_amount_mxn(self):
-        dolar_peso_exchange_rate = 20
-        return float(self.issued_amount) * float(dolar_peso_exchange_rate)
-
-
-class SettlementInstruction(models.Model):
+class SettlementInstruction(custom_models.DatedModel):
 
     # these clearing valiues ust be in sync with securities'
     INDEVAL_CLEARING = 'indeval'
@@ -535,11 +257,10 @@ class SettlementInstruction(models.Model):
         Institution, on_delete=models.SET_NULL, null=True)
     trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=250, choices=STATUS_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     deactivated_at = models.DateTimeField(null=True, blank=True)
 
 
-class Alarm(models.Model):
+class Alarm(custom_models.DatedModel):
 
     YIELD_TYPE = 'yield'
     PRICE_TYPE = 'price'
@@ -554,12 +275,11 @@ class Alarm(models.Model):
     alarm_type = models.CharField(
         max_length=150, choices=TYPE_CHOICES)
     value = models.DecimalField(max_digits=40, decimal_places=20)
-    security = models.ForeignKey(
-        Security, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    # ref to Security
+    security = models.UUIDField()
 
 
-class CobOrder(models.Model):
+class CobOrder(custom_models.DatedModel):
 
     ACTIVE_STATUS = 'active'
     CANCELLED_STATUS = 'cancelled'
@@ -584,8 +304,8 @@ class CobOrder(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     trader = models.ForeignKey(
         Trader, null=True, on_delete=models.SET_NULL)
-    security = models.ForeignKey(
-        Security, null=True, on_delete=models.SET_NULL)
+    # ref to Security
+    security = models.UUIDField()
     submission = models.DateTimeField()
     expiration = models.DateTimeField()
     volume = models.IntegerField()
@@ -600,14 +320,14 @@ class CobOrder(models.Model):
     yield_value = models.DecimalField(max_digits=40, decimal_places=20)
     direction = models.CharField(
         max_length=150, choices=DIRECTION_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True)
+
     # TODO: update order_group ref when in same module s OrderGroup
     # order_group = models.ForeignKey(
     #     OrderGroup, on_delete=models.SET_NULL, null=True)
     order_group = models.UUIDField()
 
 
-class CobAutoRefresher(models.Model):
+class CobAutoRefresher(custom_models.DatedModel):
 
     TYPE_FIXED_PRICE = 'fixed-price'
     TYPE_FIXED_SPREAD = 'fixed-spread'
@@ -622,10 +342,9 @@ class CobAutoRefresher(models.Model):
         CobOrder, null=True, on_delete=models.SET_NULL)
     autorefresh_type = models.CharField(max_length=150, choices=TYPE_CHOICES)
     interval = models.PositiveIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class CobStream(models.Model):
+class CobStream(custom_models.DatedModel):
     STATUS_ACTIVE = 'active'
     STATUS_DEACTIVATED = 'deactivated'
     STATUS_CHOICES = [
@@ -636,7 +355,6 @@ class CobStream(models.Model):
     cob_order = models.ForeignKey(
         CobOrder, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     deactivated_at = models.DateTimeField(null=True, blank=True)
     # TODO: update order_group ref when in same module as OrderGroup
     # order_group = models.ForeignKey(
@@ -644,7 +362,7 @@ class CobStream(models.Model):
     order_group = models.UUIDField()
 
 
-class Rfq(models.Model):
+class Rfq(custom_models.DatedModel):
 
     BUY_DIRECTION = 'buy'
     SELL_DIRECTION = 'sell'
@@ -672,8 +390,9 @@ class Rfq(models.Model):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    security = models.ForeignKey(
-        Security, null=True, on_delete=models.SET_NULL)
+    # ref to Security
+    security = models.UUIDField()
+
     trader = models.ForeignKey(
         Trader, null=True, on_delete=models.SET_NULL)
     anonymous = models.BooleanField(default=True)
@@ -687,14 +406,13 @@ class Rfq(models.Model):
     counterparties = models.ManyToManyField(Institution)
     settlement_currency = models.CharField(
         max_length=150, choices=SETTLEMENT_CURRENCY_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     # TODO: update order_group ref when in same module s OrderGroup
     # order_group = models.ForeignKey(
     #     OrderGroup, on_delete=models.SET_NULL, null=True)
     order_group = models.UUIDField()
 
 
-class RfqResponse(models.Model):
+class RfqResponse(custom_models.DatedModel):
 
     CANCELLED_STATUS = 'cancelled'
     EXPIRED_STATUS = 'expired'
@@ -729,10 +447,8 @@ class RfqResponse(models.Model):
     bid_fx = models.DecimalField(max_digits=40, decimal_places=20)
     autoresponded = models.BooleanField()
 
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
-
-class RfqAutoResponder(models.Model):
+class RfqAutoResponder(custom_models.DatedModel):
 
     ACTIVE_STATUS = 'active'
     DEACTIVATED_STATUS = 'deactivated'
@@ -749,8 +465,8 @@ class RfqAutoResponder(models.Model):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    security = models.ForeignKey(
-        Security,  on_delete=models.SET_NULL, null=True)
+    # ref to Security
+    security = models.UUIDField()
     trader = models.ForeignKey(
         Trader, on_delete=models.SET_NULL, null=True)
     counterparties = models.ManyToManyField(Institution)
@@ -772,11 +488,10 @@ class RfqAutoResponder(models.Model):
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
     priority = models.DateTimeField()
 
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     deactivated_at = models.DateTimeField(null=True, blank=True)
 
 
-class RfqLock(models.Model):
+class RfqLock(custom_models.DatedModel):
     ACTIVE_STATUS = 'active'
     DEACTIVATED_STATUS = 'deactivated'
     STATUS_CHOICES = [
@@ -788,10 +503,9 @@ class RfqLock(models.Model):
     trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
     institution = models.ForeignKey(
         Institution, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     deactivated_at = models.DateTimeField(null=True, blank=True)
 
-# class BaseTransaction(models.Model):
+# class BaseTransaction(custom_models.DatedModel):
 #     """
 #     Base class used for CobTransaction and RfqTransaction
 #     """
@@ -837,10 +551,9 @@ class RfqLock(models.Model):
 #     settlement_currency = models.CharField(
 #         max_length=150, choices=SETTLEMENT_CURRENCY_CHOICES)
 #     fx = models.DecimalField(max_digits=40, decimal_places=20)
-#     created_at = models.DateTimeField()
 
 
-class CobTransaction(models.Model):
+class CobTransaction(custom_models.DatedModel):
     CLOSED_STATUS = 'closed'
     BOOKED_STATUS = 'booked'
     FAILED_STATUS = 'failed'
@@ -861,8 +574,8 @@ class CobTransaction(models.Model):
         Trader, null=True, on_delete=models.SET_NULL, related_name='cob_transaction_buyer')
     seller = models.ForeignKey(
         Trader, null=True, on_delete=models.SET_NULL, related_name='cob_transaction_seller')
-    security = models.ForeignKey(
-        Security, null=True, on_delete=models.SET_NULL)
+    # ref to Security
+    security = models.UUIDField()
     volume = models.IntegerField()
     notional = models.DecimalField(max_digits=40, decimal_places=20)
     accrued_interest = models.DecimalField(max_digits=40, decimal_places=20)
@@ -886,7 +599,6 @@ class CobTransaction(models.Model):
     settlement_currency = models.CharField(
         max_length=150, choices=SETTLEMENT_CURRENCY_CHOICES)
     fx = models.DecimalField(max_digits=40, decimal_places=20)
-    created_at = models.DateTimeField()
     sell_order = models.ForeignKey(
         CobOrder, null=True, on_delete=models.SET_NULL, related_name='cob_sell_order')
     buy_order = models.ForeignKey(
@@ -895,7 +607,7 @@ class CobTransaction(models.Model):
         max_digits=40, decimal_places=20, null=True, blank=True)
 
 
-class RfqTransaction(models.Model):
+class RfqTransaction(custom_models.DatedModel):
     CLOSED_STATUS = 'closed'
     BOOKED_STATUS = 'booked'
     FAILED_STATUS = 'failed'
@@ -916,8 +628,8 @@ class RfqTransaction(models.Model):
         Trader, null=True, on_delete=models.SET_NULL, related_name='rfq_transaction_buyer')
     seller = models.ForeignKey(
         Trader, null=True, on_delete=models.SET_NULL, related_name='rfq_transaction_seller')
-    security = models.ForeignKey(
-        Security, null=True, on_delete=models.SET_NULL)
+    # ref to Security
+    security = models.UUIDField()
     volume = models.IntegerField()
     notional = models.DecimalField(max_digits=40, decimal_places=20)
     accrued_interest = models.DecimalField(max_digits=40, decimal_places=20)
@@ -941,14 +653,13 @@ class RfqTransaction(models.Model):
     settlement_currency = models.CharField(
         max_length=150, choices=SETTLEMENT_CURRENCY_CHOICES)
     fx = models.DecimalField(max_digits=40, decimal_places=20)
-    created_at = models.DateTimeField()
     rfq = models.ForeignKey(
         Rfq, null=True, on_delete=models.SET_NULL)
     rfq_response = models.ForeignKey(
         RfqResponse, null=True, on_delete=models.SET_NULL)
 
 
-class Watchlist(models.Model):
+class Watchlist(custom_models.DatedModel):
 
     ACTIVE_STATUS = 'active'
     DEACTIVATED_STATUS = 'deactivated'
@@ -961,14 +672,14 @@ class Watchlist(models.Model):
     trader = models.ForeignKey(
         Trader, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=250)
-    securities = models.ManyToManyField(Security)
+    # ref to Security
+    securities = ArrayField(models.UUIDField(), null=True, blank=True)
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
     description = models.TextField(blank=True, default='')
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     archived_at = models.DateTimeField(null=True, blank=True)
 
 
-class TradeBlockSettlement(models.Model):
+class TradeBlockSettlement(custom_models.DatedModel):
 
     FAILED_STATUS = 'failed'
     SETTLED_STATUS = 'settled'
@@ -982,10 +693,9 @@ class TradeBlockSettlement(models.Model):
     notional = models.DecimalField(max_digits=40, decimal_places=20)
     status = models.CharField(
         max_length=150, choices=STATUS_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class TradeBlock(models.Model):
+class TradeBlock(custom_models.DatedModel):
     # NOTE: NOT READY: define trandsactions and transaction_block_settlements
     USD_CURRENCY = 'usd'
     MXN_CURRENCY = 'mxn'
@@ -1004,8 +714,8 @@ class TradeBlock(models.Model):
     # transactions =
     # transaction_block_settlements
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    security = models.ForeignKey(
-        Security, on_delete=models.SET_NULL, null=True)
+    # ref to Security
+    security = models.UUIDField()
     volume = models.IntegerField()
     notional = models.DecimalField(max_digits=40, decimal_places=20)
     settlement_currency = models.CharField(
@@ -1023,10 +733,9 @@ class TradeBlock(models.Model):
         Institution, on_delete=models.SET_NULL, null=True, related_name='seller_institution')
     booked_by = models.ForeignKey(
         Trader, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class Notification(models.Model):
+class Notification(custom_models.DatedModel):
     TYPE_RFQ_SUBMITTED = 'rfq-submitted'
     TYPE_RFQ_FULFILLED = 'rfq-fulfilled'
     TYPE_RFQ_EXPIRED = 'rfq-expired'
@@ -1120,10 +829,9 @@ class Notification(models.Model):
     body = models.JSONField(encoder=DjangoJSONEncoder)
     status = models.CharField(max_length=250, choices=STATUS_CHOICES)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
-class NotificationSettings(models.Model):
+class NotificationSettings(custom_models.DatedModel):
 
     NOTIFY_AS_EMAIL = 'email'
     NOTIFY_AS_INBOX = 'inbox'
@@ -1141,7 +849,6 @@ class NotificationSettings(models.Model):
         max_length=250, choices=Notification.TYPE_CHOICES)
     notify_as = ArrayField(models.CharField(
         max_length=250, choices=NOTIFY_AS_CHOICES))
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
 
 model_list = [
@@ -1158,8 +865,6 @@ model_list = [
     ContactPerson,
     Lead,
     Concierge,
-    SecurityIssuer,
-    Security,
     SettlementInstruction,
     Alarm,
     CobOrder,
