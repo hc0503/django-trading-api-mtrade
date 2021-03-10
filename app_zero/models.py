@@ -180,26 +180,26 @@ class Institution(custom_models.DatedModel):
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
 
 
-class Trader(custom_models.DatedModel):
-    """
-    Repredents a Trader 
-    """
-    TRADER_LICENSE = 'trader'
-    ANALYST_LICENSE = 'analyst'
-    DEMO_LICENSE = 'demo'
-    LICENSE_CHOICES = [
-        (TRADER_LICENSE, 'Trader License'),
-        (ANALYST_LICENSE, 'Analyst License'),
-        (DEMO_LICENSE, 'Demo License')
-    ]
+# class Trader(custom_models.DatedModel):
+#     """
+#     Represents a Trader
+#     """
+#     TRADER_LICENSE = 'trader'
+#     ANALYST_LICENSE = 'analyst'
+#     DEMO_LICENSE = 'demo'
+#     LICENSE_CHOICES = [
+#         (TRADER_LICENSE, 'Trader License'),
+#         (ANALYST_LICENSE, 'Analyst License'),
+#         (DEMO_LICENSE, 'Demo License')
+#     ]
 
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    # ref to User
-    user = models.UUIDField()
-    license_type = ArrayField(models.CharField(
-        max_length=150, choices=LICENSE_CHOICES))
-    institution = models.ForeignKey(
-        Institution, on_delete=models.SET_NULL, null=True)
+#     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+#     # ref to User
+#     user = models.UUIDField()
+#     license_type = ArrayField(models.CharField(
+#         max_length=150, choices=LICENSE_CHOICES))
+#     institution = models.ForeignKey(
+#         Institution, on_delete=models.SET_NULL, null=True)
 
 
 class ContactPerson(custom_models.DatedModel):
@@ -259,7 +259,8 @@ class SettlementInstruction(custom_models.DatedModel):
     custodian = models.CharField(max_length=250)
     institution = models.ForeignKey(
         Institution, on_delete=models.SET_NULL, null=True)
-    trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
+    # ref to Trader
+    trader = models.UUIDField()
     status = models.CharField(max_length=250, choices=STATUS_CHOICES)
     deactivated_at = models.DateTimeField(null=True, blank=True)
 
@@ -306,8 +307,8 @@ class CobOrder(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    trader = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL)
+    # ref to Trader
+    trader = models.UUIDField()
     # ref to Security
     security = models.UUIDField()
     submission = models.DateTimeField()
@@ -396,9 +397,8 @@ class Rfq(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Security
     security = models.UUIDField()
-
-    trader = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL)
+    # ref to Trader
+    trader = models.UUIDField()
     anonymous = models.BooleanField(default=True)
     public = models.BooleanField(default=False)
     submission = models.DateTimeField()
@@ -428,8 +428,8 @@ class RfqResponse(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    trader = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL)
+    # ref to Trader
+    trader = models.UUIDField()
     submission = models.DateTimeField()
     rfq = models.ForeignKey(
         Rfq, null=True, on_delete=models.SET_NULL)
@@ -471,8 +471,9 @@ class RfqAutoResponder(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Security
     security = models.UUIDField()
-    trader = models.ForeignKey(
-        Trader, on_delete=models.SET_NULL, null=True)
+    # ref to Trader
+    trader = models.UUIDField()
+
     counterparties = models.ManyToManyField(Institution)
     min_volume = models.PositiveIntegerField()
     max_volume = models.PositiveIntegerField()
@@ -504,7 +505,8 @@ class RfqLock(custom_models.DatedModel):
     ]
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
-    trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
+    # ref to Trader
+    trader = models.UUIDField()
     institution = models.ForeignKey(
         Institution, on_delete=models.SET_NULL, null=True)
     deactivated_at = models.DateTimeField(null=True, blank=True)
@@ -574,10 +576,10 @@ class CobTransaction(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    buyer = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL, related_name='cob_transaction_buyer')
-    seller = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL, related_name='cob_transaction_seller')
+    # ref to Trader (buyer)
+    buyer = models.UUIDField()
+    # ref to Trader (seller)
+    seller = models.UUIDField()
     # ref to Security
     security = models.UUIDField()
     volume = models.IntegerField()
@@ -628,10 +630,10 @@ class RfqTransaction(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    buyer = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL, related_name='rfq_transaction_buyer')
-    seller = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL, related_name='rfq_transaction_seller')
+    # ref to Trader (buyer)
+    buyer = models.UUIDField()
+    # ref to Trader (seller)
+    seller = models.UUIDField()
     # ref to Security
     security = models.UUIDField()
     volume = models.IntegerField()
@@ -673,8 +675,8 @@ class Watchlist(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    trader = models.ForeignKey(
-        Trader, null=True, on_delete=models.SET_NULL)
+    # ref to Trader
+    trader = models.UUIDField()
     name = models.CharField(max_length=250)
     # ref to Security
     securities = ArrayField(models.UUIDField(), null=True, blank=True)
@@ -735,8 +737,8 @@ class TradeBlock(custom_models.DatedModel):
         Institution, on_delete=models.SET_NULL, null=True, related_name='buyer_institution')
     seller = models.ForeignKey(
         Institution, on_delete=models.SET_NULL, null=True, related_name='seller_institution')
-    booked_by = models.ForeignKey(
-        Trader, on_delete=models.SET_NULL, null=True)
+    # ref to Trader (booked_by)
+    booked_by = models.UUIDField()
 
 
 class Notification(custom_models.DatedModel):
@@ -866,7 +868,6 @@ model_list = [
     ComplianceOfficer,
     InstitutionLead,
     Institution,
-    Trader,
     ContactPerson,
     Lead,
     Concierge,

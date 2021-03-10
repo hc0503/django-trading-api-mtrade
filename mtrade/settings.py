@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'mtrade.domain.users',
     'mtrade.domain.market',
     'mtrade.domain.security',
+    'mtrade.domain.trader',
 
     'app_zero.apps.AppZeroConfig',
 

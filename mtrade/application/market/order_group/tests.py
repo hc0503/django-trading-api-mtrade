@@ -31,6 +31,7 @@ class OrderGroupAppServicesTests(TestCase):
         pdb.create_compliance_officers()
         pdb.create_institution_leads()
         pdb.create_institutions()
+        pdb.create_trader_licenses()
         pdb.create_traders()
         pdb.create_contact_persons()
         pdb.create_leads()
