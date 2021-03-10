@@ -379,7 +379,9 @@ def create_user_data(test_word=None):
         is_active=False
     ))
 
-    additional_data = dict(id=uuid.uuid4(), password=f'password_{num_user}',
+    password = make_password(f'password_{num_user}')
+
+    additional_data = dict(id=uuid.uuid4(), password=password,
 
                            )
     data = dict()

@@ -10,6 +10,7 @@ from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactor
 class OrderGroupAppServices():
     @staticmethod
     def list_order_groups(user) -> QuerySet:
+        """returns a list of order groups where user's trader profile owns ordergroup. If user does not have a trader profile, propagate exception."""
         # TODO: implement this method correctly
         # fetch users trader profile and then go to his order groups order groups. If trader does not exist, propagate or handle exception
         return ogs.get_order_group_repo().all()
