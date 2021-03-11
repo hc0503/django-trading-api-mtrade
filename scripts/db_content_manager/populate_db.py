@@ -19,10 +19,14 @@ from datetime import datetime, timedelta
 from django.db import models
 
 from app_zero.models import *
-from mtrade.domain.market.order_group.models import OrderGroup
-from mtrade.domain.security.models import SecurityIssuer, Security
+
+
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.domain.trader.models import Trader, TraderLicense
+
+from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory
+from mtrade.domain.security.models import SecurityIssuer, Security, SecurityFactory, SecurityIssuerFactory
+
 
 from mtrade.settings import TIME_ZONE
 pd.options.display.max_columns = 500
@@ -155,19 +159,13 @@ def select_random_fk_reference(Model: models.Model, return_type='model_instance'
 
 
     """
-    universe = Model.objects.all()
-    instance = random.choice(universe)
+    count = Model.objects.all().count()
+    random_index = random.randint(0, count-1)
+    instance = Model.objects.all()[random_index]
 
     if return_type == 'model_instance':
         return instance
     elif return_type == 'uuid':
-        # if many:
-        # try:
-        #     num_returned = random.randint(1, len(5))
-        #     return [i.id for i in random.choices(universe, k=num_returned)]
-        # except:
-        #     logger.error(
-        #         'There was a problem chosing. There are probably too little instances to chose from.')
         return instance.id
     else:
         print('Provided return_type is incorrect')
@@ -780,9 +778,10 @@ def create_security_issuers():
     Model = SecurityIssuer
 
     security_issuers_data = [
-        {"name": "Issuer 1"},
-        {"name": "Issuer 2"},
-        {"name": "Issuer 3"},
+        dict(name='Issuer 1'),
+        dict(name='Issuer 2'),
+        dict(name='Issuer 3')
+
     ]
 
     security_issuers_gen = (i for i in security_issuers_data)
@@ -793,14 +792,12 @@ def create_security_issuers():
         random_str = create_random_string()
         security_issuer_data = next(security_issuers_gen)
 
-        new_instance = Model(
-            name=security_issuer_data["name"]
-        )
-
-        return new_instance
+        security_issuer = SecurityIssuerFactory.build_entity(
+            **security_issuer_data)
+        security_issuer.save()
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model)
+        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
 def create_securities():
@@ -822,10 +819,6 @@ def create_securities():
                           .replace(tzinfo=tz.gettz(TIME_ZONE))
                           .isoformat())
 
-    def create_random_string(n=12):
-        return ''.join(random.choice(string.ascii_lowercase) for i in range(n))
-
-    print('Creating securities...')
     try:
         # get general security info
         _data = pd.read_csv(path_to_general_info, index_col='isin')
@@ -849,75 +842,74 @@ def create_securities():
             content['amortization_scheme'] = amort_scheme_dict
 
     except Exception:
-        traceback.print_exc()
         logger.error('There was a problem importing security data')
+        raise Exception
 
-    print(f'Creating {len(list(data.keys()))} securities...')
-    num_created = 0
-    for isin, content in data.items():
-        try:
-            def create_security_name():
-                ticker = f"{content['ticker']}"
-                coupon = f"{round(content['coupon_rate']*100, 2)}%"
-                maturity_date = datetime.strptime(
-                    content['final_maturity_date'], tz_aware_datetime_iso_format)
-                maturity_year = maturity_date.year
-                # string format month (short name)
-                maturity_month = maturity_date.strftime("%b")
-                maturity_day = f"{maturity_date.day:02d}"
-                return f"{ticker}  {coupon}  {maturity_day}/{maturity_month}/{maturity_year}"
+    security_gen = (i for i in data.items())
 
-            random_str = create_random_string()
+    def create_new_instance():
+        isin, content = next(security_gen)
 
-            new_instance = Model(
-                isin=isin,
-                name=create_security_name(),
-                ticker=str(content["ticker"]),
-                series=f'Series {random_str}',
-                issuer=select_random_fk_reference(SecurityIssuer),
-                registration=select_random_model_choice(
-                    Model.REGISTRATION_CHOICES),
-                classification_mx='Classification mx',
-                amortization_scheme=content['amortization_scheme'],
-                coupon_rate=str(content['coupon_rate']),
-                initial_margin=str(round(200 + random.random()*150, 4)),
-                issue_date=content['issue_date'],
-                first_coupon_date=content['first_coupon_date'],
-                final_maturity_date=content['final_maturity_date'],
-                nominal_value=str(content['nominal_value']),
-                year_day_count=str(content['year_day_count']),
-                redemption_price='100',
-                redemption_type=select_random_model_choice(
-                    Model.REDEMPTION_TYPE_CHOICES),
-                security_notes='TEST Issued Int. under 144a/RegS',
-                number_of_payments=str(random.randint(0, 50)),
-                issued_amount=str(content['issued_amount']),
-                outstanding=str(content['outstanding']),
-                category=select_random_model_choice(Model.CATEGORY_CHOICES),
-                listing=select_random_model_choice(
-                    Model.LISTING_CHOICES, many=True),
-                clearing=select_random_model_choice(
-                    Model.CLEARING_CHOICES, many=True),
-                amortization_structure=content['amortization_structure'],
-                coupon_period=content['coupon_period'],
-                day_count_convention=Model.DAY_COUNT_CONVENTION_MX_ACT_360,
-                currency_risk=content['currency_risk'],
-                currency_of_payments=content['currency_of_payments'],
-                security_type=Model.TYPE_M_BONO,
-                seniority=Model.SENIOR_SENIORITY,
-                guarantee=Model.GUARANTEE_SECURED
+        def create_security_name():
+            ticker = f"{content['ticker']}"
+            coupon = f"{round(content['coupon_rate']*100, 2)}%"
+            maturity_date = datetime.strptime(
+                content['final_maturity_date'], tz_aware_datetime_iso_format)
+            maturity_year = maturity_date.year
+            # string format month (short name)
+            maturity_month = maturity_date.strftime("%b")
+            maturity_day = f"{maturity_date.day:02d}"
+            return f"{ticker}  {coupon}  {maturity_day}/{maturity_month}/{maturity_year}"
 
-            )
-            new_instance.full_clean()
-            new_instance.save()
-            num_created += 1
+        random_str = create_random_string(n=12)
 
-        except Exception as e:
-            traceback.print_exc()
-            logger.error('There was a problem creating a security', e.args)
-            break
+        security_data = dict(
+            isin=isin,
+            name=create_security_name(),
+            ticker=str(content["ticker"]),
+            series=f'Series {random_str}',
+            issuer=select_random_fk_reference(SecurityIssuer),
+            registration=select_random_model_choice(
+                Model.REGISTRATION_CHOICES),
+            classification_mx='Classification mx',
+            amortization_scheme=content['amortization_scheme'],
+            coupon_rate=str(content['coupon_rate']),
+            initial_margin=str(round(200 + random.random()*150, 4)),
+            issue_date=content['issue_date'],
+            first_coupon_date=content['first_coupon_date'],
+            final_maturity_date=content['final_maturity_date'],
+            nominal_value=str(content['nominal_value']),
+            year_day_count=str(content['year_day_count']),
+            redemption_price='100',
+            redemption_type=select_random_model_choice(
+                Model.REDEMPTION_TYPE_CHOICES),
+            security_notes='TEST Issued Int. under 144a/RegS',
+            number_of_payments=str(random.randint(0, 50)),
+            issued_amount=str(content['issued_amount']),
+            outstanding=str(content['outstanding']),
+            category=select_random_model_choice(Model.CATEGORY_CHOICES),
+            listing=select_random_model_choice(
+                Model.LISTING_CHOICES, many=True),
+            clearing=select_random_model_choice(
+                Model.CLEARING_CHOICES, many=True),
+            amortization_structure=content['amortization_structure'],
+            coupon_period=content['coupon_period'],
+            day_count_convention=Model.DAY_COUNT_CONVENTION_MX_ACT_360,
+            currency_risk=content['currency_risk'],
+            currency_of_payments=content['currency_of_payments'],
+            security_type=Model.TYPE_M_BONO,
+            seniority=Model.SENIOR_SENIORITY,
+            guarantee=Model.GUARANTEE_SECURED
 
-    print(f'Created {num_created} securities')
+        )
+
+        security = SecurityFactory.build_entity(**security_data)
+        security.save()
+
+    n = len(data)
+
+    create_instances(n=n, create_new_instance=create_new_instance, Model=Model,
+                     manage_validation_and_saving=False)
 
 
 def create_settlement_instructions(n: int = 5):
@@ -1033,11 +1025,11 @@ def create_order_groups(n: int = 5):
 
     def create_new_instance():
         data = create_order_group_data()
-        new_instance = Model(**data)
-        return new_instance
+        order_group = OrderGroupFactory.build_entity(**data)
+        order_group.save()
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model)
+        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
 def create_cob_orders(n: int = 5):
