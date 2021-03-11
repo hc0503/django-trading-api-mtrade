@@ -661,7 +661,7 @@ def create_traders():
         data = dict(
             id=user.id,
             license=select_random_fk_reference(TraderLicense),
-            institution=select_random_fk_reference(
+            institution_id=select_random_fk_reference(
                 Institution, return_type='uuid')
         )
 
