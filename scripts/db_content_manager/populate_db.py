@@ -13,13 +13,15 @@ from dateutil import tz
 
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
+
+from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta
 from django.db import models
 
 from app_zero.models import *
 from mtrade.domain.market.order_group.models import OrderGroup
 from mtrade.domain.security.models import SecurityIssuer, Security
-from mtrade.domain.users.models import UserPersonalData, UserBasePermissions, User
+from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.domain.trader.models import Trader, TraderLicense
 
 from mtrade.settings import TIME_ZONE
@@ -27,6 +29,8 @@ pd.options.display.max_columns = 500
 
 # timezone aware datetime iso format
 tz_aware_datetime_iso_format = "%Y-%m-%dT%H:%M:%S%z"
+
+User = get_user_model()
 
 
 def create_data_template() -> dict:
@@ -404,11 +408,11 @@ def create_users(n: int = 5):
 
     def create_new_instance():
         data = create_user_data()
-        new_instance = Model(**data)
-        return new_instance
+        user = User.objects.create_user(**data)
+        user.save()
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model)
+        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
 def create_instituion_manager_data() -> dict:
@@ -628,21 +632,17 @@ def create_trader_licenses():
     create_instances(n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-_users_for_trader_gen = User.objects.all()
-_trader_gen = (i for i in _users_for_trader_gen)
-
-
 def create_trader_data() -> dict:
     """
     Returns a dict to be used in instance creation or for testing purposes
     """
-    user = next(_trader_gen)
-    data = dict(
-        id=user.id,
-        license=select_random_fk_reference(TraderLicense),
-        institution=select_random_fk_reference(
-            Institution, return_type='uuid')
-    )
+    # user = next(_trader_gen)
+    # data = dict(
+    #     id=user.id,
+    #     license=select_random_fk_reference(TraderLicense),
+    #     institution=select_random_fk_reference(
+    #         Institution, return_type='uuid')
+    # )
     return data
 
 
@@ -652,14 +652,24 @@ def create_traders():
     TODO: (optional) update so not all users have a trader profile associated
     """
     Model = Trader
+    print('userts', User.objects.all())
+    users_for_trader_gen = User.objects.all()
+    trader_gen = (i for i in users_for_trader_gen)
 
     def create_new_instance():
-        data = create_trader_data()
+        user = next(trader_gen)
+        data = dict(
+            id=user.id,
+            license=select_random_fk_reference(TraderLicense),
+            institution=select_random_fk_reference(
+                Institution, return_type='uuid')
+        )
+
         new_instance = Model(**data)
 
         return new_instance
 
-    n = len(_users_for_trader_gen)
+    n = len(users_for_trader_gen)
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
