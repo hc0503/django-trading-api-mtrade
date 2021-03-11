@@ -27,9 +27,15 @@ class TraderLicenseTests(TestCase):
         except Exception:
             self.fail("Unexpected exception")
 
+        # tests empty string can't be passed as license name
         with self.assertRaises(VOValidationExcpetion):
             TraderLicenseMetadata("", "a valid description")
 
+        # tests name can't be longer than 100 chars
+        with self.assertRaises(VOValidationExcpetion):
+            TraderLicenseMetadata("x" * 101, "a valid description")
+
+        # test description can't be longer than 251 chars
         with self.assertRaises(VOValidationExcpetion):
             TraderLicenseMetadata("a valid name", "x" * 251)
 

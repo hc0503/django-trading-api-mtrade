@@ -20,5 +20,5 @@ def gen_rand_license() -> TraderLicense:
 def gen_rand_licenses(num_of_licenses: int) -> typing.List[TraderLicense]:
     licenses = []
     for _ in range(num_of_licenses):
-        licenses.append(gen_rand_license)
+        licenses.append(gen_rand_license())
     return licenses
