@@ -90,3 +90,24 @@ mail.ip_pool_name = 'my-ip-pool'
 
 mail.send(fail_silently=False)
 ```
+
+## Logger module
+### Usage
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+
+logger.info('Here is the message.', extra={'key1': 'value1', 'key2': 'value2'})
+# output logs/log.json > {"key1":"value1","key2":"value2",level":"INFO","msg":"Here is the message.","module":"mtrade.infrastructure.logger.views.infoLogger","time":"2021-03-09T23:39:08.748015"}
+
+logger.debug('Here is the message.')
+# output logs/log.json > {level":"DEBUG","msg":"Here is the message.","module":"mtrade.infrastructure.logger.views.infoLogger","time":"2021-03-09T23:39:08.748015"}
+```
+
+### Logger levels
+- debug
+- info
+- warning
+- error
+- fatal

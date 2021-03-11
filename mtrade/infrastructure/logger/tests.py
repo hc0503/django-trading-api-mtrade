@@ -1,8 +1,12 @@
 # django imports
 from django.test import TestCase, RequestFactory
+from rest_framework.test import APITestCase, force_authenticate, APIRequestFactory
 import logging
 
-logging.addLevelName(logging.CRITICAL, 'FATAL')
+# local imports
+from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
+from mtrade.application.users.services import UserAppServices
+from .views import infoLogger
 
 class DebugLoggerTest(TestCase):
 	def test_logging(self):
@@ -19,3 +23,24 @@ class DebugLoggerTest(TestCase):
 			'WARNING:foo:The warning message',
 			'FATAL:foo:The fatal message',
 		])
+
+class LoggerViewTest(APITestCase):
+	def setUp(self):
+		self.factory = APIRequestFactory()
+		self.u_data_01 = UserPersonalData(
+			username = 'Teser',
+			first_name = 'Testerman',
+			last_name = 'Testerson',
+			email = "testerman@example.com"
+		)
+		self.u_permissions_01 = UserBasePermissions(
+			is_staff = False,
+			is_active = False
+		)
+		self.user_01 = UserAppServices.create_user(self.u_data_01, self.u_permissions_01)
+
+	def test_send_mail(self):
+		request = self.factory.get('/api/v0/emailers/send')
+		force_authenticate(request, user=self.user_01)
+		response = infoLogger(request)
+		self.assertIs(response.status_code, 200)
