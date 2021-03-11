@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 # app imports
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.application.users.services import UserAppServices
-from mtrade.application.security.services import SecurityAppServices
+from mtrade.application.market.order_group.services import OrderGroupAppServices
 
 # local imports
 from . import views
