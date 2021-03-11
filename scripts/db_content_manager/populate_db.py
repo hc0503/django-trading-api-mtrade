@@ -1266,7 +1266,7 @@ def create_rfq_locks(n: int = 5):
         new_instance = Model(
             status=select_random_model_choice(Model.STATUS_CHOICES),
             trader=trader.id,
-            institution=Institution.objects.get(id=trader.institution)
+            institution=Institution.objects.get(id=trader.institution_id)
         )
 
         return new_instance
