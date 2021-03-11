@@ -630,18 +630,18 @@ def create_trader_licenses():
     create_instances(n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_trader_data() -> dict:
-    """
-    Returns a dict to be used in instance creation or for testing purposes
-    """
-    # user = next(_trader_gen)
-    # data = dict(
-    #     id=user.id,
-    #     license=select_random_fk_reference(TraderLicense),
-    #     institution=select_random_fk_reference(
-    #         Institution, return_type='uuid')
-    # )
-    return data
+# def create_trader_data() -> dict:
+#     """
+#     Returns a dict to be used in instance creation or for testing purposes
+#     """
+#     # user = next(_trader_gen)
+#     # data = dict(
+#     #     id=user.id,
+#     #     license=select_random_fk_reference(TraderLicense),
+#     #     institution=select_random_fk_reference(
+#     #         Institution, return_type='uuid')
+#     # )
+#     return data
 
 
 def create_traders():
@@ -650,7 +650,6 @@ def create_traders():
     TODO: (optional) update so not all users have a trader profile associated
     """
     Model = Trader
-    print('userts', User.objects.all())
     users_for_trader_gen = User.objects.all()
     trader_gen = (i for i in users_for_trader_gen)
 
