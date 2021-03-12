@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 from .tokens import email_verification_token
 
 class EmailVerification():
-	@api_view(['POST'])
+	@api_view(['GET'])
+	@permission_classes([IsAuthenticated])
 	def activate(request, uidb64, token):
 		try:
 			uid = force_text(urlsafe_base64_decode(uidb64))

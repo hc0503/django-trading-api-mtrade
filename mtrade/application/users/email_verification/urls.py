@@ -5,5 +5,5 @@ from django.urls import path
 from .views import EmailVerification
 
 urlpatterns = [
-	path('users/<uidb64>/<token>/email-verification', EmailVerification.activate)
+	path('users/email-verification/<uidb64>/<token>', EmailVerification.activate)
 ]
