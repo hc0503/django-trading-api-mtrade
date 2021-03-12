@@ -41,6 +41,8 @@ from .market.urls import (
 )
 from mtrade.infrastructure.logger.urls import urlpatterns as logger_urlpatterns
 from mtrade.infrastructure.emailer.urls import urlpatterns as emailer_urlpatterns
+from .notification.urls import router as notification_router
+from .notification.setting.urls import router as notification_setting_router
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -64,6 +66,8 @@ urlpatterns = [
     path('api/v0/', include(market_cob_subrouter.urls)),
     path('api/v0/', include(market_rfq_subrouter.urls)),
 
+    path('api/v0/', include(notification_router.urls)),
+    path('api/v0/', include(notification_setting_router.urls)),
 
     path('api/v0/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v0/', include(logger_urlpatterns)),
