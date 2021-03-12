@@ -26,7 +26,7 @@ class OrderGroupViewSet(CreateListUpdateRetrieveViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = OrderGroupSerializer
-    filterset_fields = ('direction',  'trader')
+    filterset_fields = ('direction',  'trader_id')
     ordering = ('-created_at',)
     # TODO: add missing filetr fields: 'institution'
     # TODO: consider adding security__isin filter
