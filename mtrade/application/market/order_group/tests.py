@@ -6,6 +6,7 @@ from django.db.models.query import QuerySet
 
 # app imoprts
 from mtrade.domain.market.order_group.models import OrderGroup
+from mtrade.domain.trader.services import TraderServices
 # from mtrade.domain.market.models import Market
 from mtrade.domain.market.order_group.services import OrderGroupServices as ogs
 from scripts.db_content_manager import populate_db as pdb
@@ -42,8 +43,13 @@ class OrderGroupAppServicesTests(TestCase):
         pdb.create_order_groups()
 
     def test_list_order_groups(self):
-        order_groups = ogas.list_order_groups(None)
+        trader = TraderServices.get_trader_repo().all()[0]
+        order_groups = ogas.list_order_groups(trader)
         self.assertEqual(type(order_groups), QuerySet)
+
+    def test_retrieve_order_group(self):
+        # TODO: implement this test
+        pass
 
     def test_create_order_group(self):
         data = pdb.create_order_group_data()

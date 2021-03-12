@@ -21,7 +21,7 @@ from django.db import models
 from app_zero.models import *
 
 
-from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
+from mtrade.domain.users.models import UserPersonalData, UserBasePermissions, User
 from mtrade.domain.trader.models import Trader, TraderLicense
 
 from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory, TraderID, SecurityID, RequestorID
@@ -34,7 +34,7 @@ pd.options.display.max_columns = 500
 # timezone aware datetime iso format
 tz_aware_datetime_iso_format = "%Y-%m-%dT%H:%M:%S%z"
 
-User = get_user_model()
+# User = get_user_model()
 
 
 def create_data_template() -> dict:
@@ -366,7 +366,7 @@ def create_user_data(test_word=None):
     Returns a dict to be used in instance creation or for testing purposes
 
     If test_word (str) is provided. It will create a user with credentials `username_<test_word>`
-    ans password `password_<test_word>`
+    and password `password`
 
     Note: provide test_word argument is recommended in case where a single instance is being created for testing purposes
     """
@@ -379,14 +379,13 @@ def create_user_data(test_word=None):
     ))
     base_permissions = asdict(UserBasePermissions(
         is_staff=False,
-        is_active=False
+        is_active=True
     ))
 
-    password = make_password(f'password_{num_user}')
+    password = make_password(f'password')
 
-    additional_data = dict(id=uuid.uuid4(), password=password,
-
-                           )
+    additional_data = dict(
+        id=uuid.uuid4(), password=password)
     data = dict()
     data.update(personal_data)
     data.update(base_permissions)
@@ -406,7 +405,8 @@ def create_users(n: int = 5):
 
     def create_new_instance():
         data = create_user_data()
-        user = User.objects.create_user(**data)
+        user = User(**data)
+        user.full_clean()
         user.save()
 
     create_instances(
