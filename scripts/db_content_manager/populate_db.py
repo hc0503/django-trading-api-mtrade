@@ -19,10 +19,14 @@ from datetime import datetime, timedelta
 from django.db import models
 
 from app_zero.models import *
-from mtrade.domain.market.order_group.models import OrderGroup
-from mtrade.domain.security.models import SecurityIssuer, Security
+
+
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.domain.trader.models import Trader, TraderLicense
+
+from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory, TraderID, SecurityID, RequestorID
+from mtrade.domain.security.models import SecurityIssuer, Security, SecurityFactory, SecurityIssuerFactory
+
 
 from mtrade.settings import TIME_ZONE
 pd.options.display.max_columns = 500
@@ -155,19 +159,13 @@ def select_random_fk_reference(Model: models.Model, return_type='model_instance'
 
 
     """
-    universe = Model.objects.all()
-    instance = random.choice(universe)
+    count = Model.objects.all().count()
+    random_index = random.randint(0, count-1)
+    instance = Model.objects.all()[random_index]
 
     if return_type == 'model_instance':
         return instance
     elif return_type == 'uuid':
-        # if many:
-        # try:
-        #     num_returned = random.randint(1, len(5))
-        #     return [i.id for i in random.choices(universe, k=num_returned)]
-        # except:
-        #     logger.error(
-        #         'There was a problem chosing. There are probably too little instances to chose from.')
         return instance.id
     else:
         print('Provided return_type is incorrect')
@@ -244,7 +242,7 @@ def create_adress_data() -> dict:
 
 def create_addresses(n: int = 5):
     """
-    Creates sprecified instances 
+    Creates sprecified instances
 
     Arguments
     ----------
@@ -632,27 +630,26 @@ def create_trader_licenses():
     create_instances(n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_trader_data() -> dict:
-    """
-    Returns a dict to be used in instance creation or for testing purposes
-    """
-    # user = next(_trader_gen)
-    # data = dict(
-    #     id=user.id,
-    #     license=select_random_fk_reference(TraderLicense),
-    #     institution=select_random_fk_reference(
-    #         Institution, return_type='uuid')
-    # )
-    return data
+# def create_trader_data() -> dict:
+#     """
+#     Returns a dict to be used in instance creation or for testing purposes
+#     """
+#     # user = next(_trader_gen)
+#     # data = dict(
+#     #     id=user.id,
+#     #     license=select_random_fk_reference(TraderLicense),
+#     #     institution=select_random_fk_reference(
+#     #         Institution, return_type='uuid')
+#     # )
+#     return data
 
 
 def create_traders():
     """
-    Creates traders. One per user. 
+    Creates traders. One per user.
     TODO: (optional) update so not all users have a trader profile associated
     """
     Model = Trader
-    print('userts', User.objects.all())
     users_for_trader_gen = User.objects.all()
     trader_gen = (i for i in users_for_trader_gen)
 
@@ -780,9 +777,10 @@ def create_security_issuers():
     Model = SecurityIssuer
 
     security_issuers_data = [
-        {"name": "Issuer 1"},
-        {"name": "Issuer 2"},
-        {"name": "Issuer 3"},
+        dict(name='Issuer 1'),
+        dict(name='Issuer 2'),
+        dict(name='Issuer 3')
+
     ]
 
     security_issuers_gen = (i for i in security_issuers_data)
@@ -793,14 +791,12 @@ def create_security_issuers():
         random_str = create_random_string()
         security_issuer_data = next(security_issuers_gen)
 
-        new_instance = Model(
-            name=security_issuer_data["name"]
-        )
-
-        return new_instance
+        security_issuer = SecurityIssuerFactory.build_entity(
+            **security_issuer_data)
+        security_issuer.save()
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model)
+        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
 def create_securities():
@@ -822,10 +818,6 @@ def create_securities():
                           .replace(tzinfo=tz.gettz(TIME_ZONE))
                           .isoformat())
 
-    def create_random_string(n=12):
-        return ''.join(random.choice(string.ascii_lowercase) for i in range(n))
-
-    print('Creating securities...')
     try:
         # get general security info
         _data = pd.read_csv(path_to_general_info, index_col='isin')
@@ -849,75 +841,74 @@ def create_securities():
             content['amortization_scheme'] = amort_scheme_dict
 
     except Exception:
-        traceback.print_exc()
         logger.error('There was a problem importing security data')
+        raise Exception
 
-    print(f'Creating {len(list(data.keys()))} securities...')
-    num_created = 0
-    for isin, content in data.items():
-        try:
-            def create_security_name():
-                ticker = f"{content['ticker']}"
-                coupon = f"{round(content['coupon_rate']*100, 2)}%"
-                maturity_date = datetime.strptime(
-                    content['final_maturity_date'], tz_aware_datetime_iso_format)
-                maturity_year = maturity_date.year
-                # string format month (short name)
-                maturity_month = maturity_date.strftime("%b")
-                maturity_day = f"{maturity_date.day:02d}"
-                return f"{ticker}  {coupon}  {maturity_day}/{maturity_month}/{maturity_year}"
+    security_gen = (i for i in data.items())
 
-            random_str = create_random_string()
+    def create_new_instance():
+        isin, content = next(security_gen)
 
-            new_instance = Model(
-                isin=isin,
-                name=create_security_name(),
-                ticker=str(content["ticker"]),
-                series=f'Series {random_str}',
-                issuer=select_random_fk_reference(SecurityIssuer),
-                registration=select_random_model_choice(
-                    Model.REGISTRATION_CHOICES),
-                classification_mx='Classification mx',
-                amortization_scheme=content['amortization_scheme'],
-                coupon_rate=str(content['coupon_rate']),
-                initial_margin=str(round(200 + random.random()*150, 4)),
-                issue_date=content['issue_date'],
-                first_coupon_date=content['first_coupon_date'],
-                final_maturity_date=content['final_maturity_date'],
-                nominal_value=str(content['nominal_value']),
-                year_day_count=str(content['year_day_count']),
-                redemption_price='100',
-                redemption_type=select_random_model_choice(
-                    Model.REDEMPTION_TYPE_CHOICES),
-                security_notes='TEST Issued Int. under 144a/RegS',
-                number_of_payments=str(random.randint(0, 50)),
-                issued_amount=str(content['issued_amount']),
-                outstanding=str(content['outstanding']),
-                category=select_random_model_choice(Model.CATEGORY_CHOICES),
-                listing=select_random_model_choice(
-                    Model.LISTING_CHOICES, many=True),
-                clearing=select_random_model_choice(
-                    Model.CLEARING_CHOICES, many=True),
-                amortization_structure=content['amortization_structure'],
-                coupon_period=content['coupon_period'],
-                day_count_convention=Model.DAY_COUNT_CONVENTION_MX_ACT_360,
-                currency_risk=content['currency_risk'],
-                currency_of_payments=content['currency_of_payments'],
-                security_type=Model.TYPE_M_BONO,
-                seniority=Model.SENIOR_SENIORITY,
-                guarantee=Model.GUARANTEE_SECURED
+        def create_security_name():
+            ticker = f"{content['ticker']}"
+            coupon = f"{round(content['coupon_rate']*100, 2)}%"
+            maturity_date = datetime.strptime(
+                content['final_maturity_date'], tz_aware_datetime_iso_format)
+            maturity_year = maturity_date.year
+            # string format month (short name)
+            maturity_month = maturity_date.strftime("%b")
+            maturity_day = f"{maturity_date.day:02d}"
+            return f"{ticker}  {coupon}  {maturity_day}/{maturity_month}/{maturity_year}"
 
-            )
-            new_instance.full_clean()
-            new_instance.save()
-            num_created += 1
+        random_str = create_random_string(n=12)
 
-        except Exception as e:
-            traceback.print_exc()
-            logger.error('There was a problem creating a security', e.args)
-            break
+        security_data = dict(
+            isin=isin,
+            name=create_security_name(),
+            ticker=str(content["ticker"]),
+            series=f'Series {random_str}',
+            issuer=select_random_fk_reference(SecurityIssuer),
+            registration=select_random_model_choice(
+                Model.REGISTRATION_CHOICES),
+            classification_mx='Classification mx',
+            amortization_scheme=content['amortization_scheme'],
+            coupon_rate=str(content['coupon_rate']),
+            initial_margin=str(round(200 + random.random()*150, 4)),
+            issue_date=content['issue_date'],
+            first_coupon_date=content['first_coupon_date'],
+            final_maturity_date=content['final_maturity_date'],
+            nominal_value=str(content['nominal_value']),
+            year_day_count=str(content['year_day_count']),
+            redemption_price='100',
+            redemption_type=select_random_model_choice(
+                Model.REDEMPTION_TYPE_CHOICES),
+            security_notes='TEST Issued Int. under 144a/RegS',
+            number_of_payments=str(random.randint(0, 50)),
+            issued_amount=str(content['issued_amount']),
+            outstanding=str(content['outstanding']),
+            category=select_random_model_choice(Model.CATEGORY_CHOICES),
+            listing=select_random_model_choice(
+                Model.LISTING_CHOICES, many=True),
+            clearing=select_random_model_choice(
+                Model.CLEARING_CHOICES, many=True),
+            amortization_structure=content['amortization_structure'],
+            coupon_period=content['coupon_period'],
+            day_count_convention=Model.DAY_COUNT_CONVENTION_MX_ACT_360,
+            currency_risk=content['currency_risk'],
+            currency_of_payments=content['currency_of_payments'],
+            security_type=Model.TYPE_M_BONO,
+            seniority=Model.SENIOR_SENIORITY,
+            guarantee=Model.GUARANTEE_SECURED
 
-    print(f'Created {num_created} securities')
+        )
+
+        security = SecurityFactory.build_entity(**security_data)
+        security.save()
+
+    n = len(data)
+
+    create_instances(n=n, create_new_instance=create_new_instance, Model=Model,
+                     manage_validation_and_saving=False)
 
 
 def create_settlement_instructions(n: int = 5):
@@ -972,9 +963,14 @@ def create_alarms(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_order_group_data() -> dict:
+def create_order_group_data(test=False) -> dict:
     """
     Returns a dict to be used in instance creation or for testing purposes
+
+    Arguments
+    -----
+    test: bool
+        If True, returns a trader instance with fake relations to other models
     """
     Model = OrderGroup
 
@@ -987,9 +983,15 @@ def create_order_group_data() -> dict:
         '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
     expiration = create_random_datetime(
         '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
+
+    security_id = SecurityID(uuid.uuid4()) if test else SecurityID(select_random_fk_reference(
+        Security, return_type='uuid'))
+    trader_id = TraderID(uuid.uuid4()) if test else TraderID(select_random_fk_reference(
+        Trader, return_type='uuid'))
+    requestor_id = RequestorID(uuid.uuid4()) if test else RequestorID(select_random_fk_reference(
+        Institution, return_type='uuid'))
+
     data = dict(
-        security=select_random_fk_reference(
-            Security, return_type='uuid'),
         orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
         order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
         direction=select_random_model_choice(Model.DIRECTION_CHOICES),
@@ -1009,12 +1011,13 @@ def create_order_group_data() -> dict:
             Model.CURRENCY_CHOICES),
         requestor_type=select_random_model_choice(
             Model.REQUESTOR_TYPE_CHOICES),
-        requestor=select_random_fk_reference(
-            Institution, return_type='uuid'),
         resp_received=random.randint(0, 10),
-        trader=select_random_fk_reference(Trader, return_type='uuid'),
         priority=create_random_datetime(
-            '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
+            '20/1/2021 1:30 PM', '20/4/2021 1:30 PM'),
+
+        security_id=security_id,
+        trader_id=trader_id,
+        requestor_id=requestor_id
     )
 
     return data
@@ -1022,7 +1025,7 @@ def create_order_group_data() -> dict:
 
 def create_order_groups(n: int = 5):
     """
-    Creates sprecified instances 
+    Creates sprecified instances
 
     Arguments
     ----------
@@ -1033,11 +1036,11 @@ def create_order_groups(n: int = 5):
 
     def create_new_instance():
         data = create_order_group_data()
-        new_instance = Model(**data)
-        return new_instance
+        order_group = OrderGroupFactory.build_entity_with_id(**data)
+        order_group.save()
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model)
+        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
 def create_cob_orders(n: int = 5):
@@ -1058,7 +1061,8 @@ def create_cob_orders(n: int = 5):
 
         new_instance = Model(
             trader=select_random_fk_reference(Trader, return_type='uuid'),
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             submission=submission,
             expiration=create_random_datetime(
                 '20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
@@ -1139,7 +1143,8 @@ def create_rfqs(n: int = 5):
         submission = create_random_datetime(
             '20/1/2021 1:30 PM', '20/3/2021 1:30 PM')
         new_instance = Model(
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             trader=select_random_fk_reference(Trader, return_type='uuid'),
             anonymous=random.choice([True, False]),
             public=random.choice([True, False]),
@@ -1231,7 +1236,8 @@ def create_rfq_auto_responders(n: int = 5):
         ask_notional = ask_price*min_volume
 
         new_instance = Model(
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             trader=select_random_fk_reference(Trader, return_type='uuid'),
             min_volume=min_volume,
             max_volume=min_volume + random.randint(100, 1000000),
@@ -1275,7 +1281,7 @@ def create_rfq_locks(n: int = 5):
         new_instance = Model(
             status=select_random_model_choice(Model.STATUS_CHOICES),
             trader=trader.id,
-            institution=Institution.objects.get(id=trader.institution)
+            institution=Institution.objects.get(id=trader.institution_id)
         )
 
         return new_instance
@@ -1307,7 +1313,8 @@ def create_cob_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader, return_type='uuid'),
             seller=select_random_fk_reference(Trader, return_type='uuid'),
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             volume=Decimal(str(volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',
@@ -1366,7 +1373,8 @@ def create_rfq_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader, return_type='uuid'),
             seller=select_random_fk_reference(Trader, return_type='uuid'),
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             volume=Decimal((volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',

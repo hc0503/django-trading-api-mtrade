@@ -20,6 +20,30 @@ class OrderGroupID():
     value: uuid.UUID
 
 
+@dataclass(frozen=True)
+class SecurityID():
+    """
+    This is a value object that should be used to generate and pass the SecurityID to the OrderGroupFactory
+    """
+    value: uuid.UUID
+
+
+@dataclass(frozen=True)
+class RequestorID():
+    """
+    This is a value object that should be used to generate and pass the RequestorID (Institution) to the OrderGroupFactory
+    """
+    value: uuid.UUID
+
+
+@dataclass(frozen=True)
+class TraderID():
+    """
+    This is a value object that should be used to generate and pass the TraderID to the OrderGroupFactory
+    """
+    value: uuid.UUID
+
+
 class OrderGroup(custom_models.DatedModel):
     """
     Represents an overview of all trades related to a Cob origin order or an Rfq
@@ -84,7 +108,7 @@ class OrderGroup(custom_models.DatedModel):
     # TODO: when possible, make sure security makes reference to Security
     # security = models.ForeignKey(
     #     Security, on_delete=models.SET_NULL, null=True)
-    security = models.UUIDField()
+    security_id = models.UUIDField()
     orderbook = models.CharField(max_length=150, choices=ORDERBOOK_CHOICES)
     order_type = models.CharField(max_length=150, choices=ORDER_TYPE_CHOICES)
     direction = models.CharField(max_length=150, choices=DIRECTION_CHOICES)
@@ -114,10 +138,10 @@ class OrderGroup(custom_models.DatedModel):
     # TODO: when possible, make sure requestor makes reference to an Institution
     # requestor = models.ForeignKey(
     #     Institution, on_delete=models.SET_NULL, null=True)
-    requestor = models.UUIDField()
+    requestor_id = models.UUIDField()
     # TODO: when possible make sure trader makes reference to Trader
     # trader = models.ForeignKey(Trader, on_delete=models.SET_NULL, null=True)
-    trader = models.UUIDField()
+    trader_id = models.UUIDField()
     priority = models.DateTimeField()
 
     def update_entity(self,
@@ -150,6 +174,29 @@ class OrderGroup(custom_models.DatedModel):
 
 class OrderGroupFactory():
     @staticmethod
-    # TODO: implement restrictions for entity building (check MArket Example)
-    def build_entity(**kwargs) -> OrderGroup:
-        return OrderGroup(**kwargs)
+    def build_entity(order_group_id: OrderGroupID,
+                     security_id: SecurityID,
+                     requestor_id: RequestorID,
+                     trader_id: TraderID, **kwargs) -> OrderGroup:
+        order_group = OrderGroup(
+            id=order_group_id.value,
+            security_id=security_id.value,
+            requestor_id=requestor_id.value,
+            trader_id=trader_id.value,
+            **kwargs
+        )
+        order_group.full_clean()
+        return order_group
+
+    @classmethod
+    def build_entity_with_id(cls,
+                             security_id: SecurityID,
+                             requestor_id: RequestorID,
+                             trader_id: TraderID, **kwargs) -> OrderGroup:
+        order_group_id = OrderGroupID(uuid.uuid4())
+
+        return cls.build_entity(order_group_id=order_group_id,
+                                security_id=security_id,
+                                requestor_id=requestor_id,
+                                trader_id=trader_id,
+                                **kwargs)

@@ -1,6 +1,8 @@
 import logging
 import uuid
 
+from dataclasses import dataclass
+
 from django.db import models
 from datetime import datetime
 from lib.django import custom_models
@@ -27,7 +29,9 @@ class SecurityIssuer(custom_models.DatedModel):
 class SecurityIssuerFactory():
     @staticmethod
     def build_entity(**kwargs) -> SecurityIssuer:
-        return SecurityIssuer(**kwargs)
+        security_issuer = SecurityIssuer(**kwargs)
+        security_issuer.full_clean()
+        return security_issuer
 
 
 class Security(custom_models.DatedModel):
@@ -184,7 +188,7 @@ class Security(custom_models.DatedModel):
     registration = models.CharField(
         max_length=250, choices=REGISTRATION_CHOICES)
     classification_mx = models.CharField(max_length=250)
-    # amortization_scheme must have following structure: {0:{ "date": "08/08/19", "amort": "0"}, 1:{"date": "06/02/20", "amort": "0"}, 2:{"date": "06/08/20", "amort": "1"}}
+
     amortization_scheme = models.JSONField(encoder=DjangoJSONEncoder)
 
     coupon_rate = models.DecimalField(max_digits=40, decimal_places=20)
@@ -227,7 +231,7 @@ class Security(custom_models.DatedModel):
 
     def clean(self):
         # validate amortization_scheme_data
-        amortization_scheme = self.amortization_scheme
+        amortization_scheme = dict(self.amortization_scheme)
 
         # checar estructura de lo que see envió y de paso convertir a integer las keys
         dict_with_int_keys = dict()
@@ -235,7 +239,7 @@ class Security(custom_models.DatedModel):
             try:
                 int_key = int(key)
 
-            except Exception as e:
+            except Exception:
                 raise ValidationError(
                     'Check amort scheme info for creating security')
             if "date" not in val.keys():
@@ -289,4 +293,6 @@ class Security(custom_models.DatedModel):
 class SecurityFactory():
     @staticmethod
     def build_entity(**kwargs) -> Security:
-        return Security(**kwargs)
+        security = Security(**kwargs)
+        security.full_clean()
+        return security

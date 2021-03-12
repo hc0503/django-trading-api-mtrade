@@ -18,7 +18,7 @@ class OrderGroupAppServices():
     @staticmethod
     def create_order_group_from_dict(user, data: dict) -> OrderGroup:
         # TODO: Check user or trader has permission to perform this action
-        order_group = OrderGroupFactory.build_entity(**data)
+        order_group = OrderGroupFactory.build_entity_with_id(**data)
         order_group.save()
         return order_group
 
