@@ -1,6 +1,10 @@
 # python imports
 import logging
 
+# django imports
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 # app imports
 from mtrade.domain.users.models import User, UserPersonalData, UserBasePermissions
 from mtrade.domain.users.services import UserServices
@@ -21,3 +25,23 @@ class UserAppServices():
         user.save()
         log.info("model saved")
         return user
+
+    @classmethod
+    def websocket_send(
+            cls,
+            ws_user: User,
+            ws_type: str,
+            ws_payload: str) -> bool:
+        # This method send websocket payload to a user
+        if ws_user.is_authenticated:
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                'users_{}'.format(ws_user.id),
+                {
+                    'type': ws_type,
+                    'message': ws_payload
+                }
+            )
+            return True
+        else:
+            return False

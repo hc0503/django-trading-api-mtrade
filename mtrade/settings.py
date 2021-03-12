@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'mtrade.domain.market',
     'mtrade.domain.security',
     'mtrade.domain.trader',
+    'mtrade.domain.notifications',
+    'mtrade.domain.notifications.setting',
 
     'app_zero.apps.AppZeroConfig',
 
@@ -55,7 +57,16 @@ INSTALLED_APPS = [
     'django_extensions',
     'mtrade.infrastructure.logger',
     'django_filters',
+    'channels',
 ]
+
+ASGI_APPLICATION = 'mtrade.drivers.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
