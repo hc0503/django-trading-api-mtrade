@@ -24,7 +24,7 @@ from app_zero.models import *
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.domain.trader.models import Trader, TraderLicense
 
-from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory
+from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory, TraderID, SecurityID, RequestorID
 from mtrade.domain.security.models import SecurityIssuer, Security, SecurityFactory, SecurityIssuerFactory
 
 
@@ -242,7 +242,7 @@ def create_adress_data() -> dict:
 
 def create_addresses(n: int = 5):
     """
-    Creates sprecified instances 
+    Creates sprecified instances
 
     Arguments
     ----------
@@ -646,7 +646,7 @@ def create_trader_licenses():
 
 def create_traders():
     """
-    Creates traders. One per user. 
+    Creates traders. One per user.
     TODO: (optional) update so not all users have a trader profile associated
     """
     Model = Trader
@@ -963,9 +963,14 @@ def create_alarms(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_order_group_data() -> dict:
+def create_order_group_data(test=False) -> dict:
     """
     Returns a dict to be used in instance creation or for testing purposes
+
+    Arguments
+    -----
+    test: bool
+        If True, returns a trader instance with fake relations to other models
     """
     Model = OrderGroup
 
@@ -978,9 +983,15 @@ def create_order_group_data() -> dict:
         '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
     expiration = create_random_datetime(
         '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
+
+    security_id = SecurityID(uuid.uuid4()) if test else SecurityID(select_random_fk_reference(
+        Security, return_type='uuid'))
+    trader_id = TraderID(uuid.uuid4()) if test else TraderID(select_random_fk_reference(
+        Trader, return_type='uuid'))
+    requestor_id = RequestorID(uuid.uuid4()) if test else RequestorID(select_random_fk_reference(
+        Institution, return_type='uuid'))
+
     data = dict(
-        security=select_random_fk_reference(
-            Security, return_type='uuid'),
         orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
         order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
         direction=select_random_model_choice(Model.DIRECTION_CHOICES),
@@ -1000,12 +1011,13 @@ def create_order_group_data() -> dict:
             Model.CURRENCY_CHOICES),
         requestor_type=select_random_model_choice(
             Model.REQUESTOR_TYPE_CHOICES),
-        requestor=select_random_fk_reference(
-            Institution, return_type='uuid'),
         resp_received=random.randint(0, 10),
-        trader=select_random_fk_reference(Trader, return_type='uuid'),
         priority=create_random_datetime(
-            '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
+            '20/1/2021 1:30 PM', '20/4/2021 1:30 PM'),
+
+        security_id=security_id,
+        trader_id=trader_id,
+        requestor_id=requestor_id
     )
 
     return data
@@ -1013,7 +1025,7 @@ def create_order_group_data() -> dict:
 
 def create_order_groups(n: int = 5):
     """
-    Creates sprecified instances 
+    Creates sprecified instances
 
     Arguments
     ----------
@@ -1024,7 +1036,7 @@ def create_order_groups(n: int = 5):
 
     def create_new_instance():
         data = create_order_group_data()
-        order_group = OrderGroupFactory.build_entity(**data)
+        order_group = OrderGroupFactory.build_entity_with_id(**data)
         order_group.save()
 
     create_instances(
@@ -1049,7 +1061,8 @@ def create_cob_orders(n: int = 5):
 
         new_instance = Model(
             trader=select_random_fk_reference(Trader, return_type='uuid'),
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             submission=submission,
             expiration=create_random_datetime(
                 '20/1/2020 1:30 PM', '20/3/2021 1:30 PM'),
@@ -1130,7 +1143,8 @@ def create_rfqs(n: int = 5):
         submission = create_random_datetime(
             '20/1/2021 1:30 PM', '20/3/2021 1:30 PM')
         new_instance = Model(
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             trader=select_random_fk_reference(Trader, return_type='uuid'),
             anonymous=random.choice([True, False]),
             public=random.choice([True, False]),
@@ -1222,7 +1236,8 @@ def create_rfq_auto_responders(n: int = 5):
         ask_notional = ask_price*min_volume
 
         new_instance = Model(
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             trader=select_random_fk_reference(Trader, return_type='uuid'),
             min_volume=min_volume,
             max_volume=min_volume + random.randint(100, 1000000),
@@ -1298,7 +1313,8 @@ def create_cob_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader, return_type='uuid'),
             seller=select_random_fk_reference(Trader, return_type='uuid'),
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             volume=Decimal(str(volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',
@@ -1357,7 +1373,8 @@ def create_rfq_transactions(n: int = 5):
         new_instance = Model(
             buyer=select_random_fk_reference(Trader, return_type='uuid'),
             seller=select_random_fk_reference(Trader, return_type='uuid'),
-            security=select_random_fk_reference(Security, return_type='uuid'),
+            security=select_random_fk_reference(
+                Security, return_type='uuid'),
             volume=Decimal((volume)),
             notional=Decimal(str(notional)),
             accrued_interest='0.002',
