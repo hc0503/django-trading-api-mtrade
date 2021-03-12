@@ -91,6 +91,43 @@ mail.ip_pool_name = 'my-ip-pool'
 mail.send(fail_silently=False)
 ```
 
+## Websocket module
+### Intial message sending when connecting to websocket for each module
+For each module populator(returns initial messages) is registered in __init__.py
+```python
+# django imports
+from mtrade.interface.user.websocket import WSConsumer
+from .services import NotificationAppServices as nas
+
+# list_unread_notifications is an populator which returns all unread messages
+WSConsumer.register(nas.list_unread_notifications)
+```
+
+### Sending messages in custom modules
+- There's users group for the broadcasting.
+```python
+from channels.layers import get_channel_layer
+
+channel_layer = get_channel_layer()
+channel_layer.group_send('users', message=message)
+```
+
+- Each user is a group of the websocket channel.
+```python
+from channels.layers import get_channel_layer
+
+channel_layer = get_channel_layer()
+channel_layer.group_send('users_{}'.format(request.user.id), message=message)
+```
+
+#### Command message style
+```python
+message = {
+	'type': 'raw.message',
+	'message': 'This is a raw message.'
+}
+```
+
 ## Logger module
 ### Usage
 ```python
