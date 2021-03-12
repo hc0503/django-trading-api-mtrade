@@ -17,6 +17,10 @@ class WSConsumer(WebsocketConsumer):
     def register(cls, populator: Callable):
         cls.populators.append(populator)
 
+    @classmethod
+    def empty_populator(cls):
+        cls.populators = []
+
     def connect(self):
         self.user = self.scope['user']
         if self.user.is_authenticated:

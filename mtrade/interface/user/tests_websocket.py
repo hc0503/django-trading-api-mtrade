@@ -13,6 +13,7 @@ from mtrade.application.notifications.services import NotificationAppServices as
 
 # local imports
 from .websocket import WSConsumer
+from .tests_websocket_helper import test_populator
 
 class AuthWebsocketCommunicator(WebsocketCommunicator):
     def __init__(self, application, path, headers=None, subprotocols=None, user=None):
@@ -58,12 +59,11 @@ class WebSocketTest(TestCase):
         communicator = AuthWebsocketCommunicator(application, "/ws/users/", user = AnonymousUser())
         connected, subprotocol = await communicator.connect()
         self.assertIs(connected, False)
-
-    def test_register(self):
-        # Test if populators contains initial_message funcs
-        self.assertIs(nas.list_unread_notifications in WSConsumer.populators, True)
+    
+    # async def test_initial_message_populator(self):
 
     async def test_websocket_send_A_not_B(self):
+        WSConsumer.empty_populator()
         communicator1 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_01)
         communicator2 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_02)
         await communicator1.connect()
@@ -85,6 +85,7 @@ class WebSocketTest(TestCase):
         await communicator2.disconnect()
 
     async def test_websocket_send_B_not_A(self):
+        WSConsumer.empty_populator()
         communicator1 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_01)
         communicator2 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_02)
         await communicator1.connect()
@@ -106,18 +107,42 @@ class WebSocketTest(TestCase):
         await communicator2.disconnect()
 
     async def test_websocket_send_all(self):
-       communicator1 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_01)
-       communicator2 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_02)
-       await communicator1.connect()
-       await communicator2.connect()
-       message = {
-           'type': 'raw.message',
-           'message': 'This is a raw message.'
-       }
-       channel_layer = get_channel_layer()
-       await channel_layer.group_send('users', message=message)
-       response1 = await communicator1.receive_json_from()
-       response2 = await communicator2.receive_json_from()
-       assert response1 == response2 == message
-       await communicator1.disconnect()
-       await communicator2.disconnect()
+        WSConsumer.empty_populator()
+        communicator1 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_01)
+        communicator2 = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_02)
+        await communicator1.connect()
+        await communicator2.connect()
+        message = {
+            'type': 'raw.message',
+            'message': 'This is a raw message.'
+        }
+        channel_layer = get_channel_layer()
+        await channel_layer.group_send('users', message=message)
+        response1 = await communicator1.receive_json_from()
+        response2 = await communicator2.receive_json_from()
+        assert response1 == response2 == message
+        await communicator1.disconnect()
+        await communicator2.disconnect()
+
+    async def test_register(self):
+        # Test if populators contains initial_message funcs
+        WSConsumer.register(test_populator)
+        self.assertIs(test_populator in WSConsumer.populators, True)
+        communicator = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_01)
+
+        await communicator.connect()
+        response1 = await communicator.receive_json_from()
+        message1 = {
+            'type': 'raw.message',
+            'message': 'Inital message testing 1'
+        }
+        assert message1 == response1
+
+        response2 = await communicator.receive_json_from()
+        message2 = {
+            'type': 'raw.message',
+            'message': 'Inital message testing 2'
+        }
+        assert message2 == response2
+        
+        await communicator.disconnect()
