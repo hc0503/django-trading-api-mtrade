@@ -18,6 +18,7 @@ logging-utilities = "*"
 django-structlog = "*"
 django-filter = "*"
 django-sendgrid-v5 = "*"
+channels = "*"
 
 [dev-packages]
 autopep8 = "*"
