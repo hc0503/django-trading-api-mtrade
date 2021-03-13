@@ -17,6 +17,9 @@ from mtrade.domain.users.models import User
 class EmailVerification():
 	@api_view(['POST'])
 	def resend(request, uid):
+		"""
+		API endpoint that sends email verification request.
+		"""
 		try:
 			current_site = get_current_site(request)
 			user = User.objects.get(pk=uid)
@@ -42,6 +45,9 @@ class EmailVerification():
 
 	@api_view(['GET'])
 	def activate(request, uidb64, token):
+		"""
+		API endpoint that process email verification.
+		"""
 		try:
 			uid = force_text(urlsafe_base64_decode(uidb64))
 			user = User.objects.get(pk=uid)
