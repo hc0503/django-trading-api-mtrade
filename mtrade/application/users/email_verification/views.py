@@ -22,7 +22,7 @@ class EmailVerification():
 			user = User.objects.get(pk=uid)
 			mail = Mail(
 				subject = 'Activate your account',
-				from_email = settings.FROM_EMAIL,
+				from_email = settings.EMAIL_FROM_ADDRESS,
 				to = [user.email],
 				template_id = settings.SENDGRID_EMAIL_VERIFICATION_TEMPLATE_ID,
 				dynamic_template_data = {
