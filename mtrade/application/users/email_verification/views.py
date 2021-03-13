@@ -7,6 +7,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
+from rest_framework import status
 
 # local import
 from .tokens import email_verification_token
@@ -32,7 +33,9 @@ class EmailVerification():
 			)
 			mail.send(fail_silently=False)
 		except Exception as e:
-			raise APIException(e)
+			raise APIException({
+				'message': e
+			})
 		return Response({
 			'message': 'Please confirm your mail box to verify your email address'
 		})
@@ -42,9 +45,11 @@ class EmailVerification():
 		try:
 			uid = force_text(urlsafe_base64_decode(uidb64))
 			user = User.objects.get(pk=uid)
-		except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-			user = None
-		if user is not None and email_verification_token.check_token(user, token):
+		except Exception as e:
+			raise APIException({
+				'message': e
+			})
+		if email_verification_token.check_token(user, token):
 			user.is_active = True
 			user.save()
 			return Response({
@@ -53,4 +58,4 @@ class EmailVerification():
 		else:
 			return Response({
 				'message': 'Activation link is invalid!'
-			})
+			}, status=status.HTTP_400_BAD_REQUEST)
