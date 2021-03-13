@@ -1,5 +1,5 @@
 # django import
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
@@ -15,7 +15,6 @@ from mtrade.domain.users.models import User
 
 class EmailVerification():
 	@api_view(['POST'])
-	@permission_classes([IsAuthenticated])
 	def resend(request, uid):
 		try:
 			current_site = get_current_site(request)
@@ -39,7 +38,6 @@ class EmailVerification():
 		})
 
 	@api_view(['GET'])
-	@permission_classes([IsAuthenticated])
 	def activate(request, uidb64, token):
 		try:
 			uid = force_text(urlsafe_base64_decode(uidb64))
