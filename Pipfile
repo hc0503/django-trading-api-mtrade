@@ -19,6 +19,7 @@ django-structlog = "*"
 django-filter = "*"
 django-sendgrid-v5 = "*"
 channels = "*"
+django-utils-six = "*"
 
 [dev-packages]
 autopep8 = "*"
