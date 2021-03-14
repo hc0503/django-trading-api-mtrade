@@ -1,66 +1,74 @@
 # MTrade Infrastructure modules
 
 ## Emailer module
+
 ### How to install
+
 In your project's in .env
-```shell
+
+```text
 EMAIL_BACKEND=sendgrid_backend.SendgridBackend
 SENDGRID_API_KEY=your_sendgrid_api
 SENDGRID_SANDBOX_MODE_IN_DEBUG=True/False
 ```
 
 ### Usage
+
 #### Simple
+
 ```python
 from mtrade.infrastructure.emailer.services import Mail
 
 mail = Mail(
-	'Here is the subject',
-	'Here is the body.',
-	'from@mtrade.mx',
-	['to@mtrade.mx'],
+    'Here is the subject',
+    'Here is the body.',
+    'from@mtrade.mx',
+    ['to@mtrade.mx'],
 )
 
 mail.send(fail_silently=False)
 ```
+
 #### Dynamic Template with JSON Data
+
 First, create a [dynamic template](https://mc.sendgrid.com/dynamic-templates) and copy the ID.
 
 ```python
 from mtrade.infrastructure.emailer.services import Mail
 
 mail = Mail(
-	subject = 'Here is the subject',
-	body = 'Here is the body.',
-	from_email = 'from@mtrade.mx',
-	to = ['to@mtrade.mx'],
-	bcc = ['bcc@mtrade.mx'],
-	connection = 'Here is connection',
-	attachments = 'Here is attachments',
-	headers = 'headers',
-	cc = ['cc@mtrade.mx'],
-	reply_to = 'reply-to@mtrade.mx',
-	# Transactional templates
-	# https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/
-	template_id = 'sendgrid_template_id',
-	dynamic_template_data = {
-		'title': 'testTitle',
-		'name': 'testName'
-	},
+    subject = 'Here is the subject',
+    body = 'Here is the body.',
+    from_email = 'from@mtrade.mx',
+    to = ['to@mtrade.mx'],
+    bcc = ['bcc@mtrade.mx'],
+    connection = 'Here is connection',
+    attachments = 'Here is attachments',
+    headers = 'headers',
+    cc = ['cc@mtrade.mx'],
+    reply_to = 'reply-to@mtrade.mx',
+    # Transactional templates
+    # https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/
+    template_id = 'sendgrid_template_id',
+    dynamic_template_data = {
+        'title': 'testTitle',
+        'name': 'testName'
+    },
 )
 
 mail.send(fail_silently=False)
 ```
 
 #### The kitchen sink Mail (all of the supported SendGrid specific properties)
+
 ```python
 from mtrade.infrastructure.emailer.services import Mail
 
 mail = Mail(
-	from_email='from@mtrade.mx',
-	to=['to@mtrade.mx'],
-	cc=['cc@mtrade.mx'],
-	bcc=['bcc@mtrade.mx'],
+    from_email='from@mtrade.mx',
+    to=['to@mtrade.mx'],
+    cc=['cc@mtrade.mx'],
+    bcc=['bcc@mtrade.mx'],
 )
 
 # Personalization custom args
@@ -92,8 +100,11 @@ mail.send(fail_silently=False)
 ```
 
 ## Websocket module
+
 ### Intial message sending when connecting to websocket for each module
+
 For each module populator(returns initial messages) is registered in __init__.py
+
 ```python
 # django imports
 from mtrade.interface.user.websocket import WSConsumer
@@ -104,7 +115,9 @@ WSConsumer.register(nas.list_unread_notifications)
 ```
 
 ### Sending messages in custom modules
+
 - There's users group for the broadcasting.
+
 ```python
 from channels.layers import get_channel_layer
 
@@ -113,6 +126,7 @@ channel_layer.group_send('users', message=message)
 ```
 
 - Each user is a group of the websocket channel.
+
 ```python
 from channels.layers import get_channel_layer
 
@@ -121,15 +135,18 @@ channel_layer.group_send('users_{}'.format(request.user.id), message=message)
 ```
 
 #### Command message style
+
 ```python
 message = {
-	'type': 'raw.message',
-	'message': 'This is a raw message.'
+    'type': 'raw.message',
+    'message': 'This is a raw message.'
 }
 ```
 
 ## Logger module
+
 ### Usage
+
 ```python
 import logging
 
@@ -143,6 +160,7 @@ logger.debug('Here is the message.')
 ```
 
 ### Logger levels
+
 - debug
 - info
 - warning
