@@ -12,7 +12,7 @@
 ```bash
 ./scripts/launch-postgres.sh
 pipenv shell
-pipenv install
+pipenv install --dev
 export $(cat .example.env | xargs)
 ./manage.py migrate
 ./manage.py createsuperuser
