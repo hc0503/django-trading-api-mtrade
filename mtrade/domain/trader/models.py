@@ -12,6 +12,7 @@ class Trader(custom_models.DatedModel):
     """
     Represents a Trader
     """
+    # This id must be the same id as the user it relates to
     id = models.UUIDField(primary_key=True, editable=False)
     license = models.ForeignKey(
         TraderLicense,

@@ -19,5 +19,9 @@ class TraderServices():
         return Trader.objects
 
     @staticmethod
+    def get_trader_by_id(trader_id) -> Type[Trader]:
+        return Trader.objects.get(id=trader_id)
+
+    @staticmethod
     def get_trader_license_repo() -> Type[Manager]:
         return TraderLicense.objects
