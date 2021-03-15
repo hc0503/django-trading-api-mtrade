@@ -10,7 +10,8 @@ from lib.django import custom_models
 from lib.ddd.exceptions import VOValidationExcpetion
 #from lib.data_manipulation.type_conversion import asdict
 
-# local imports
+# NOTE: COBOrder is imported here so django migrations can detect it
+from .cob.models import COBOrder
 
 
 @dataclass(frozen=True)

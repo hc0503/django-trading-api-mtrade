@@ -26,6 +26,7 @@ pandas = "*"
 openpyxl = "*"
 pylint-django = "*"
 django-stubs = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.9"
