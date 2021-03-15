@@ -22,9 +22,10 @@ channels = "*"
 
 [dev-packages]
 autopep8 = "*"
-pylint = "*"
 pandas = "*"
 openpyxl = "*"
+pylint-django = "*"
+django-stubs = "*"
 
 [requires]
 python_version = "3.9"
