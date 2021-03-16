@@ -70,7 +70,11 @@ class InstitutionManager(custom_models.DatedModel):
 
 class InstitutionLicense(custom_models.DatedModel):
     """
-    Represents an Institution License
+    Represents an Institution License.
+    # TODO: implement license type creation
+
+    TRADING_LICENSE = 'trading'
+    VIEW_ONLY_LICENSE = 'data'
     """
     class Meta:
         ordering = ['id']
@@ -87,13 +91,6 @@ class Institution(custom_models.DatedModel):
     class Meta:
         ordering = ['id']
 
-    TRADING_LICENSE = 'trading'
-    VIEW_ONLY_LICENSE = 'data'
-    LICENSE_TYPE_CHOICES = [
-        (TRADING_LICENSE, 'Trading Licence'),
-        (VIEW_ONLY_LICENSE, 'Data Licence')
-    ]
-
     ENABLED_STATUS = 'enabled'
     DISABLED_STATUS = 'disabled'
     STATUS_CHOICES = [
@@ -104,10 +101,10 @@ class Institution(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(max_length=250, unique=True)
     # contract: ref to File
-    contract = models.UUIDField()
+    contract_id = models.UUIDField()
     rfc = models.CharField(max_length=350, unique=True)
     # logo: ref to File
-    logo = models.UUIDField()
+    logo_id = models.UUIDField()
     manager = models.ForeignKey(
         InstitutionManager, on_delete=models.SET_NULL, null=True)
     status = models.CharField(
@@ -120,7 +117,7 @@ class Institution(custom_models.DatedModel):
     data_licenses = models.PositiveIntegerField()
     curp = models.CharField(max_length=50, unique=True)
     # ref to ComplianceOfficer
-    compliance_officer = models.UUIDField()
+    compliance_officer_id = models.UUIDField()
     # ref to Address
     address = models.UUIDField()
 
@@ -154,7 +151,7 @@ class SettlementInstruction(custom_models.DatedModel):
 
     name = models.CharField(max_length=250)
     # ref to File
-    document = models.UUIDField()
+    document_id = models.UUIDField()
     clearing_house = models.CharField(max_length=250, choices=CLEARING_CHOICES)
     account = models.CharField(max_length=250)
     bic_code = models.CharField(max_length=250)
@@ -162,7 +159,7 @@ class SettlementInstruction(custom_models.DatedModel):
     institution = models.ForeignKey(
         Institution, on_delete=models.SET_NULL, null=True)
     # ref to Trader
-    trader = models.UUIDField()
+    trader_id = models.UUIDField()
     status = models.CharField(max_length=250, choices=STATUS_CHOICES)
     deactivated_at = models.DateTimeField(null=True, blank=True)
 
@@ -215,7 +212,7 @@ class InstitutionLicenseFactory():
 class InstitutionFactory():
     @staticmethod
     def build_entity(institution_id: InstitutionID, **kwargs) -> Institution:
-        institution = InstitutionManager(
+        institution = Institution(
             id=institution_id.value, **kwargs)
         institution.full_clean()
         return institution

@@ -20,12 +20,37 @@ from django.db import models
 
 from app_zero.models import *
 
-
+# users
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions, User
+# trader
 from mtrade.domain.trader.models import Trader, TraderLicense
-
-from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory, TraderID, SecurityID, RequestorID
-from mtrade.domain.security.models import SecurityIssuer, Security, SecurityFactory, SecurityIssuerFactory
+# market
+from mtrade.domain.market.order_group.models import OrderGroup, OrderGroupFactory
+from mtrade.domain.market.order_group.models import (TraderID,
+                                                     SecurityID,
+                                                     RequestorInstitutionID,
+                                                     Priority,
+                                                     ResponsesReceived,
+                                                     AllocationPercentage,
+                                                     OrderGroupStatus,
+                                                     OrderGroupBaseParams,
+                                                     OrderGroupExtendedParams,
+                                                     WeightedAveragePrice,
+                                                     WeightedAverageSpread,
+                                                     WeightedAverageYield,
+                                                     FX)
+# security
+from mtrade.domain.security.models import SecurityIssuer, Security
+from mtrade.domain.security.models import SecurityFactory, SecurityIssuerFactory
+# institution
+from mtrade.domain.institution.models import (
+    Institution,
+    InstitutionManager,
+    SettlementInstruction,
+    InstitutionLicense,
+    RfqLock)
+from mtrade.domain.institution.models import InstitutionFactory, InstitutionManagerFactory, SettlementInstructionFactory, InstitutionLicenseFactory
+from mtrade.domain.institution.models import InstitutionID, InstitutionManagerID, SettlementInstructionID, InstitutionLicenseID
 
 
 from mtrade.settings import TIME_ZONE
@@ -214,6 +239,7 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
             print(
                 f'There was a problem while trying to create a {Model.__name__} instance -- {e.args}')
             traceback.print_exc()
+            exit()
 
     print(
         f'{num_created} of {n} {Model.__name__} instances were created')
@@ -222,7 +248,7 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
 """             MAIN MODEL INSTANCE GENERATORS     """
 
 
-def create_adress_data() -> dict:
+def create_address_data() -> dict:
     """
     Returns a dict to be used in instance creation or for testing purposes
     """
@@ -253,7 +279,7 @@ def create_addresses(n: int = 5):
 
     def create_new_instance():
 
-        data = create_adress_data()
+        data = create_address_data()
         new_instance = Model(**data)
 
         return new_instance
@@ -358,7 +384,7 @@ def create_user_settings(n: int = 5):
 #     return data
 
 # we defined a large number of possible users. Must be sufficient
-_users_gen = (i for i in range(1000))
+_users_gen = (i for i in range(10000))
 
 
 def create_user_data(test_word=None):
@@ -413,27 +439,21 @@ def create_users(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
 
 
-def create_instituion_manager_data() -> dict:
+def create_institution_managers():
     """
-    Returns a dict to be used in instance creation or for testing purposes
-    """
-    Model = InstitutionManager
-    data = dict(user=select_random_fk_reference(User, return_type='uuid'))
-    return data
-
-
-def create_institution_managers(n: int = 5):
-    """
-    Arguments
-    ----------
-    n : int
-        Number of instances to be created
+    Creates InstitutionManagers. One per user
     """
     Model = InstitutionManager
+    # TODO: (optional) update so not all users have an institution manager profile
+    users_for_institution_managers = User.objects.all()
+    institution_manager_gen = (i for i in users_for_institution_managers)
+
+    n = len(users_for_institution_managers)
 
     def create_new_instance():
-        data = create_instituion_manager_data()
-        new_instance = Model(**data)
+        user = next(institution_manager_gen)
+        new_instance = InstitutionManagerFactory.build_entity(
+            institution_manager_id=InstitutionManagerID(user.id))
 
         return new_instance
 
@@ -441,26 +461,22 @@ def create_institution_managers(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_controller_data() -> dict:
-    """
-    Returns a dict to be used in instance creation or for testing purposes
-    """
-    Model = Controller
-    data = dict(user=select_random_fk_reference(User, return_type='uuid'))
-    return data
-
-
 def create_controllers(n: int = 5):
     """
-    Arguments
-    ----------
-    n : int
-        Number of instances to be created
+    Creates Controller instances. One per user
+    # TODO: (optional) update so not all Controllers have a trader profile associated
     """
     Model = Controller
 
+    users_for_controllers = User.objects.all()
+    controller_gen = (i for i in users_for_controllers)
+
+    n = len(users_for_controllers)
+
     def create_new_instance():
-        data = create_controller_data()
+        # TODO: update to Factory creation when possible
+        user = next(controller_gen)
+        data = dict(id=user.id)
         new_instance = Model(**data)
 
         return new_instance
@@ -507,10 +523,11 @@ def create_institution_leads_data() -> dict:
     """
     Model = InstitutionLead
     random_str = create_random_string()
-    data = dict(contract=select_random_fk_reference(File),
+    data = dict(contract_id=select_random_fk_reference(File, return_type='uuid'),
                 rfc=f"RFC {random_str}",
-                logo=select_random_fk_reference(File),
-                contact_user=select_random_fk_reference(
+
+                logo_id=select_random_fk_reference(File, return_type='uuid'),
+                contact_user_id=select_random_fk_reference(
                     User, return_type='uuid'),
                 status=select_random_model_choice(Model.STATUS_CHOICES),
                 compliance_officer=select_random_fk_reference(
@@ -539,11 +556,29 @@ def create_institution_leads(n: int = 5):
         n=n, create_new_instance=create_new_instance, Model=Model)
 
 
-def create_institution_data():
+def create_institution_licenses():
     """
-    No test data here yet.
+    Creates Institution Licenses
     """
-    pass
+    Model = InstitutionLicense
+    institution_license_data = [
+        dict(name='trading', short_description='This is an institution trading license'),
+        dict(name='data', short_description='This is an institution data license')]
+
+    institution_license_gen = (i for i in institution_license_data)
+
+    n = len(institution_license_data)
+
+    def create_new_instance():
+        inst_lic_data = next(institution_license_gen)
+        new_instance = InstitutionLicenseFactory.build_entity_with_id(
+            name=inst_lic_data['name'],
+            short_description=inst_lic_data['short_description']
+        )
+        return new_instance
+
+    create_instances(
+        n=n, create_new_instance=create_new_instance, Model=Model)
 
 
 def create_institutions():
@@ -570,21 +605,21 @@ def create_institutions():
         random_str = create_random_string()
         inst_data = next(institution_gen)
 
-        new_instance = Model(
+        new_instance = InstitutionFactory.build_entity_with_id(
             name=inst_data["name"],
-            contract=select_random_fk_reference(File),
+            contract_id=select_random_fk_reference(File, return_type='uuid'),
             rfc=f"RFC {random_str}",
-            logo=select_random_fk_reference(File),
+            logo_id=select_random_fk_reference(File, return_type='uuid'),
             manager=select_random_fk_reference(InstitutionManager),
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            license_type=select_random_model_choice(
-                Model.LICENSE_TYPE_CHOICES, many=True),
+            license_type=select_random_fk_reference(InstitutionLicense),
             demo_licenses=random.randint(0, 5),
             trade_licenses=random.randint(0, 5),
             data_licenses=random.randint(0, 5),
             curp=f"CURP {random_str}",
-            compliance_officer=select_random_fk_reference(ComplianceOfficer),
-            address=select_random_fk_reference(Address)
+            compliance_officer_id=select_random_fk_reference(
+                ComplianceOfficer, return_type='uuid'),
+            address=select_random_fk_reference(Address, return_type='uuid')
         )
 
         return new_instance
@@ -646,12 +681,15 @@ def create_trader_licenses():
 
 def create_traders():
     """
-    Creates traders. One per user.
-    TODO: (optional) update so not all users have a trader profile associated
+    Creates Trader instances. One per user
+    # TODO: (optional) update so not all users have a trader profile associated
     """
     Model = Trader
+
     users_for_trader_gen = User.objects.all()
     trader_gen = (i for i in users_for_trader_gen)
+
+    n = len(users_for_trader_gen)
 
     def create_new_instance():
         user = next(trader_gen)
@@ -665,8 +703,6 @@ def create_traders():
         new_instance = Model(**data)
 
         return new_instance
-
-    n = len(users_for_trader_gen)
 
     create_instances(
         n=n, create_new_instance=create_new_instance, Model=Model)
@@ -709,9 +745,9 @@ def create_lead_data() -> dict:
     Returns a dict to be used in instance creation or for testing purposes
     """
     Model = Lead
-    random_str = create_random_string()
     data = dict(institution_lead=select_random_fk_reference(InstitutionLead),
-                institution=select_random_fk_reference(Institution),
+                institution_id=select_random_fk_reference(
+                    Institution, return_type='uuid'),
                 contact_person=select_random_fk_reference(ContactPerson),
                 comments='This is a comment.')
     return data
@@ -746,19 +782,13 @@ def create_concierges(n: int = 5):
     Model = Concierge
 
     def create_new_instance():
-        random_str = create_random_string()
         new_instance = Model(
-            user=select_random_fk_reference(User, return_type='uuid'),
-        )
+            institution_ids=[select_random_fk_reference(Institution, return_type='uuid')])
         new_instance.full_clean()
         new_instance.save()
-        # add a random number of institutions to concierge
-        for i in range(random.randint(0, 6)):
-            new_instance.institutions.add(
-                select_random_fk_reference(Institution))
 
         # add a random number of institution leads to concierge
-        for i in range(random.randint(0, 6)):
+        for i in range(random.randint(0, 2)):
             new_instance.leads.add(select_random_fk_reference(Lead))
 
         return new_instance
@@ -924,13 +954,13 @@ def create_settlement_instructions(n: int = 5):
         random_str = create_random_string()
         new_instance = Model(
             name=f'Settlement {random_str}',
-            document=select_random_fk_reference(File),
+            document_id=select_random_fk_reference(File, return_type='uuid'),
             clearing_house=select_random_model_choice(Model.CLEARING_CHOICES),
             account=f'Account {random_str}',
             bic_code=f'Bic Code {random_str}',
             custodian=f'Custodian {random_str}',
             institution=select_random_fk_reference(Institution),
-            trader=select_random_fk_reference(Trader, return_type='uuid'),
+            trader_id=select_random_fk_reference(Trader, return_type='uuid'),
             status=select_random_model_choice(Model.STATUS_CHOICES)
         )
 
@@ -954,7 +984,8 @@ def create_alarms(n: int = 5):
         new_instance = Model(
             alarm_type=select_random_model_choice(Model.TYPE_CHOICES),
             value='100',
-            security=select_random_fk_reference(Security, return_type='uuid')
+            security_id=select_random_fk_reference(
+                Security, return_type='uuid')
         )
 
         return new_instance
@@ -974,50 +1005,73 @@ def create_order_group_data(test=False) -> dict:
     """
     Model = OrderGroup
 
-    volume = create_random_number_of_securities()
     price = create_random_price(return_type='number')
     yield_value = create_random_yield()
-    notional = str(volume * price)
+
     spread = create_random_spread()
-    submission = create_random_datetime(
-        '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
-    expiration = create_random_datetime(
-        '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
 
     security_id = SecurityID(uuid.uuid4()) if test else SecurityID(select_random_fk_reference(
         Security, return_type='uuid'))
     trader_id = TraderID(uuid.uuid4()) if test else TraderID(select_random_fk_reference(
         Trader, return_type='uuid'))
-    requestor_id = RequestorID(uuid.uuid4()) if test else RequestorID(select_random_fk_reference(
+    requestor_institution_id = RequestorInstitutionID(uuid.uuid4()) if test else RequestorInstitutionID(select_random_fk_reference(
         Institution, return_type='uuid'))
+    priority = Priority(create_random_datetime(
+        '20/1/2021 1:30 PM', '20/4/2021 1:30 PM'))
+    resp_received = ResponsesReceived(random.randint(0, 10))
+    allocation_pct = AllocationPercentage(Decimal(str(random.random())))
+    status = OrderGroupStatus(select_random_model_choice(Model.STATUS_CHOICES))
 
-    data = dict(
-        orderbook=select_random_model_choice(Model.ORDERBOOK_CHOICES),
-        order_type=select_random_model_choice(Model.ORDER_TYPE_CHOICES),
-        direction=select_random_model_choice(Model.DIRECTION_CHOICES),
-        volume=volume,
+    # base_params
+    orderbook_type = select_random_model_choice(Model.ORDERBOOK_TYPE_CHOICES)
+    order_type = select_random_model_choice(Model.ORDER_TYPE_CHOICES)
+    direction = select_random_model_choice(Model.DIRECTION_CHOICES)
+    size = create_random_number_of_securities()
+    notional = Decimal(str(size * price))
+    submission = create_random_datetime(
+        '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
+    expiration = create_random_datetime(
+        '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
+    response_type = select_random_model_choice(
+        Model.RESPONSE_TYPE_CHOICES)
+    settlement_currency = select_random_model_choice(
+        Model.SETTLEMENT_CURRENCY_CHOICES)
+    requestor_type = select_random_model_choice(
+        Model.REQUESTOR_TYPE_CHOICES)
+    base_params = OrderGroupBaseParams(
+        orderbook_type=orderbook_type,
+        order_type=order_type,
+        direction=direction,
+        size=size,
         notional=notional,
-        weighted_avg_price=Decimal(str(price)),
-        weighted_avg_yield=Decimal(str(yield_value)),
-        weighted_avg_spread=Decimal(spread),
-        fx=Decimal(str(random.random()*10 + 15)),
-        status=select_random_model_choice(Model.STATUS_CHOICES),
         submission=submission,
         expiration=expiration,
-        allocation_pct=Decimal(str(random.random())),
-        responded_by=select_random_model_choice(
-            Model.RESPONDED_BY_CHOICES),
-        settlement_currency=select_random_model_choice(
-            Model.CURRENCY_CHOICES),
-        requestor_type=select_random_model_choice(
-            Model.REQUESTOR_TYPE_CHOICES),
-        resp_received=random.randint(0, 10),
-        priority=create_random_datetime(
-            '20/1/2021 1:30 PM', '20/4/2021 1:30 PM'),
+        response_type=response_type,
+        settlement_currency=settlement_currency,
+        requestor_type=requestor_type)
 
+    # extended_params
+    weighted_avg_price = WeightedAveragePrice(Decimal(str(price)))
+    weighted_avg_yield = WeightedAverageYield(Decimal(str(yield_value)))
+    weighted_avg_spread = WeightedAverageSpread(Decimal(spread))
+    fx = FX(Decimal(str(random.random()*10 + 15)))
+    extended_params = OrderGroupExtendedParams(
+        weighted_avg_price=weighted_avg_price,
+        weighted_avg_spread=weighted_avg_spread,
+        weighted_avg_yield=weighted_avg_yield,
+        fx=fx
+    )
+
+    data = dict(
         security_id=security_id,
+        requestor_institution_id=requestor_institution_id,
         trader_id=trader_id,
-        requestor_id=requestor_id
+        priority=priority,
+        resp_received=resp_received,
+        allocation_pct=allocation_pct,
+        status=status,
+        base_params=base_params,
+        extended_params=extended_params
     )
 
     return data
@@ -1120,7 +1174,7 @@ def create_cob_streams(n: int = 5):
         new_instance = Model(
             cob_order=select_random_fk_reference(CobOrder),
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            order_group=select_random_fk_reference(
+            order_group_id=select_random_fk_reference(
                 OrderGroup, return_type='uuid')
         )
 
@@ -1143,9 +1197,9 @@ def create_rfqs(n: int = 5):
         submission = create_random_datetime(
             '20/1/2021 1:30 PM', '20/3/2021 1:30 PM')
         new_instance = Model(
-            security=select_random_fk_reference(
+            security_id=select_random_fk_reference(
                 Security, return_type='uuid'),
-            trader=select_random_fk_reference(Trader, return_type='uuid'),
+            trader_id=select_random_fk_reference(Trader, return_type='uuid'),
             anonymous=random.choice([True, False]),
             public=random.choice([True, False]),
             submission=submission,
@@ -1155,18 +1209,15 @@ def create_rfqs(n: int = 5):
             direction=select_random_model_choice(Model.DIRECTION_CHOICES),
             volume=create_random_number_of_securities(),
             settlement_currency=Model.MXN_CURRENCY,
-            order_group=select_random_fk_reference(
-                OrderGroup, return_type='uuid')
+            order_group_id=select_random_fk_reference(
+                OrderGroup, return_type='uuid'),
+            counterparty_ids=[select_random_fk_reference(
+                Institution, return_type='uuid')]
         )
-        new_instance.full_clean()
-        new_instance.save()
-        for _ in range(random.randint(0, 4)):
-            new_instance.counterparties.add(
-                select_random_fk_reference(Institution))
-        new_instance.save()
+        return new_instance
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
+        n=n, create_new_instance=create_new_instance, Model=Model)
 
 
 def create_rfq_responses(n: int = 5):
@@ -1191,7 +1242,7 @@ def create_rfq_responses(n: int = 5):
         bid_volume = create_random_number_of_securities()
 
         new_instance = Model(
-            trader=select_random_fk_reference(Trader, return_type='uuid'),
+            trader_id=select_random_fk_reference(Trader, return_type='uuid'),
             submission=submission_datetime,
             rfq=select_random_fk_reference(Rfq),
             status=select_random_model_choice(Model.STATUS_CHOICES),
@@ -1236,9 +1287,9 @@ def create_rfq_auto_responders(n: int = 5):
         ask_notional = ask_price*min_volume
 
         new_instance = Model(
-            security=select_random_fk_reference(
+            security_id=select_random_fk_reference(
                 Security, return_type='uuid'),
-            trader=select_random_fk_reference(Trader, return_type='uuid'),
+            trader_id=select_random_fk_reference(Trader, return_type='uuid'),
             min_volume=min_volume,
             max_volume=min_volume + random.randint(100, 1000000),
             public=random.choice([False, True]),
@@ -1253,18 +1304,15 @@ def create_rfq_auto_responders(n: int = 5):
             bid_notional=Decimal(str(ask_notional)),
             status=select_random_model_choice(Model.STATUS_CHOICES),
             priority=create_random_datetime(
-                '20/1/2021 1:30 PM', '20/4/2021 1:30 PM')
+                '20/1/2021 1:30 PM', '20/4/2021 1:30 PM'),
+            counterparty_ids=[select_random_fk_reference(
+                Institution, return_type='uuid')]
         )
 
-        new_instance.full_clean()
-        new_instance.save()
-        for _ in range(random.randint(1, 5)):
-            new_instance.counterparties.add(
-                select_random_fk_reference(Institution))
-        new_instance.save()
+        return new_instance
 
     create_instances(
-        n=n, create_new_instance=create_new_instance, Model=Model, manage_validation_and_saving=False)
+        n=n, create_new_instance=create_new_instance, Model=Model)
 
 
 def create_rfq_locks(n: int = 5):
@@ -1280,7 +1328,7 @@ def create_rfq_locks(n: int = 5):
         trader = select_random_fk_reference(Trader)
         new_instance = Model(
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            trader=trader.id,
+            trader_id=trader.id,
             institution=Institution.objects.get(id=trader.institution_id)
         )
 
@@ -1371,9 +1419,9 @@ def create_rfq_transactions(n: int = 5):
         yield_value = create_random_yield()
 
         new_instance = Model(
-            buyer=select_random_fk_reference(Trader, return_type='uuid'),
-            seller=select_random_fk_reference(Trader, return_type='uuid'),
-            security=select_random_fk_reference(
+            buyer_id=select_random_fk_reference(Trader, return_type='uuid'),
+            seller_id=select_random_fk_reference(Trader, return_type='uuid'),
+            security_id=select_random_fk_reference(
                 Security, return_type='uuid'),
             volume=Decimal((volume)),
             notional=Decimal(str(notional)),
@@ -1413,16 +1461,15 @@ def create_watchlists(n: int = 5):
         Number of instances to be created
     """
     Model = Watchlist
-    random_str = create_random_string()
 
     def create_new_instance():
         random_str = create_random_string()
         new_instance = Model(
-            trader=select_random_fk_reference(Trader, return_type='uuid'),
+            trader_id=select_random_fk_reference(Trader, return_type='uuid'),
             name=f'Watchlist {random_str}',
             description='This is a watchlist',
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            securities=[
+            security_ids=[
                 select_random_fk_reference(Security, return_type='uuid'),
                 select_random_fk_reference(Security, return_type='uuid'),
                 select_random_fk_reference(Security, return_type='uuid')]
@@ -1448,7 +1495,7 @@ def create_notifications(n: int = 5):
             notification_type=select_random_model_choice(Model.TYPE_CHOICES),
             body={"key": "this is a body"},
             status=select_random_model_choice(Model.STATUS_CHOICES),
-            user=select_random_fk_reference(User, return_type='uuid')
+            user_id=select_random_fk_reference(User, return_type='uuid')
         )
 
         return new_instance
@@ -1479,11 +1526,12 @@ def run(interactive: bool = True):
             create_files(50)
             create_user_settings(50)
             create_users(2)
-            create_institution_managers(10)
-            create_controllers(10)
+            create_institution_managers()
+            create_controllers()
 
             create_compliance_officers(10)
             create_institution_leads(10)
+            create_institution_licenses()
             create_institutions()
 
             create_trader_licenses()

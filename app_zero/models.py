@@ -102,9 +102,8 @@ class UserSettings(custom_models.DatedModel):
 
 
 class Controller(custom_models.DatedModel):
+    # Controller.id is the same as the user it refers to
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    # ref to User
-    user_id = models.UUIDField()
 
 
 class ComplianceOfficer(custom_models.DatedModel):
@@ -129,11 +128,11 @@ class InstitutionLead(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    contract_id = models.ForeignKey(
-        File, on_delete=models.SET_NULL, null=True, related_name='institution_lead_contract')
+    # ref to File (contract_id)
+    contract_id = models.UUIDField()
     rfc = models.CharField(max_length=250, default='Test RFC')
-    logo_id = models.ForeignKey(File, on_delete=models.SET_NULL,
-                                null=True, related_name='institution_lead_logo')
+    # ref to File (logo_id)
+    logo_id = models.UUIDField()
     # ref to User
     contact_user_id = models.UUIDField()
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
@@ -226,7 +225,7 @@ class Concierge(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     leads = models.ManyToManyField(Lead)
     # ref to Institution (list of)
-    institution_ids = ArrayField(models.UUIDField())
+    institution_ids = ArrayField(models.UUIDField(), null=True)
 
 
 class Alarm(custom_models.DatedModel):
@@ -415,6 +414,8 @@ class RfqResponse(custom_models.DatedModel):
     bid_volume = models.IntegerField()
     bid_fx = models.DecimalField(max_digits=40, decimal_places=20)
     autoresponded = models.BooleanField()
+    # ref to Institution (list of)
+    counterparty_ids = ArrayField(models.URLField(), null=True, blank=True)
 
 
 class RfqAutoResponder(custom_models.DatedModel):
