@@ -11,25 +11,25 @@ from mtrade.application.institution.services import InstitutionAppServices
 
 # local imports
 from . import open_api
-from .serializers import RfqLockSerializer
+from .serializers import InstitutionLicenseSerializer
 
 
 @extend_schema_view(
-    list=open_api.rfq_lock_list_extension,
-    retrieve=open_api.rfq_lock_retrieve_extension,
-    create=open_api.rfq_lock_create_extension,
-    update=open_api.rfq_lock_update_extension,
-    partial_update=open_api.rfq_lock_partial_update_extension,
+    list=open_api.inst_license_list_extension,
+    retrieve=open_api.inst_license_retrieve_extension,
+    create=open_api.inst_license_create_extension,
+    update=open_api.inst_license_update_extension,
+    partial_update=open_api.inst_license_partial_update_extension,
 )
-class RfqLockViewSet(viewsets.ReadOnlyModelViewSet):
+class InstitutionLicenseViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows the client to interact with Rfq Locks
+    API endpoint that allows the client to interact with Institution Managers
     """
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = RfqLockSerializer
+    serializer_class = InstitutionLicenseSerializer
     filterset_fields = ()
     ordering = ['-created_at']
 
     def get_queryset(self):
         order_by_string = self.request.query_params.get('order_by', 'id')
-        return InstitutionAppServices.list_rfq_locks().order_by(order_by_string)
+        return InstitutionAppServices.list_institution_licenses().order_by(order_by_string)

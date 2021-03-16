@@ -48,6 +48,7 @@ class OrderGroupViewSet(CreateListUpdateRetrieveViewSet):
     """
     Allows clients to perform order operations
     """
+    # TODO: this serializer is intended for listing ordergroups in viewset.
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = OrderGroupExtendedSerializer
     filterset_fields = ('direction',  'trader_id')

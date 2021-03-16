@@ -92,19 +92,19 @@ class UserSettings(custom_models.DatedModel):
 #         UserSettings, on_delete=models.SET_NULL, null=True)
 
 
-class InstitutionManager(custom_models.DatedModel):
-    """
-    Represents an Institution Manager
-    """
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    # ref to User
-    user = models.UUIDField()
+# class InstitutionManager(custom_models.DatedModel):
+#     """
+#     Represents an Institution Manager
+#     """
+#     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+#     # ref to User
+#     user = models.UUIDField()
 
 
 class Controller(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to User
-    user = models.UUIDField()
+    user_id = models.UUIDField()
 
 
 class ComplianceOfficer(custom_models.DatedModel):
@@ -129,55 +129,55 @@ class InstitutionLead(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    contract = models.ForeignKey(
+    contract_id = models.ForeignKey(
         File, on_delete=models.SET_NULL, null=True, related_name='institution_lead_contract')
     rfc = models.CharField(max_length=250, default='Test RFC')
-    logo = models.ForeignKey(File, on_delete=models.SET_NULL,
-                             null=True, related_name='institution_lead_logo')
+    logo_id = models.ForeignKey(File, on_delete=models.SET_NULL,
+                                null=True, related_name='institution_lead_logo')
     # ref to User
-    contact_user = models.UUIDField()
+    contact_user_id = models.UUIDField()
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
     compliance_officer = models.ForeignKey(
         ComplianceOfficer, on_delete=models.SET_NULL, null=True)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
 
 
-class Institution(custom_models.DatedModel):
+# class Institution(custom_models.DatedModel):
 
-    TRADING_LICENSE = 'trading'
-    VIEW_ONLY_LICENSE = 'data'
-    LICENSE_TYPE_CHOICES = [
-        (TRADING_LICENSE, 'Trading Licence'),
-        (VIEW_ONLY_LICENSE, 'Data Licence')
-    ]
+#     TRADING_LICENSE = 'trading'
+#     VIEW_ONLY_LICENSE = 'data'
+#     LICENSE_TYPE_CHOICES = [
+#         (TRADING_LICENSE, 'Trading Licence'),
+#         (VIEW_ONLY_LICENSE, 'Data Licence')
+#     ]
 
-    ENABLED_STATUS = 'enabled'
-    DISABLED_STATUS = 'disabled'
-    STATUS_CHOICES = [
-        (ENABLED_STATUS, 'enabled'),
-        (DISABLED_STATUS, 'disabled')
-    ]
+#     ENABLED_STATUS = 'enabled'
+#     DISABLED_STATUS = 'disabled'
+#     STATUS_CHOICES = [
+#         (ENABLED_STATUS, 'enabled'),
+#         (DISABLED_STATUS, 'disabled')
+#     ]
 
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    name = models.CharField(max_length=250, unique=True)
-    contract = models.ForeignKey(
-        File, on_delete=models.SET_NULL, null=True, related_name='institution_contract')
-    rfc = models.CharField(max_length=350, unique=True)
-    logo = models.ForeignKey(
-        File, on_delete=models.SET_NULL, null=True, related_name='institution_logo')
-    manager = models.ForeignKey(
-        InstitutionManager, on_delete=models.SET_NULL, null=True)
-    status = models.CharField(
-        max_length=150, choices=STATUS_CHOICES)
-    license_type = ArrayField(models.CharField(
-        max_length=150, choices=LICENSE_TYPE_CHOICES))
-    demo_licenses = models.PositiveIntegerField()
-    trade_licenses = models.PositiveIntegerField()
-    data_licenses = models.PositiveIntegerField()
-    curp = models.CharField(max_length=50, unique=True)
-    compliance_officer = models.ForeignKey(
-        ComplianceOfficer, on_delete=models.SET_NULL, null=True)
-    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+#     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+#     name = models.CharField(max_length=250, unique=True)
+#     contract = models.ForeignKey(
+#         File, on_delete=models.SET_NULL, null=True, related_name='institution_contract')
+#     rfc = models.CharField(max_length=350, unique=True)
+#     logo = models.ForeignKey(
+#         File, on_delete=models.SET_NULL, null=True, related_name='institution_logo')
+#     manager = models.ForeignKey(
+#         InstitutionManager, on_delete=models.SET_NULL, null=True)
+#     status = models.CharField(
+#         max_length=150, choices=STATUS_CHOICES)
+#     license_type = ArrayField(models.CharField(
+#         max_length=150, choices=LICENSE_TYPE_CHOICES))
+#     demo_licenses = models.PositiveIntegerField()
+#     trade_licenses = models.PositiveIntegerField()
+#     data_licenses = models.PositiveIntegerField()
+#     curp = models.CharField(max_length=50, unique=True)
+#     compliance_officer = models.ForeignKey(
+#         ComplianceOfficer, on_delete=models.SET_NULL, null=True)
+#     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
 
 
 # class Trader(custom_models.DatedModel):
@@ -214,55 +214,19 @@ class Lead(custom_models.DatedModel):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     institution_lead = models.ForeignKey(
         InstitutionLead, on_delete=models.SET_NULL, null=True)
-    institution = models.ForeignKey(
-        Institution, on_delete=models.SET_NULL, null=True)
+    # ref to Institution
+    institution_id = models.UUIDField()
     contact_person = models.ForeignKey(
         ContactPerson, on_delete=models.SET_NULL, null=True)
     comments = models.TextField()
 
 
 class Concierge(custom_models.DatedModel):
+    # must have the same id as the user it refers to
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    # ref to User
-    user = models.UUIDField()
     leads = models.ManyToManyField(Lead)
-    institutions = models.ManyToManyField(Institution)
-
-
-class SettlementInstruction(custom_models.DatedModel):
-
-    # these clearing valiues ust be in sync with securities'
-    INDEVAL_CLEARING = 'indeval'
-    DTC_CLEARING = 'dtc'
-    EUROCLEAR_CLEARING = 'euroclear'
-    CLEARSTREAM_CLEARING = 'clearstream'
-    CLEARING_CHOICES = (
-        (INDEVAL_CLEARING, 'Indeval'),
-        (DTC_CLEARING, 'DTC'),
-        (EUROCLEAR_CLEARING, 'Euroclear'),
-        (CLEARSTREAM_CLEARING, 'Clearstream')
-    )
-
-    ACTIVE_STATUS = 'active'
-    DEACTIVATED_STATUS = 'deactivated'
-    STATUS_CHOICES = [
-        (ACTIVE_STATUS, 'Active'),
-        (DEACTIVATED_STATUS, 'Deactivated')
-    ]
-
-    name = models.CharField(max_length=250)
-    document = models.ForeignKey(
-        File, null=True, on_delete=models.SET_NULL)
-    clearing_house = models.CharField(max_length=250, choices=CLEARING_CHOICES)
-    account = models.CharField(max_length=250)
-    bic_code = models.CharField(max_length=250)
-    custodian = models.CharField(max_length=250)
-    institution = models.ForeignKey(
-        Institution, on_delete=models.SET_NULL, null=True)
-    # ref to Trader
-    trader = models.UUIDField()
-    status = models.CharField(max_length=250, choices=STATUS_CHOICES)
-    deactivated_at = models.DateTimeField(null=True, blank=True)
+    # ref to Institution (list of)
+    institution_ids = ArrayField(models.UUIDField())
 
 
 class Alarm(custom_models.DatedModel):
@@ -281,7 +245,7 @@ class Alarm(custom_models.DatedModel):
         max_length=150, choices=TYPE_CHOICES)
     value = models.DecimalField(max_digits=40, decimal_places=20)
     # ref to Security
-    security = models.UUIDField()
+    security_id = models.UUIDField()
 
 
 class CobOrder(custom_models.DatedModel):
@@ -364,7 +328,7 @@ class CobStream(custom_models.DatedModel):
     # TODO: update order_group ref when in same module as OrderGroup
     # order_group = models.ForeignKey(
     #     OrderGroup, on_delete=models.SET_NULL, null=True)
-    order_group = models.UUIDField()
+    order_group_id = models.UUIDField()
 
 
 class Rfq(custom_models.DatedModel):
@@ -396,9 +360,9 @@ class Rfq(custom_models.DatedModel):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Security
-    security = models.UUIDField()
+    security_id = models.UUIDField()
     # ref to Trader
-    trader = models.UUIDField()
+    trader_id = models.UUIDField()
     anonymous = models.BooleanField(default=True)
     public = models.BooleanField(default=False)
     submission = models.DateTimeField()
@@ -407,13 +371,14 @@ class Rfq(custom_models.DatedModel):
     direction = models.CharField(
         max_length=150, choices=DIRECTION_CHOICES)
     volume = models.IntegerField()
-    counterparties = models.ManyToManyField(Institution)
+    # ref to Institution (list of)
+    counterparty_ids = ArrayField(models.UUIDField())
     settlement_currency = models.CharField(
         max_length=150, choices=SETTLEMENT_CURRENCY_CHOICES)
     # TODO: update order_group ref when in same module s OrderGroup
     # order_group = models.ForeignKey(
     #     OrderGroup, on_delete=models.SET_NULL, null=True)
-    order_group = models.UUIDField()
+    order_group_id = models.UUIDField()
 
 
 class RfqResponse(custom_models.DatedModel):
@@ -429,7 +394,7 @@ class RfqResponse(custom_models.DatedModel):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Trader
-    trader = models.UUIDField()
+    trader_id = models.UUIDField()
     submission = models.DateTimeField()
     rfq = models.ForeignKey(
         Rfq, null=True, on_delete=models.SET_NULL)
@@ -470,11 +435,11 @@ class RfqAutoResponder(custom_models.DatedModel):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Security
-    security = models.UUIDField()
+    security_id = models.UUIDField()
     # ref to Trader
-    trader = models.UUIDField()
-
-    counterparties = models.ManyToManyField(Institution)
+    trader_id = models.UUIDField()
+    # ref to Institution (list of)
+    counterparty_ids = ArrayField(models.UUIDField())
     min_volume = models.PositiveIntegerField()
     max_volume = models.PositiveIntegerField()
     public = models.BooleanField()
@@ -496,20 +461,20 @@ class RfqAutoResponder(custom_models.DatedModel):
     deactivated_at = models.DateTimeField(null=True, blank=True)
 
 
-class RfqLock(custom_models.DatedModel):
-    ACTIVE_STATUS = 'active'
-    DEACTIVATED_STATUS = 'deactivated'
-    STATUS_CHOICES = [
-        (ACTIVE_STATUS, 'Active'),
-        (DEACTIVATED_STATUS, 'Deactivated')
-    ]
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    status = models.CharField(max_length=150, choices=STATUS_CHOICES)
-    # ref to Trader
-    trader = models.UUIDField()
-    institution = models.ForeignKey(
-        Institution, on_delete=models.SET_NULL, null=True)
-    deactivated_at = models.DateTimeField(null=True, blank=True)
+# class RfqLock(custom_models.DatedModel):
+#     ACTIVE_STATUS = 'active'
+#     DEACTIVATED_STATUS = 'deactivated'
+#     STATUS_CHOICES = [
+#         (ACTIVE_STATUS, 'Active'),
+#         (DEACTIVATED_STATUS, 'Deactivated')
+#     ]
+#     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+#     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
+#     # ref to Trader
+#     trader_id = models.UUIDField()
+#     # ref to Institution
+#     institution_id = models.UUIDField()
+#     deactivated_at = models.DateTimeField(null=True, blank=True)
 
 # class BaseTransaction(custom_models.DatedModel):
 #     """
@@ -631,11 +596,11 @@ class RfqTransaction(custom_models.DatedModel):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Trader (buyer)
-    buyer = models.UUIDField()
+    buyer_id = models.UUIDField()
     # ref to Trader (seller)
-    seller = models.UUIDField()
+    seller_id = models.UUIDField()
     # ref to Security
-    security = models.UUIDField()
+    security_id = models.UUIDField()
     volume = models.IntegerField()
     notional = models.DecimalField(max_digits=40, decimal_places=20)
     accrued_interest = models.DecimalField(max_digits=40, decimal_places=20)
@@ -676,10 +641,10 @@ class Watchlist(custom_models.DatedModel):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Trader
-    trader = models.UUIDField()
+    trader_id = models.UUIDField()
     name = models.CharField(max_length=250)
     # ref to Security
-    securities = ArrayField(models.UUIDField(), null=True, blank=True)
+    security_ids = ArrayField(models.UUIDField(), null=True, blank=True)
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
     description = models.TextField(blank=True, default='')
     archived_at = models.DateTimeField(null=True, blank=True)
@@ -694,8 +659,8 @@ class TradeBlockSettlement(custom_models.DatedModel):
         (SETTLED_STATUS, 'Settled')
     ]
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    settlement_instruction = models.ForeignKey(
-        SettlementInstruction, on_delete=models.SET_NULL, null=True)
+    # ref to SettlementInstruction
+    settlement_instruction_id = models.UUIDField()
     notional = models.DecimalField(max_digits=40, decimal_places=20)
     status = models.CharField(
         max_length=150, choices=STATUS_CHOICES)
@@ -721,7 +686,7 @@ class TradeBlock(custom_models.DatedModel):
     # transaction_block_settlements
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Security
-    security = models.UUIDField()
+    security_id = models.UUIDField()
     volume = models.IntegerField()
     notional = models.DecimalField(max_digits=40, decimal_places=20)
     settlement_currency = models.CharField(
@@ -733,12 +698,12 @@ class TradeBlock(custom_models.DatedModel):
         max_digits=40, decimal_places=20)
     all_in_weighted_avg_yield = models.DecimalField(
         max_digits=40, decimal_places=20)
-    buyer = models.ForeignKey(
-        Institution, on_delete=models.SET_NULL, null=True, related_name='buyer_institution')
-    seller = models.ForeignKey(
-        Institution, on_delete=models.SET_NULL, null=True, related_name='seller_institution')
+    # ref to Institution
+    buyer_institution_id = models.UUIDField()
+    # ref to Institution
+    seller_institution_id = models.UUIDField()
     # ref to Trader (booked_by)
-    booked_by = models.UUIDField()
+    booked_by_trader_id = models.UUIDField()
 
 
 class Notification(custom_models.DatedModel):
@@ -835,7 +800,7 @@ class Notification(custom_models.DatedModel):
     body = models.JSONField(encoder=DjangoJSONEncoder)
     status = models.CharField(max_length=250, choices=STATUS_CHOICES)
     # ref to User
-    user = models.UUIDField()
+    user_id = models.UUIDField()
 
 
 class NotificationSettings(custom_models.DatedModel):
@@ -852,7 +817,7 @@ class NotificationSettings(custom_models.DatedModel):
     ]
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to User
-    user = models.UUIDField()
+    user_id = models.UUIDField()
     notification_type = models.CharField(
         max_length=250, choices=Notification.TYPE_CHOICES)
     notify_as = ArrayField(models.CharField(
@@ -863,15 +828,15 @@ model_list = [
     Address,
     File,
     UserSettings,
-    InstitutionManager,
+    # InstitutionManager,
     Controller,
     ComplianceOfficer,
     InstitutionLead,
-    Institution,
+    # Institution,
     ContactPerson,
     Lead,
     Concierge,
-    SettlementInstruction,
+    # SettlementInstruction,
     Alarm,
     CobOrder,
     CobAutoRefresher,
@@ -879,7 +844,7 @@ model_list = [
     Rfq,
     RfqResponse,
     RfqAutoResponder,
-    RfqLock,
+    # RfqLock,
     CobTransaction,
     RfqTransaction,
     Watchlist,

@@ -23,7 +23,6 @@ class SecurityServices():
 
     @staticmethod
     def get_security_by_id(security_id) -> Security:
-
         return Security.objects.get(id=security_id)
 
     @staticmethod
