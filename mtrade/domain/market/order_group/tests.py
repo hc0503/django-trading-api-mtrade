@@ -53,6 +53,8 @@ class OrderGroupTests(TestCase):
         except Exception:
             self.fail("Unexpected exception")
 
+    # TODO: implement tests for BaseOrderGroupParams related values
+
 
 class OrderGroupServicesTests(TestCase):
     def test_order_group_repo(self):
