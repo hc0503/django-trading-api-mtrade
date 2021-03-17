@@ -23,7 +23,7 @@ class MarketTests(TestCase):
         except Exception:
             self.fail("Unexpected exception")
 
-    def test_build_ISIN(self):
+    def test_build_isin(self):
         try:
             ISIN("123456789012")
         except Exception:
