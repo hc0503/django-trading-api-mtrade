@@ -34,7 +34,7 @@ class RfqResponseViewSet(CreateListUpdateRetrieveViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = RFQ_RESPONSE_ZERO_SERIALIZER
-    filterset_fields = ('trader',)
+    #filterset_fields = ('trader',)
     ordering = ['-created_at']
 
     # TODO: add missing filetr fields: 'institution'

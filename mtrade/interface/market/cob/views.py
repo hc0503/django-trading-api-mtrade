@@ -36,7 +36,7 @@ class COBViewSet(CreateListRetrieveViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = COB_ZERO_SERIALIZER
-    filterset_fields = ('direction', 'security', 'trader', 'order_group')
+    #filterset_fields = ('direction', 'security', 'trader', 'order_group')
     ordering = ['-created_at']
     # TODO: add missing filetr fields: 'institution'
     # TODO: add filter for security based on ISIN
