@@ -43,13 +43,18 @@ class TraderID():
 
 
 @dataclass(frozen=True)
+class Priority():
+    value: datetime
+
+
+@dataclass(frozen=True)
 class OrderGroupBaseParams():
     orderbook_type: str
     order_type: str
     direction: str
     size: int
+    priority: Priority
     notional: Decimal
-    submission: datetime
     expiration: datetime
     response_type: str
     settlement_currency: str
@@ -67,11 +72,11 @@ class OrderGroupBaseParams():
         self.validate_requestor_type()
 
     def validate_dates(self):
-        if self.submission >= self.expiration:
+        if self.priority.value >= self.expiration:
             raise VOValidationExcpetion(
                 "BaseOrderGroupParams",
-                "OrderGroup should have an expiration date that is greater than its submission date. Received - submission: {}, expiration:{}".format(
-                    self.submission,
+                "OrderGroup should have an expiration date that is greater than its priority date. Received - priority: {}, expiration:{}".format(
+                    self.priority.value,
                     self.expiration))
 
     def validate_orderbook_type(self):
@@ -144,11 +149,6 @@ class OrderGroupBaseParams():
         if not valid_choice:
             raise VOValidationExcpetion(
                 "OrderGroupParams", "Invalid requestor type. Received - requestor_type: {}".format(self.requestor_type))
-
-
-@dataclass(frozen=True)
-class Priority():
-    value: datetime
 
 
 @dataclass(frozen=True)
@@ -269,7 +269,7 @@ class OrderGroup(custom_models.DatedModel):
         (ORDERBOOK_TYPE_COB, 'COB'),
         (ORDERBOOK_TYPE_RFQ, 'RFQ')
     ]
-    # TODO: order types are the union of Rfq and Cob order types
+    # TODO: order types must be the union of Rfq and Cob order types
     ORDER_TYPE_STREAM = 'stream'
     ORDER_TYPE_CHOICES = [
         (ORDER_TYPE_STREAM, 'Stream')
@@ -313,10 +313,10 @@ class OrderGroup(custom_models.DatedModel):
     ]
 
     REQUESTOR_TYPE_ANONYMOUS = 'anonymous'
-    REQUESTOR_TYPE_NOT_ANONYMOUS = 'not-anonymous'
+    REQUESTOR_TYPE_PUBLIC = 'public'
     REQUESTOR_TYPE_CHOICES = [
         (REQUESTOR_TYPE_ANONYMOUS, 'Anonymous'),
-        (REQUESTOR_TYPE_NOT_ANONYMOUS, 'Not Anonymous')
+        (REQUESTOR_TYPE_PUBLIC, 'Public')
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
@@ -340,7 +340,6 @@ class OrderGroup(custom_models.DatedModel):
     fx = models.DecimalField(max_digits=40, decimal_places=20, null=True)
     status = models.CharField(max_length=150, choices=STATUS_CHOICES)
     allocation_pct = models.DecimalField(max_digits=40, decimal_places=20)
-    submission = models.DateTimeField()
     priority = models.DateTimeField()
     expiration = models.DateTimeField()
     response_type = models.CharField(
@@ -390,7 +389,6 @@ class OrderGroupFactory():
                      security_id: SecurityID,
                      requestor_institution_id: RequestorInstitutionID,
                      trader_id: TraderID,
-                     priority: Priority,
                      resp_received: ResponsesReceived,
                      allocation_pct: AllocationPercentage,
                      status: OrderGroupStatus,
@@ -411,8 +409,7 @@ class OrderGroupFactory():
             fx=extended_params.fx.value,
             status=status,
             allocation_pct=allocation_pct.value,
-            submission=base_params.submission,
-            priority=priority.value,
+            priority=base_params.priority.value,
             expiration=base_params.expiration,
             response_type=base_params.response_type,
             settlement_currency=base_params.settlement_currency,
@@ -427,7 +424,6 @@ class OrderGroupFactory():
                              security_id: SecurityID,
                              requestor_institution_id: RequestorInstitutionID,
                              trader_id: TraderID,
-                             priority: Priority,
                              resp_received: ResponsesReceived,
                              allocation_pct: AllocationPercentage,
                              status: OrderGroupStatus,
@@ -439,7 +435,6 @@ class OrderGroupFactory():
                                 security_id=security_id,
                                 requestor_institution_id=requestor_institution_id,
                                 trader_id=trader_id,
-                                priority=priority,
                                 resp_received=resp_received,
                                 allocation_pct=allocation_pct,
                                 status=status,

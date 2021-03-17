@@ -1016,13 +1016,14 @@ def create_order_group_data(test=False) -> dict:
         Trader, return_type='uuid'))
     requestor_institution_id = RequestorInstitutionID(uuid.uuid4()) if test else RequestorInstitutionID(select_random_fk_reference(
         Institution, return_type='uuid'))
-    priority = Priority(create_random_datetime(
-        '20/1/2021 1:30 PM', '20/4/2021 1:30 PM'))
+
     resp_received = ResponsesReceived(random.randint(0, 10))
     allocation_pct = AllocationPercentage(Decimal(str(random.random())))
     status = OrderGroupStatus(select_random_model_choice(Model.STATUS_CHOICES))
 
     # base_params
+    priority = Priority(create_random_datetime(
+        '20/1/2021 1:30 PM', '20/4/2021 1:30 PM'))
     orderbook_type = select_random_model_choice(Model.ORDERBOOK_TYPE_CHOICES)
     order_type = select_random_model_choice(Model.ORDER_TYPE_CHOICES)
     direction = select_random_model_choice(Model.DIRECTION_CHOICES)
@@ -1039,12 +1040,12 @@ def create_order_group_data(test=False) -> dict:
     requestor_type = select_random_model_choice(
         Model.REQUESTOR_TYPE_CHOICES)
     base_params = OrderGroupBaseParams(
+        priority=priority,
         orderbook_type=orderbook_type,
         order_type=order_type,
         direction=direction,
         size=size,
         notional=notional,
-        submission=submission,
         expiration=expiration,
         response_type=response_type,
         settlement_currency=settlement_currency,
@@ -1066,7 +1067,6 @@ def create_order_group_data(test=False) -> dict:
         security_id=security_id,
         requestor_institution_id=requestor_institution_id,
         trader_id=trader_id,
-        priority=priority,
         resp_received=resp_received,
         allocation_pct=allocation_pct,
         status=status,

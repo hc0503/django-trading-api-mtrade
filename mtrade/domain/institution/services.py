@@ -31,7 +31,12 @@ class InstitutionServices():
     def get_institution_repo() -> Type[Manager]:
         return Institution.objects
 
+    @staticmethod
+    def get_institution_by_id(institution_id) -> Institution:
+        return Institution.objects.get(id=institution_id)
+
     # INSTITUTION LICENSES
+
     @staticmethod
     def get_institution_license_factory() -> Type[InstitutionLicenseFactory]:
         return InstitutionLicenseFactory

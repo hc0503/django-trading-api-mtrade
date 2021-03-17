@@ -71,7 +71,6 @@ class InstitutionManager(custom_models.DatedModel):
 class InstitutionLicense(custom_models.DatedModel):
     """
     Represents an Institution License.
-    # TODO: implement license type creation
 
     TRADING_LICENSE = 'trading'
     VIEW_ONLY_LICENSE = 'data'

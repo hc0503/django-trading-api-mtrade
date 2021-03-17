@@ -4,19 +4,11 @@ from mtrade.domain.market.order_group.models import OrderGroup
 # DISCUSS: is it ok to fetch services from domain or should it only be application in this case?
 from mtrade.domain.security.services import SecurityServices
 from mtrade.domain.users.services import UserServices
+from mtrade.domain.institution.services import InstitutionServices
 from rest_framework import serializers
 
 
 class OrderGroupSerializer(ApplicationModelSerializer):
-    # TODO: revise serializer
-    class Meta:
-        model = OrderGroup
-        fields = '__all__'
-
-    # TODO: creation of ordergroups
-
-
-class OrderGroupExtendedSerializer(ApplicationModelSerializer):
     """
     This serializer is intended for a blotter view
     """
@@ -24,7 +16,7 @@ class OrderGroupExtendedSerializer(ApplicationModelSerializer):
     security_name = serializers.SerializerMethodField()
     security_isin = serializers.SerializerMethodField()
     trader = serializers.SerializerMethodField()
-    requestor = serializers.SerializerMethodField()
+    requestor_institution = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderGroup
@@ -51,6 +43,8 @@ class OrderGroupExtendedSerializer(ApplicationModelSerializer):
         user_full_name = user.get_full_name()
         return user_full_name
 
-    def get_requestor(self, obj):
-        # Return requestor if not anonymous
-        return 'Anonymous'
+    def get_requestor_institution(self, obj):
+        institution_id = obj.requestor_institution_id
+        institution = InstitutionServices.get_institution_by_id(
+            institution_id=institution_id)
+        return institution.name
