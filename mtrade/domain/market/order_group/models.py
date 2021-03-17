@@ -1,4 +1,3 @@
-# python imports
 import uuid
 from dataclasses import dataclass
 from decimal import Decimal
@@ -87,7 +86,9 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupBaseParams", "Invalid orderbook type. Received - orderbook_type: {}".format(self.orderbook_type))
+                "OrderGroupBaseParams",
+                "Invalid orderbook type. Received - orderbook_type: {}".format(
+                    self.orderbook_type))
 
     def validate_order_type(self):
         valid_choice = next(
@@ -97,7 +98,9 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupBaseParams", "Invalid order type. Received - order_type: {}".format(self.order_type))
+                "OrderGroupBaseParams",
+                "Invalid order type. Received - order_type: {}".format(
+                    self.order_type))
 
     def validate_direction(self):
         valid_choice = next(
@@ -117,7 +120,9 @@ class OrderGroupBaseParams():
     def validate_notional(self):
         if self.notional < 0:
             raise VOValidationExcpetion(
-                "OrderGroupBaseParams", "Notional must be positive. Received - notional: {}".format(self.notional))
+                "OrderGroupBaseParams",
+                "Notional must be positive. Received - notional: {}".format(
+                    self.notional))
 
     def validate_response_type(self):
         if self.orderbook_type == OrderGroup.ORDERBOOK_TYPE_RFQ:
@@ -128,7 +133,9 @@ class OrderGroupBaseParams():
                 None)
             if not valid_choice:
                 raise VOValidationExcpetion(
-                    "OrderGroupBaseParams", "Invalid response type. Received - response_type: {}".format(self.direction))
+                    "OrderGroupBaseParams",
+                    "Invalid response type. Received - response_type: {}".format(
+                        self.direction))
 
     def validate_settlement_currency(self):
         valid_choice = next(
@@ -138,7 +145,9 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupBaseParams", "Invalid settlement currency. Received - settlement_currency: {}".format(self.settlement_currency))
+                "OrderGroupBaseParams",
+                "Invalid settlement currency. Received - settlement_currency: {}".format(
+                    self.settlement_currency))
 
     def validate_requestor_type(self):
         valid_choice = next(
@@ -148,7 +157,9 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupParams", "Invalid requestor type. Received - requestor_type: {}".format(self.requestor_type))
+                "OrderGroupParams",
+                "Invalid requestor type. Received - requestor_type: {}".format(
+                    self.requestor_type))
 
 
 @dataclass(frozen=True)
@@ -161,20 +172,60 @@ class ResponsesReceived():
     def validate_resp_received(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "ResponsesReceived", "Received responses must be positive. Received - value: {}".format(self.value))
+                "ResponsesReceived",
+                "Received responses must be positive. Received - value: {}".format(
+                    self.value))
 
 
 @dataclass(frozen=True)
-class AllocationPercentage():
-    value: Decimal
+class AllocationProgress():
+    status: str
+    percentage: Decimal
 
     def __post_init__(self):
         self.validate_allocation_percentage()
+        self.validate_status_value()
+        self.validate_status_matches_percentage()
 
     def validate_allocation_percentage(self):
-        if self.value < 0:
+        if self.percentage < 0:
             raise VOValidationExcpetion(
-                "AllocationPercentage", "Allocation percentage must be positive. Received - value: {}".format(self.value))
+                "AllocationProgress",
+                "Allocation percentage must be positive. Received - value: {}".format(
+                    self.percentage))
+        if self.percentage > 100:
+            raise VOValidationExcpetion(
+                "AllocationProgress",
+                "Allocation percentage can't exceed 100. Received - value: {}".format(
+                    self.percentage))
+
+    def validate_status_value(self):
+        valid_choice = next(
+            filter(
+                lambda x: x[0] == self.status,
+                OrderGroup.ALLOCATION_STATUS_CHOICES),
+            None)
+        if not valid_choice:
+            raise VOValidationExcpetion(
+                "AllocationProgress",
+                "Invalid status. Received - status: {}".format(self.status))
+
+    def validate_status_matches_percentage(self):
+        allowed_combinations = (
+            (OrderGroup.ALLOCATION_STATUS_FULL, Decimal("100")),
+            (OrderGroup.ALLOCATION_STATUS_NONE, Decimal("0"))
+        )
+        for combination in allowed_combinations:
+            percentage_match = self.percentage == combination[1]
+            status_match = self.status == combination[0]
+
+            if percentage_match or status_match:
+                if not (percentage_match and status_match):
+                    raise VOValidationExcpetion(
+                        "AllocationProgress",
+                        "Status does not match Percentage. Received - status: {}, percentage: {}".format(
+                            self.status,
+                            self.percentage))
 
 
 @dataclass(frozen=True)
@@ -188,7 +239,7 @@ class OrderGroupStatus():
         valid_choice = next(
             filter(
                 lambda x: x[0] == self.value,
-                OrderGroup.STATUS_CHOICES),
+                OrderGroup.GROUP_STATUS_CHOICES),
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
@@ -197,7 +248,7 @@ class OrderGroupStatus():
 
 @dataclass(frozen=True)
 class WeightedAveragePrice():
-    value:  Decimal
+    value: Decimal
 
     def __post_init__(self):
         self.validate_weighted_avg_price_value()
@@ -205,12 +256,14 @@ class WeightedAveragePrice():
     def validate_weighted_avg_price_value(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "WeightedAveragePrice", "Weighted average price must be positive. Received - value: {}".format(self.value))
+                "WeightedAveragePrice",
+                "Weighted average price must be positive. Received - value: {}".format(
+                    self.value))
 
 
 @dataclass(frozen=True)
 class WeightedAverageYield():
-    value:  Decimal
+    value: Decimal
 
     def __post_init__(self):
         self.validate_weighted_avg_yield_value()
@@ -218,12 +271,14 @@ class WeightedAverageYield():
     def validate_weighted_avg_yield_value(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "WeightedAverageYield", "Weighted average yield must be positive. Received - value: {}".format(self.value))
+                "WeightedAverageYield",
+                "Weighted average yield must be positive. Received - value: {}".format(
+                    self.value))
 
 
 @dataclass(frozen=True)
 class WeightedAverageSpread():
-    value:  Decimal
+    value: Decimal
 
     def __post_init__(self):
         self.validate_weighted_avg_spread_value()
@@ -231,12 +286,14 @@ class WeightedAverageSpread():
     def validate_weighted_avg_spread_value(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "WeightedAverageSpread", "Weighted average spread must be positive. Received - value: {}".format(self.value))
+                "WeightedAverageSpread",
+                "Weighted average spread must be positive. Received - value: {}".format(
+                    self.value))
 
 
 @dataclass(frozen=True)
 class FX():
-    value:  Decimal
+    value: Decimal
 
     def __post_init__(self):
         self.validate_fx_value()
@@ -284,19 +341,26 @@ class OrderGroup(custom_models.DatedModel):
         (DIRECTION_MARKET, 'Market')
     ]
 
-    ACTIVE_STATUS = 'active'
-    CANCELLED_STATUS = 'cancelled'
-    EXPIRED_STATUS = 'expired'
-    PENDING_STATUS = 'pending'
-    FULL_ALLOCATION_STATUS = 'full-allocation'
-    # TODO: Update status choices
-    STATUS_CHOICES = [
-        (ACTIVE_STATUS, 'Active'),
-        (CANCELLED_STATUS, 'Cancelled'),
-        (EXPIRED_STATUS, 'Expired'),
-        (PENDING_STATUS, 'Pending'),
-        (FULL_ALLOCATION_STATUS, 'Full Allocation')
-    ]
+    ALLOCATION_STATUS_FULL = 'full'
+    ALLOCATION_STATUS_PARTIAL = 'partial'
+    ALLOCATION_STATUS_NONE = 'none'
+    ALLOCATION_STATUS_CHOICES = (
+        (ALLOCATION_STATUS_FULL, "Full"),
+        (ALLOCATION_STATUS_PARTIAL, "Partial"),
+        (ALLOCATION_STATUS_NONE, "None")
+    )
+
+    GROUP_STATUS_ACTIVE = 'inactive'
+    GROUP_STATUS_ACTIVE = 'active'
+    GROUP_STATUS_EXPIRED = 'expired'
+    GROUP_STATUS_CANCELLED = 'cancelled'
+
+    GROUP_STATUS_CHOICES = (
+        (GROUP_STATUS_ACTIVE, 'Active'),
+        (GROUP_STATUS_EXPIRED, 'Expired'),
+        (GROUP_STATUS_CANCELLED, 'Cancelled')
+    )
+
     RESPONSE_TYPE_AUTORESPONDER = 'autoresponder'
     RESPONSE_TYPE_MANUAL = 'manual'
 
@@ -320,6 +384,7 @@ class OrderGroup(custom_models.DatedModel):
         (REQUESTOR_TYPE_PUBLIC, 'Public')
     ]
 
+    # TODO: remove default uuid
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     # ref to Security
     security_id = models.UUIDField()
@@ -339,7 +404,10 @@ class OrderGroup(custom_models.DatedModel):
     weighted_avg_spread = models.DecimalField(
         max_digits=40, decimal_places=20, null=True)
     fx = models.DecimalField(max_digits=40, decimal_places=20, null=True)
-    status = models.CharField(max_length=150, choices=STATUS_CHOICES)
+    group_status = models.CharField(
+        max_length=150, choices=GROUP_STATUS_CHOICES)
+    allocation_status = models.CharField(
+        max_length=150, choices=ALLOCATION_STATUS_CHOICES)
     allocation_pct = models.DecimalField(max_digits=40, decimal_places=20)
     priority = models.DateTimeField()
     expiration = models.DateTimeField()
@@ -347,7 +415,8 @@ class OrderGroup(custom_models.DatedModel):
         max_length=150, choices=RESPONSE_TYPE_CHOICES)
     settlement_currency = models.CharField(
         max_length=150, choices=SETTLEMENT_CURRENCY_CHOICES)
-    # NOTE: queries must take into account that, if requestor_typ is anonymous, counterparties must not know who requestor is
+    # NOTE: queries must take into account that, if requestor_typ is
+    # anonymous, counterparties must not know who requestor is
     requestor_type = models.CharField(
         max_length=150, choices=REQUESTOR_TYPE_CHOICES)
     resp_received = models.PositiveIntegerField()
@@ -361,10 +430,10 @@ class OrderGroup(custom_models.DatedModel):
                       weighted_avg_yield: WeightedAverageYield = None,
                       weighted_avg_spread: WeightedAverageSpread = None,
                       fx: FX = None,
-                      status: OrderGroupStatus = None,
-                      allocation_pct: AllocationPercentage = None,
+                      group_status: OrderGroupStatus = None,
+                      allocation_progress: AllocationProgress = None,
                       resp_received: ResponsesReceived = None,
-                      priority: Priority = None, **kwargs):
+                      priority: Priority = None):
         """Updates and entity. Only fields in arguments may be updated"""
         if weighted_avg_price is not None:
             self.weighted_avg_price = weighted_avg_price.value
@@ -374,10 +443,11 @@ class OrderGroup(custom_models.DatedModel):
             self.weighted_avg_spread = weighted_avg_spread.value
         if fx is not None:
             self.fx = fx.value
-        if status is not None:
-            self.status = status.value
-        if allocation_pct is not None:
-            self.allocation_pct = allocation_pct.value
+        if group_status is not None:
+            self.group_status = group_status.value
+        if allocation_progress is not None:
+            self.allocation_status = allocation_progress.status
+            self.allocation_pct = allocation_progress.percentage
         if resp_received is not None:
             self.resp_received = resp_received.value
         if priority is not None:
@@ -391,7 +461,7 @@ class OrderGroupFactory():
                      requestor_institution_id: RequestorInstitutionID,
                      trader_id: TraderID,
                      resp_received: ResponsesReceived,
-                     allocation_pct: AllocationPercentage,
+                     allocation_progress: AllocationProgress,
                      status: OrderGroupStatus,
                      base_params: OrderGroupBaseParams,
                      extended_params: OrderGroupExtendedParams) -> OrderGroup:
@@ -408,8 +478,9 @@ class OrderGroupFactory():
             weighted_avg_yield=extended_params.weighted_avg_yield.value,
             weighted_avg_spread=extended_params.weighted_avg_spread.value,
             fx=extended_params.fx.value,
-            status=status,
-            allocation_pct=allocation_pct.value,
+            group_status=status.value,
+            allocation_pct=allocation_progress.percentage,
+            allocation_status=allocation_progress.status,
             priority=base_params.priority.value,
             expiration=base_params.expiration,
             response_type=base_params.response_type,
@@ -421,24 +492,35 @@ class OrderGroupFactory():
         return order_group
 
     @classmethod
-    def build_entity_with_id(cls,
-                             security_id: SecurityID,
-                             requestor_institution_id: RequestorInstitutionID,
-                             trader_id: TraderID,
-                             resp_received: ResponsesReceived,
-                             allocation_pct: AllocationPercentage,
-                             status: OrderGroupStatus,
-                             base_params: OrderGroupBaseParams,
-                             extended_params: OrderGroupExtendedParams) -> OrderGroup:
+    def build_entity_with_id(
+            cls,
+            security_id: SecurityID,
+            requestor_institution_id: RequestorInstitutionID,
+            trader_id: TraderID,
+            resp_received: ResponsesReceived,
+            allocation_progress: AllocationProgress,
+            status: OrderGroupStatus,
+            base_params: OrderGroupBaseParams,
+            extended_params: OrderGroupExtendedParams) -> OrderGroup:
         order_group_id = OrderGroupID(uuid.uuid4())
 
-        return cls.build_entity(order_group_id=order_group_id,
-                                security_id=security_id,
-                                requestor_institution_id=requestor_institution_id,
-                                trader_id=trader_id,
-                                resp_received=resp_received,
-                                allocation_pct=allocation_pct,
-                                status=status,
-                                base_params=base_params,
-                                extended_params=extended_params
-                                )
+        return cls.build_entity(
+            order_group_id=order_group_id,
+            security_id=security_id,
+            requestor_institution_id=requestor_institution_id,
+            trader_id=trader_id,
+            resp_received=resp_received,
+            allocation_progress=allocation_progress,
+            status=status,
+            base_params=base_params,
+            extended_params=extended_params)
+
+    # @classmethod
+    # def build_cob_order_group(
+    #         security_id: SecurityID,
+    #         requestor_institution_id: RequestorInstitutionID,
+    #         trader_id: TraderID,
+    #         status: OrderGroupStatus,
+    #         base_params: OrderGroupBaseParams,
+    #         extended_params: OrderGroupExtendedParams) -> OrderGroup:
+    # order_group_id = OrderGroupID(uuid.uuid4())
