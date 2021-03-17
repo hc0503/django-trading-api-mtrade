@@ -30,6 +30,15 @@ class TraderID():
 
 
 @dataclass(frozen=True)
+class InstitutionID():
+    """
+    A value object used to generate and pass the TraderID to the
+    COBOrderFactory
+    """
+    value: uuid.UUID
+
+
+@dataclass(frozen=True)
 class SecurityID():
     """
     A value object used to generate and pass the SecurityID to the
@@ -118,7 +127,7 @@ class COBOrder(custom_models.DatedModel):
     STATUS_QUEUED = 'queued'
     STATUS_REPLACED = 'replaced'
     STATUS_FULLY_ALLOCATED = 'fully-allocated'
-    STATUS_CHOICES = [
+    STATUS_CHOICES = (
         (STATUS_NEW, 'New'),
         (STATUS_ACTIVE, 'Active'),
         (STATUS_CANCELLED, 'Cancelled'),
@@ -126,7 +135,7 @@ class COBOrder(custom_models.DatedModel):
         (STATUS_QUEUED, 'Queued'),
         (STATUS_REPLACED, 'Replaced'),
         (STATUS_FULLY_ALLOCATED, 'Fully Allocated')
-    ]
+        )
 
     STATUS_TRANSITIONS = {}
     STATUS_TRANSITIONS[STATUS_NEW] = (
@@ -165,10 +174,10 @@ class COBOrder(custom_models.DatedModel):
         (DIRECTION_ASK, 'Ask')
     ]
 
-    # TODO: Evaluate if institution field should be added here, this would
     # speed up queries
     id = models.UUIDField(primary_key=True, editable=False)
     trader_id = models.UUIDField()
+    institution_id = models.UUIDField()
     security_id = models.UUIDField()
 
     # NOTE: priority is preserved when a CobOrder's  size is increased.
@@ -192,28 +201,40 @@ class COBOrder(custom_models.DatedModel):
     yield_value = models.DecimalField(max_digits=40, decimal_places=20)
 
     order_group = models.ForeignKey(
-        OrderGroup, on_delete=models.PROTECT, null=False)
+        OrderGroup, on_delete=models.PROTECT, null=True)
 
     def update_entity(
             self,
-            status: COBOrderStatus):
+            status: COBOrderStatus = None,
+            order_group: OrderGroup = None
+            ):
         """
-        Updates a COBOrder. Only status updates are allowed. Any other
-        operation should be performed through an order replacement.
+        Updates a COBOrder. Only status and order group updates are allowed.
+        Any other operation should be performed through an order replacement.
+
+        Order group can only be updated once, any subsequent update will raise
+        an exception.
         """
-        if status is None:
-            raise InvalidMarketOperationException(
-                "update_entity", "status cannot be None")
 
-        # Verifies transition is valid
-        if status.value not in self.STATUS_TRANSITIONS[self.status]:
-            raise InvalidMarketOperationException(
-                "update_entity",
-                "Invalid transition. Current status: {}, received status: {}".format(
-                    self.status,
-                    status.value))
+        if status is not None:
+            # Verifies transition is valid
+            if status.value not in self.STATUS_TRANSITIONS[self.status]:
+                raise InvalidMarketOperationException(
+                    "update_entity",
+                    "Invalid transition. Current status: {}, received status: {}".format(
+                        self.status,
+                        status.value))
 
-        self.status = status.value
+            self.status = status.value
+
+        if order_group is not None:
+            if self.order_group is not None:
+                raise InvalidMarketOperationException(
+                    "update_entity",
+                    "order_group is already set. Current order_group: {}, received order_group: {}".format(
+                        self.order_group,
+                        order_group))
+
 
 
 class COBOrderFactory():
@@ -221,6 +242,7 @@ class COBOrderFactory():
     def build_entity(
             order_id: COBOrderID,
             trader_id: TraderID,
+            institution_id: InstitutionID,
             security_id: SecurityID,
             base_params: BaseCOBOrderParams,
             status: COBOrderStatus,
@@ -231,6 +253,7 @@ class COBOrderFactory():
             id=order_id.value,
             trader_id=trader_id.value,
             security_id=security_id.value,
+            institution_id=institution_id.value,
             priority=base_params.priority,
             expiration=base_params.expiration,
             price=base_params.price,
@@ -249,6 +272,7 @@ class COBOrderFactory():
     def build_entity_with_id(
             cls,
             trader_id: TraderID,
+            institution_id: InstitutionID,
             security_id: SecurityID,
             base_params: BaseCOBOrderParams,
             status: COBOrderStatus,
@@ -259,6 +283,7 @@ class COBOrderFactory():
         return cls.build_entity(
             order_id,
             trader_id,
+            institution_id,
             security_id,
             base_params,
             status,

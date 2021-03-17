@@ -1,16 +1,17 @@
 from datetime import datetime, timedelta
-import factory
-import pytz
 from decimal import Decimal
 
 from django.db.models.manager import Manager
 from django.test import TestCase
+import factory
+import pytz
 
-from lib.ddd.exceptions import VOValidationExcpetion
-from mtrade.domain.market.order_group.models import OrderGroupFactory
-from scripts.db_content_manager import populate_db as pdb
 from lib.data_manipulation.date_generators import date_linear_generator
 from lib.data_manipulation.number_generators import num_linear_generator
+from lib.ddd.exceptions import VOValidationExcpetion
+from mtrade.domain.market.exceptions import InvalidMarketOperationException
+from mtrade.domain.market.order_group.models import OrderGroupFactory
+from scripts.db_content_manager import populate_db as pdb
 
 from . import test_helper as th
 from .models import COBOrder, COBOrderFactory, COBOrderStatus
@@ -119,6 +120,7 @@ class COBOrderTests(TestCase):
         try:
             COBOrderFactory.build_entity_with_id(
                 trader_id=th.TraderIDFactory.build(),
+                institution_id=th.InstitutionIDFactory.build(),
                 security_id=th.SecurityIDFactory.build(),
                 base_params=th.BaseCOBOrderParamsFactory.build(),
                 status=th.COBOrderStatusFactory.build(),
@@ -127,6 +129,36 @@ class COBOrderTests(TestCase):
             )
         except Exception:
             self.fail("Unexpected exception")
+
+    def test_update_cob_order(self):
+        og_data = pdb.create_order_group_data(test=True)
+        order_group = OrderGroupFactory.build_entity_with_id(**og_data)
+
+        cob_order = None
+        try:
+            cob_order = COBOrderFactory.build_entity_with_id(
+                trader_id=th.TraderIDFactory.build(),
+                institution_id=th.InstitutionIDFactory.build(),
+                security_id=th.SecurityIDFactory.build(),
+                base_params=th.BaseCOBOrderParamsFactory.build(),
+                status=COBOrderStatus(COBOrder.STATUS_NEW),
+                extended_params=th.ExtendedCOBOrderParamsFactory.build(),
+                order_group=order_group
+            )
+        except Exception:
+            self.fail("Unexpected exception")
+
+        # Tests successful status update from New to Active
+        cob_order.update_entity(status = COBOrderStatus(COBOrder.STATUS_ACTIVE))
+        self.assertEqual(cob_order.status, COBOrder.STATUS_ACTIVE)
+
+        # Tests successful status update from Active to Cancelled
+        cob_order.update_entity(status = COBOrderStatus(COBOrder.STATUS_CANCELLED))
+        self.assertEqual(cob_order.status, COBOrder.STATUS_CANCELLED)
+
+        # Tests failure on update from Cancelled to Active
+        with self.assertRaises(InvalidMarketOperationException):
+            cob_order.update_entity(status = COBOrderStatus(COBOrder.STATUS_ACTIVE))
 
 
 class COBServicesTests(TestCase):
@@ -141,27 +173,26 @@ class COBServicesTests(TestCase):
 
     def test_get_queued_orders(self):
         dategen = date_linear_generator(
-                datetime(2020, 3, 15, tzinfo=pytz.UTC),
-                timedelta(microseconds=1))
+            datetime(2020, 3, 15, tzinfo=pytz.UTC),
+            timedelta(microseconds=1))
 
         th.MultiCOBOrderFactory.create_test_orders(
-            2,
-            statusParams={"value":COBOrder.STATUS_NEW},
-            baseParams={"priority": factory.LazyFunction(lambda: next(dategen))}
-            )
+            2, statusParams={
+                "value": COBOrder.STATUS_NEW}, baseParams={
+                "priority": factory.LazyFunction(
+                    lambda: next(dategen))})
 
         th.MultiCOBOrderFactory.create_test_orders(
-            3,
-            statusParams={"value":COBOrder.STATUS_QUEUED},
-            baseParams={"priority": factory.LazyFunction(lambda: next(dategen))}
-            )
-
+            3, statusParams={
+                "value": COBOrder.STATUS_QUEUED}, baseParams={
+                "priority": factory.LazyFunction(
+                    lambda: next(dategen))})
 
         queued_orders = COBServices.get_queued_orders()
         num_of_orders = len(queued_orders)
 
         # Tests the correct number of queued orders is received
-        self.assertEqual(num_of_orders , 3)
+        self.assertEqual(num_of_orders, 3)
 
         # Tests only orders with status=queued are received
         for order in queued_orders:
@@ -169,32 +200,35 @@ class COBServicesTests(TestCase):
 
         # Tests queued elements are received in descending priority order
         for i in range(1, num_of_orders):
-            self.assertTrue(queued_orders[i].priority > queued_orders[i-1].priority)
+            self.assertTrue(
+                queued_orders[i].priority > queued_orders[i - 1].priority)
 
     def test_get_queued_orders_2(self):
-        numgen = num_linear_generator(100,10)
+        numgen = num_linear_generator(100, 10)
 
         th.MultiCOBOrderFactory.create_test_orders(
             3,
-            statusParams={"value":COBOrder.STATUS_QUEUED},
+            statusParams={"value": COBOrder.STATUS_QUEUED},
             baseParams={"size": factory.LazyFunction(lambda: next(numgen))}
-            )
+        )
 
-        # Tests queued elements with same date are received in descending size order
+        # Tests queued elements with same date are received in descending size
+        # order
         queued_orders = COBServices.get_queued_orders()
         num_of_orders = len(queued_orders)
         for i in range(1, num_of_orders):
-            self.assertTrue(queued_orders[i].size < queued_orders[i-1].size)
+            self.assertTrue(queued_orders[i].size < queued_orders[i - 1].size)
 
     def test_get_queued_orders_3(self):
         th.MultiCOBOrderFactory.create_test_orders(
             3,
-            statusParams={"value":COBOrder.STATUS_QUEUED},
+            statusParams={"value": COBOrder.STATUS_QUEUED},
             baseParams={"size": 100}
-            )
+        )
 
-        # Tests queued elements with same date and size are received in ascending id order
+        # Tests queued elements with same date and size are received in
+        # ascending id order
         queued_orders = COBServices.get_queued_orders()
         num_of_orders = len(queued_orders)
         for i in range(1, num_of_orders):
-            self.assertTrue(queued_orders[i].id > queued_orders[i-1].id)
+            self.assertTrue(queued_orders[i].id > queued_orders[i - 1].id)

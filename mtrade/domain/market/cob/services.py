@@ -21,4 +21,4 @@ class COBServices():
     @staticmethod
     def get_queued_orders() -> QuerySet[COBOrder]:
         # TODO: Add partial db index for queued orders
-        return COBOrder.objects.filter(status=COBOrder.STATUS_QUEUED). order_by('priority', 'size', 'id')
+        return COBOrder.objects.filter(status=COBOrder.STATUS_QUEUED). order_by('priority', '-size', 'id')
