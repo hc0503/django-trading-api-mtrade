@@ -1,12 +1,12 @@
 from lib.django.custom_serializers import ApplicationModelSerializer
 
-from mtrade.domain.institution.models import Institution
+from mtrade.domain.institution.models import InstitutionManager
 from mtrade.application.institution.services import InstitutionAppServices
 
 from rest_framework import serializers
 
 
-class InstitutionSerializer(ApplicationModelSerializer):
+class InstitutionManagerSerializer(ApplicationModelSerializer):
     class Meta:
-        model = Institution
+        model = InstitutionManager
         fields = '__all__'

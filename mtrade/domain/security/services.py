@@ -22,6 +22,10 @@ class SecurityServices():
         return Security.objects
 
     @staticmethod
+    def get_security_by_id(security_id) -> Security:
+        return Security.objects.get(id=security_id)
+
+    @staticmethod
     def get_security_issuer_factory() -> Type[SecurityIssuerFactory]:
         return SecurityIssuerFactory
 

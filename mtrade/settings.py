@@ -47,8 +47,12 @@ INSTALLED_APPS = [
     'mtrade.domain.market',
     'mtrade.domain.security',
     'mtrade.domain.trader',
+
     'mtrade.domain.notifications',
     'mtrade.domain.notifications.setting',
+
+    'mtrade.domain.institution',
+
 
     'app_zero.apps.AppZeroConfig',
 

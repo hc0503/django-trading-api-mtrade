@@ -1,12 +1,12 @@
 from lib.django.custom_serializers import ApplicationModelSerializer
 
-from mtrade.domain.institution.models import Institution
+from mtrade.domain.institution.models import RfqLock
 from mtrade.application.institution.services import InstitutionAppServices
 
 from rest_framework import serializers
 
 
-class InstitutionSerializer(ApplicationModelSerializer):
+class RfqLockSerializer(ApplicationModelSerializer):
     class Meta:
-        model = Institution
+        model = RfqLock
         fields = '__all__'

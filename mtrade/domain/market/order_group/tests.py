@@ -13,7 +13,7 @@ from .models import (
     OrderGroup,
     OrderGroupFactory,
     SecurityID,
-    RequestorID,
+    RequestorInstitutionID,
     TraderID
 )
 from .services import OrderGroupServices
@@ -42,7 +42,7 @@ class OrderGroupTests(TestCase):
 
     def test_build_requestor_id(self):
         try:
-            RequestorID(uuid.uuid4())
+            RequestorInstitutionID(uuid.uuid4())
         except Exception:
             self.fail("Unexpected exception")
 
@@ -52,6 +52,8 @@ class OrderGroupTests(TestCase):
             OrderGroupFactory.build_entity_with_id(**data)
         except Exception:
             self.fail("Unexpected exception")
+
+    # TODO: implement tests for BaseOrderGroupParams related values
 
 
 class OrderGroupServicesTests(TestCase):

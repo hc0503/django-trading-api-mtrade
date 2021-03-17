@@ -13,7 +13,7 @@ class TraderLicense(custom_models.DatedModel):
     """
     id = models.UUIDField(primary_key=True, editable=False)
     name = models.CharField(max_length=100)
-    short_description = models.CharField(max_length=250)
+    short_description = models.CharField(max_length=500)
 
 
 @dataclass(frozen=True)
