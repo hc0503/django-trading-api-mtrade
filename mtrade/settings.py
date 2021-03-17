@@ -232,3 +232,10 @@ LOGGING = {
 EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
 SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
 SENDGRID_SANDBOX_MODE_IN_DEBUG = os.environ["SENDGRID_SANDBOX_MODE_IN_DEBUG"]
+
+# SendGrid email verification template id and from_email address.
+SENDGRID_EMAIL_VERIFICATION_TEMPLATE_ID = os.environ['SENDGRID_EMAIL_VERIFICATION_TEMPLATE_ID']
+EMAIL_FROM_ADDRESS = os.environ['EMAIL_FROM_ADDRESS']
+
+# Expired time for email verification and password reset token
+PASSWORD_RESET_TIMEOUT_DAYS = int(os.environ['PASSWORD_RESET_TIMEOUT_DAYS'])
