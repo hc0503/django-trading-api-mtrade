@@ -39,7 +39,11 @@ class OrderGroupSerializer(ApplicationModelSerializer):
         user_full_name = user.get_full_name()
         return user_full_name
 
-    def get_requestor_institution(self, obj):
+    def get_requestor_institution(self, obj: OrderGroup):
+        """Returns anonymous if requestor type is anonymous. Else, returns institution name"""
+        if obj.requestor_type == obj.REQUESTOR_TYPE_ANONYMOUS:
+            return obj.REQUESTOR_TYPE_ANONYMOUS[1]
+
         institution_id = obj.requestor_institution_id
         institution = InstitutionAppServices.get_institution_by_id(
             institution_id=institution_id)

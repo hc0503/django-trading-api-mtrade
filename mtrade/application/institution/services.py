@@ -23,7 +23,7 @@ class InstitutionAppServices():
 
     @staticmethod
     def get_institution_by_id(institution_id) -> Institution:
-        return InstitutionServices.get_institution_repo().get(id=Institution)
+        return InstitutionServices.get_institution_repo().get(id=institution_id)
 
     @staticmethod
     def list_institution_managers() -> QuerySet:
