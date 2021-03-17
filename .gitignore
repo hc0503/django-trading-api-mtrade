@@ -15,4 +15,6 @@ obsolete
 .vscode
 .vim
 
+logs/*.*
+
 .DS_Store
