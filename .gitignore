@@ -17,4 +17,5 @@ obsolete
 
 logs/*.*
 
+local/
 .DS_Store
