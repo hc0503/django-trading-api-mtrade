@@ -239,7 +239,7 @@ def create_instances(n: int, create_new_instance: Callable, Model: models.Model,
             print(
                 f'There was a problem while trying to create a {Model.__name__} instance -- {e.args}')
             traceback.print_exc()
-            exit()
+            raise(e)
 
     print(
         f'{num_created} of {n} {Model.__name__} instances were created')

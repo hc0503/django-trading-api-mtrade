@@ -320,9 +320,7 @@ class OrderGroup(custom_models.DatedModel):
     ]
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    # TODO: when possible, make sure security makes reference to Security
-    # security = models.ForeignKey(
-    #     Security, on_delete=models.SET_NULL, null=True)
+    # ref to Security
     security_id = models.UUIDField()
     orderbook_type = models.CharField(
         max_length=150, choices=ORDERBOOK_TYPE_CHOICES)
@@ -366,7 +364,7 @@ class OrderGroup(custom_models.DatedModel):
                       status: OrderGroupStatus = None,
                       allocation_pct: AllocationPercentage = None,
                       resp_received: ResponsesReceived = None,
-                      priority: Priority = None):
+                      priority: Priority = None, **kwargs):
         """Updates and entity. Only fields in arguments may be updated"""
         if weighted_avg_price is not None:
             self.weighted_avg_price = weighted_avg_price.value
