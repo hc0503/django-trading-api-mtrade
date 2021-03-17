@@ -1001,7 +1001,7 @@ def create_order_group_data(test=False) -> dict:
     Arguments
     -----
     test: bool
-        If True, returns a trader instance with fake relations to other models
+        If True, foreign relations will be fake
     """
     Model = OrderGroup
 
