@@ -74,7 +74,7 @@ class OrderGroupBaseParams():
     def validate_dates(self):
         if self.priority.value >= self.expiration:
             raise VOValidationExcpetion(
-                "BaseOrderGroupParams",
+                "OrderGroupBaseParams",
                 "OrderGroup should have an expiration date that is greater than its priority date. Received - priority: {}, expiration:{}".format(
                     self.priority.value,
                     self.expiration))
@@ -87,7 +87,7 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupParams", "Invalid orderbook type. Received - orderbook_type: {}".format(self.orderbook_type))
+                "OrderGroupBaseParams", "Invalid orderbook type. Received - orderbook_type: {}".format(self.orderbook_type))
 
     def validate_order_type(self):
         valid_choice = next(
@@ -97,7 +97,7 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupParams", "Invalid order type. Received - order_type: {}".format(self.order_type))
+                "OrderGroupBaseParams", "Invalid order type. Received - order_type: {}".format(self.order_type))
 
     def validate_direction(self):
         valid_choice = next(
@@ -107,17 +107,17 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupParams", "Invalid direction. Received - direction: {}".format(self.direction))
+                "OrderGroupBaseParams", "Invalid direction. Received - direction: {}".format(self.direction))
 
     def validate_size(self):
         if self.size < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Size must be positive. Received - size: {}".format(self.size))
+                "OrderGroupBaseParams", "Size must be positive. Received - size: {}".format(self.size))
 
     def validate_notional(self):
         if self.notional < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Notional must be positive. Received - notional: {}".format(self.notional))
+                "OrderGroupBaseParams", "Notional must be positive. Received - notional: {}".format(self.notional))
 
     def validate_response_type(self):
         if self.orderbook_type == OrderGroup.ORDERBOOK_TYPE_RFQ:
@@ -128,7 +128,7 @@ class OrderGroupBaseParams():
                 None)
             if not valid_choice:
                 raise VOValidationExcpetion(
-                    "OrderGroupParams", "Invalid response type. Received - response_type: {}".format(self.direction))
+                    "OrderGroupBaseParams", "Invalid response type. Received - response_type: {}".format(self.direction))
 
     def validate_settlement_currency(self):
         valid_choice = next(
@@ -138,7 +138,7 @@ class OrderGroupBaseParams():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupParams", "Invalid settlement currency. Received - settlement_currency: {}".format(self.settlement_currency))
+                "OrderGroupBaseParams", "Invalid settlement currency. Received - settlement_currency: {}".format(self.settlement_currency))
 
     def validate_requestor_type(self):
         valid_choice = next(
@@ -161,7 +161,7 @@ class ResponsesReceived():
     def validate_resp_received(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Received responses must be positive. Received - value: {}".format(self.value))
+                "ResponsesReceived", "Received responses must be positive. Received - value: {}".format(self.value))
 
 
 @dataclass(frozen=True)
@@ -174,7 +174,7 @@ class AllocationPercentage():
     def validate_allocation_percentage(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Allocation percentage must be positive. Received - value: {}".format(self.value))
+                "AllocationPercentage", "Allocation percentage must be positive. Received - value: {}".format(self.value))
 
 
 @dataclass(frozen=True)
@@ -192,7 +192,7 @@ class OrderGroupStatus():
             None)
         if not valid_choice:
             raise VOValidationExcpetion(
-                "OrderGroupParams", "Invalid status. Received - status: {}".format(self.value))
+                "OrderGroupStatus", "Invalid status. Received - status: {}".format(self.value))
 
 
 @dataclass(frozen=True)
@@ -205,7 +205,7 @@ class WeightedAveragePrice():
     def validate_weighted_avg_price_value(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Weighted average price must be positive. Received - value: {}".format(self.value))
+                "WeightedAveragePrice", "Weighted average price must be positive. Received - value: {}".format(self.value))
 
 
 @dataclass(frozen=True)
@@ -218,7 +218,7 @@ class WeightedAverageYield():
     def validate_weighted_avg_yield_value(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Weighted average yield must be positive. Received - value: {}".format(self.value))
+                "WeightedAverageYield", "Weighted average yield must be positive. Received - value: {}".format(self.value))
 
 
 @dataclass(frozen=True)
@@ -231,7 +231,7 @@ class WeightedAverageSpread():
     def validate_weighted_avg_spread_value(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Weighted average spread must be positive. Received - value: {}".format(self.value))
+                "WeightedAverageSpread", "Weighted average spread must be positive. Received - value: {}".format(self.value))
 
 
 @dataclass(frozen=True)
@@ -244,7 +244,7 @@ class FX():
     def validate_fx_value(self):
         if self.value < 0:
             raise VOValidationExcpetion(
-                "BaseCobOrderParams", "Foreign Currency exchange rate must be positive. Received - value: {}".format(self.value))
+                "FX", "Foreign Currency exchange rate must be positive. Received - value: {}".format(self.value))
 
 
 @dataclass(frozen=True)
@@ -289,6 +289,7 @@ class OrderGroup(custom_models.DatedModel):
     EXPIRED_STATUS = 'expired'
     PENDING_STATUS = 'pending'
     FULL_ALLOCATION_STATUS = 'full-allocation'
+    # TODO: Update status choices
     STATUS_CHOICES = [
         (ACTIVE_STATUS, 'Active'),
         (CANCELLED_STATUS, 'Cancelled'),
