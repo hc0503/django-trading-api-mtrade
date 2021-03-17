@@ -9,7 +9,6 @@ from django.contrib.auth.models import AnonymousUser
 from mtrade.drivers.asgi import application
 from mtrade.domain.users.models import UserPersonalData, UserBasePermissions
 from mtrade.application.users.services import UserAppServices
-from mtrade.application.notifications.services import NotificationAppServices as nas
 
 # local imports
 from .websocket import WSConsumer
@@ -51,15 +50,15 @@ class WebSocketTest(TestCase):
     async def test_websocket_connect(self):
         # Accepts a user that has logged in
         communicator = AuthWebsocketCommunicator(application, "/ws/users/", user = self.user_01)
-        connected, subprotocol = await communicator.connect()
+        connected, _ = await communicator.connect()
         self.assertIs(connected, True)
         await communicator.disconnect()
 
         # Rejects a user that hasn't logged in
         communicator = AuthWebsocketCommunicator(application, "/ws/users/", user = AnonymousUser())
-        connected, subprotocol = await communicator.connect()
+        connected, _ = await communicator.connect()
         self.assertIs(connected, False)
-    
+
     # async def test_initial_message_populator(self):
 
     async def test_websocket_send_A_not_B(self):
@@ -144,5 +143,5 @@ class WebSocketTest(TestCase):
             'message': 'Inital message testing 2'
         }
         assert message2 == response2
-        
+
         await communicator.disconnect()
