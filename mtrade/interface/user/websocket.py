@@ -41,6 +41,7 @@ class WSConsumer(WebsocketConsumer):
             self.close()
 
     def disconnect(self, close_code):
+        # TODO: Execute disconnect action that corresponds to close_code
         async_to_sync(self.channel_layer.group_discard)(
             'users_{}'.format(self.user.id),
             self.channel_name

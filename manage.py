@@ -16,12 +16,17 @@ def main():
     except IndexError:
         command = "help"
 
-    running_tests = (command == 'test')
-    if running_tests:
+
+    test_and_cover = (command == 'test')
+    cov = None
+    if test_and_cover:
         from coverage import Coverage
         cov = Coverage()
         cov.erase()
         cov.start()
+
+    if command == 'ntest':
+        sys.argv[1] = 'test'
 
     try:
         from django.core.management import execute_from_command_line
@@ -34,7 +39,7 @@ def main():
     execute_from_command_line(sys.argv)
 
     # Finalize Coverage
-    if running_tests:
+    if test_and_cover:
         threshold = 80
         cov.stop()
         cov.save()

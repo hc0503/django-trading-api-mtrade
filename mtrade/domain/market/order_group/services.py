@@ -1,10 +1,7 @@
-# python imports
 from typing import Type
 
-# django imports
-from django.db.models.manager import Manager
+from django.db.models.manager import BaseManager
 
-# local imports
 from .models import OrderGroup, OrderGroupFactory
 
 
@@ -15,7 +12,7 @@ class OrderGroupServices():
         return OrderGroupFactory
 
     @staticmethod
-    def get_order_group_repo() -> Type[Manager]:
+    def get_order_group_repo() -> BaseManager[OrderGroup]:
         # We expose the whole repository as a service to avoid making a service
         # for each repo action. If some repo action is used constantly in
         # multiple places consider exposing it as a service.

@@ -31,7 +31,7 @@ from mtrade.domain.market.order_group.models import (TraderID,
                                                      RequestorInstitutionID,
                                                      Priority,
                                                      ResponsesReceived,
-                                                     AllocationPercentage,
+                                                     AllocationProgress,
                                                      OrderGroupStatus,
                                                      OrderGroupBaseParams,
                                                      OrderGroupExtendedParams,
@@ -1018,8 +1018,20 @@ def create_order_group_data(test=False) -> dict:
         Institution, return_type='uuid'))
 
     resp_received = ResponsesReceived(random.randint(0, 10))
-    allocation_pct = AllocationPercentage(Decimal(str(random.random())))
-    status = OrderGroupStatus(select_random_model_choice(Model.STATUS_CHOICES))
+
+    rand_allocation = Decimal(100*random.random())
+    a_status = Model.ALLOCATION_STATUS_PARTIAL
+
+    if rand_allocation == Decimal("0"):
+        a_status = Model.ALLOCATION_STATUS_NONE
+    elif rand_allocation == Decimal("100"):
+        a_status = Model.ALLOCATION_STATUS_FULL
+
+    allocation_progress = AllocationProgress(
+            a_status,
+            rand_allocation)
+
+    status = OrderGroupStatus(select_random_model_choice(Model.GROUP_STATUS_CHOICES))
 
     # base_params
     priority = Priority(create_random_datetime(
@@ -1068,7 +1080,7 @@ def create_order_group_data(test=False) -> dict:
         requestor_institution_id=requestor_institution_id,
         trader_id=trader_id,
         resp_received=resp_received,
-        allocation_pct=allocation_pct,
+        allocation_progress=allocation_progress,
         status=status,
         base_params=base_params,
         extended_params=extended_params
