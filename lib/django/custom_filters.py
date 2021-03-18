@@ -9,15 +9,15 @@ extended_filter_overrides = {
         },
     },
     models.DecimalField: {
-        'filter_class': filters.NumericRangeFilter
+        'filter_class': filters.RangeFilter
     },
     models.PositiveIntegerField:
     {
-        'filter_class': filters.NumericRangeFilter
+        'filter_class': filters.RangeFilter
     },
     models.IntegerField:
     {
-        'filter_class': filters.NumericRangeFilter
+        'filter_class': filters.RangeFilter
     },
     models.DateTimeField:
     {
