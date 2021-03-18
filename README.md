@@ -13,7 +13,7 @@
 ./scripts/launch-postgres.sh
 pipenv shell
 pipenv install --dev
-export $(cat .example.env | xargs)
+set -a; source .example.env; set +a
 ./manage.py migrate
 ./manage.py createsuperuser
 ./manage.py runserver
