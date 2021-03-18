@@ -17,6 +17,21 @@ class OrderGroupSerializer(ApplicationModelSerializer):
     security_isin = serializers.SerializerMethodField()
     trader = serializers.SerializerMethodField()
     requestor_institution = serializers.SerializerMethodField()
+    # display human-readable choices
+    orderbook_type = serializers.CharField(
+        source='get_orderbook_type_display')
+    order_type = serializers.CharField(
+        source='get_order_type_display')
+    direction = serializers.CharField(source='get_direction_display')
+    group_status = serializers.CharField(source='get_group_status_display')
+    allocation_status = serializers.CharField(
+        source='get_allocation_status_display')
+    response_type = serializers.CharField(
+        source='get_response_type_display')
+    settlement_currency = serializers.CharField(
+        source='get_settlement_currency_display')
+    requestor_type = serializers.CharField(
+        source='get_requestor_type_display')
 
     class Meta:
         model = OrderGroup

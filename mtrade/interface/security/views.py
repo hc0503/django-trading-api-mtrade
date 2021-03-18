@@ -20,7 +20,7 @@ class SecurityViewSet(viewsets.ReadOnlyModelViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SecuritySerializer
-    filterset_fields = []
+    filterset_fields = ['isin']
     ordering = ['-created_at']
 
     def get_queryset(self):

@@ -74,5 +74,5 @@ class OrderGroupViewSetTest(APITestCase):
         self.assertIs(response.status_code, 200)
 
     def test_retrieve_order_group_by_id(self):
-        request = self.factory.get(f'/v0/order-group/{}')
+        # request = self.factory.get(f'/v0/order-group/{}')
         pass

@@ -26,10 +26,16 @@ class OrderGroupViewSet(viewsets.ReadOnlyModelViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = OrderGroupSerializer
-    filterset_fields = ('direction',  'trader_id')
+    # TODO: pending: range filter implementation!!
+    filterset_fields = ('orderbook_type',
+                        'order_type',
+                        'direction',
+                        'group_status',
+                        'allocation_status',
+                        'response_type',
+                        'settlement_currency',
+                        )
     ordering = ('-created_at',)
-    # TODO: add missing filetr fields: 'institution'
-    # TODO: consider adding security__isin filter
 
     def get_queryset(self):
         # TODO: handle request path properly by filtering orders by market path
