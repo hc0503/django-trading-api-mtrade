@@ -5,6 +5,7 @@ import traceback
 import pandas as pd
 import pytz
 
+
 from decimal import Decimal
 from dataclasses import asdict
 
@@ -594,7 +595,7 @@ def create_institutions():
         {"name": "Actinver"},
         {"name": "Banamex"},
         {"name": "HSBC"},
-        {"name": "Santancer"}
+        {"name": "Santander"}
     ]
 
     institution_gen = (i for i in institution_data)
@@ -1019,7 +1020,7 @@ def create_order_group_data(test=False) -> dict:
 
     resp_received = ResponsesReceived(random.randint(0, 10))
 
-    rand_allocation = Decimal(100*random.random())
+    rand_allocation = Decimal(str(100*random.random()))
     a_status = Model.ALLOCATION_STATUS_PARTIAL
 
     if rand_allocation == Decimal("0"):
@@ -1028,8 +1029,7 @@ def create_order_group_data(test=False) -> dict:
         a_status = Model.ALLOCATION_STATUS_FULL
 
     allocation_progress = AllocationProgress(
-        a_status,
-        rand_allocation)
+        status=a_status, percentage=rand_allocation)
 
     status = OrderGroupStatus(
         select_random_model_choice(Model.GROUP_STATUS_CHOICES))
@@ -1073,7 +1073,6 @@ def create_order_group_data(test=False) -> dict:
         weighted_avg_yield=weighted_avg_yield,
         fx=fx
     )
-
     data = dict(
         security_id=security_id,
         requestor_institution_id=requestor_institution_id,

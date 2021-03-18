@@ -328,8 +328,15 @@ class OrderGroup(custom_models.DatedModel):
     ]
     # TODO: order types must be the union of Rfq and Cob order types
     ORDER_TYPE_STREAM = 'stream'
+    ORDER_TYPE_COB_MARKET = 'cob-market'
+    ORDER_TYPE_COB_LIMIT = 'cob-limit'
+    ORDER_TYPE_RFQ = 'rfq'
     ORDER_TYPE_CHOICES = [
-        (ORDER_TYPE_STREAM, 'Stream')
+        (ORDER_TYPE_STREAM, 'COB Stream'),
+        (ORDER_TYPE_COB_MARKET, 'COB Market'),
+        (ORDER_TYPE_COB_LIMIT, 'COB Limit'),
+        (ORDER_TYPE_RFQ, 'RFQ')
+
     ]
 
     DIRECTION_BUY = 'buy'
@@ -471,6 +478,7 @@ class OrderGroupFactory():
             requestor_institution_id=requestor_institution_id.value,
             trader_id=trader_id.value,
             orderbook_type=base_params.orderbook_type,
+            order_type=base_params.order_type,
             direction=base_params.direction,
             size=base_params.size,
             notional=base_params.notional,
@@ -488,7 +496,7 @@ class OrderGroupFactory():
             requestor_type=base_params.requestor_type,
             resp_received=resp_received.value,
         )
-        # order_group.full_clean()
+        order_group.full_clean()
         return order_group
 
     @classmethod

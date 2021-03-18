@@ -12,6 +12,9 @@ class OrderGroupSerializer(ApplicationModelSerializer):
     """
     This serializer is intended for a blotter view
     """
+    class Meta:
+        model = OrderGroup
+        fields = '__all__'
 
     security_name = serializers.SerializerMethodField()
     security_isin = serializers.SerializerMethodField()
@@ -33,10 +36,6 @@ class OrderGroupSerializer(ApplicationModelSerializer):
     requestor_type = serializers.CharField(
         source='get_requestor_type_display')
 
-    class Meta:
-        model = OrderGroup
-        fields = '__all__'
-
     def get_security_name(self, obj):
         security = SecurityAppServices.get_security_by_id(
             security_id=obj.security_id)
@@ -57,7 +56,7 @@ class OrderGroupSerializer(ApplicationModelSerializer):
     def get_requestor_institution(self, obj: OrderGroup):
         """Returns anonymous if requestor type is anonymous. Else, returns institution name"""
         if obj.requestor_type == obj.REQUESTOR_TYPE_ANONYMOUS:
-            return obj.REQUESTOR_TYPE_ANONYMOUS[1]
+            return obj.REQUESTOR_TYPE_ANONYMOUS.capitalize()
 
         institution_id = obj.requestor_institution_id
         institution = InstitutionAppServices.get_institution_by_id(
