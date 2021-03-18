@@ -11,6 +11,7 @@ from mtrade.application.market.order_group.services import OrderGroupAppServices
 # local imports
 from . import open_api
 from .serializers import OrderGroupSerializer
+from .filters import OrderGroupFilterSet
 
 
 @extend_schema_view(
@@ -26,15 +27,7 @@ class OrderGroupViewSet(viewsets.ReadOnlyModelViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = OrderGroupSerializer
-    # TODO: pending: range filter implementation!!
-    filterset_fields = ('orderbook_type',
-                        'order_type',
-                        'direction',
-                        'group_status',
-                        'allocation_status',
-                        'response_type',
-                        'settlement_currency',
-                        )
+    filterset_class = OrderGroupFilterSet
     ordering = ('-created_at',)
 
     def get_queryset(self):
