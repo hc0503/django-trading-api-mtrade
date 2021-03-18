@@ -11,3 +11,7 @@ class SecurityAppServices():
     @staticmethod
     def list_securities() -> QuerySet:
         return ss.get_security_repo().all()
+
+    @staticmethod
+    def get_security_by_id(security_id) -> Security:
+        return ss.get_security_repo().get(id=security_id)

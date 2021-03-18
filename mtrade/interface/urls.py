@@ -32,7 +32,7 @@ from .trader.urls import (
     trader_subrouter
 )
 from .market.urls import (
-
+    order_group_router,
     market_base_router,
     market_subrouter,
     market_cob_subrouter,
@@ -67,6 +67,7 @@ urlpatterns = [
     path('api/v0/', include(security_router.urls)),
     path('api/v0/', include(security_issuer_router.urls)),
     # market
+    path('api/v0/', include(order_group_router.urls)),
     path('api/v0/', include(market_base_router.urls)),
     path('api/v0/', include(market_subrouter.urls)),
     path('api/v0/', include(market_cob_subrouter.urls)),

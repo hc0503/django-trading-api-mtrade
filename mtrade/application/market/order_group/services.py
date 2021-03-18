@@ -16,7 +16,6 @@ class OrderGroupAppServices():
         # FIXME: what happens if user id does not correspond to a trader id. Handle this.
         # check user is trader
         trader_id = user.id
-        trader = TraderServices.get_trader_repo().get(id=trader_id)
         # TODO: when licenses are defined, check trader has correct license
         traders_order_groups = ogs.get_order_group_repo().filter(trader_id=trader_id)
         return traders_order_groups

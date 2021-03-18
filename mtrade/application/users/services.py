@@ -20,7 +20,8 @@ class UserAppServices():
             cls, personal_data: UserPersonalData,
             base_permissions: UserBasePermissions) -> User:
         # This method is not strictly necessary since it only wraps a call to the user factory.
-        user = cls.user_factory.build_entity_with_id(personal_data, base_permissions)
+        user = cls.user_factory.build_entity_with_id(
+            personal_data, base_permissions)
         # NOTE: This does not handle user password
         user.save()
         log.info("model saved")
@@ -45,3 +46,7 @@ class UserAppServices():
             return True
         else:
             return False
+
+    @staticmethod
+    def get_user_by_id(user_id) -> User:
+        return UserServices.get_user_repo().get(id=user_id)

@@ -1001,7 +1001,7 @@ def create_order_group_data(test=False) -> dict:
     Arguments
     -----
     test: bool
-        If True, returns a trader instance with fake relations to other models
+        If True, foreign relations will be fake
     """
     Model = OrderGroup
 
@@ -1028,10 +1028,11 @@ def create_order_group_data(test=False) -> dict:
         a_status = Model.ALLOCATION_STATUS_FULL
 
     allocation_progress = AllocationProgress(
-            a_status,
-            rand_allocation)
+        a_status,
+        rand_allocation)
 
-    status = OrderGroupStatus(select_random_model_choice(Model.GROUP_STATUS_CHOICES))
+    status = OrderGroupStatus(
+        select_random_model_choice(Model.GROUP_STATUS_CHOICES))
 
     # base_params
     priority = Priority(create_random_datetime(
@@ -1041,8 +1042,6 @@ def create_order_group_data(test=False) -> dict:
     direction = select_random_model_choice(Model.DIRECTION_CHOICES)
     size = create_random_number_of_securities()
     notional = Decimal(str(size * price))
-    submission = create_random_datetime(
-        '20/1/2020 1:30 PM', '20/5/2020 1:30 PM')
     expiration = create_random_datetime(
         '20/5/2021 1:30 PM', '20/6/2021 1:30 PM')
     response_type = select_random_model_choice(
@@ -1556,7 +1555,7 @@ def run(interactive: bool = True):
             create_securities()
             create_settlement_instructions(10)
             create_alarms(10)
-            create_order_groups(20)
+            create_order_groups(120)
             create_cob_orders(20)
             create_cob_auto_refreshers(20)
             create_cob_streams(20)

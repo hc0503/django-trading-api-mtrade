@@ -20,6 +20,10 @@ RFQ_RESPONSE_PATTERN = r'response'
 
 ORDER_GROUP_PATTERN = r'order-group'
 
+order_group_router = routers.SimpleRouter()
+order_group_router.register(
+    ORDER_GROUP_PATTERN, order_group_views.OrderGroupViewSet, basename='order-group'
+)
 
 market_base_router = routers.SimpleRouter()
 market_base_router.register(
@@ -32,9 +36,6 @@ market_subrouter.register(
     COB_PATTERN, cob_views.COBViewSet, basename='market-cob')
 market_subrouter.register(
     RFQ_PATTERN, rfq_views.RfqViewSet, basename='market-rfq')
-market_subrouter.register(
-    ORDER_GROUP_PATTERN, order_group_views.OrderGroupViewSet, basename='order-group'
-)
 
 
 market_cob_subrouter = routers.NestedSimpleRouter(
