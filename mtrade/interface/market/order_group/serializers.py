@@ -14,7 +14,8 @@ class OrderGroupSerializer(ApplicationModelSerializer):
     """
     class Meta:
         model = OrderGroup
-        fields = '__all__'
+        exclude = ('trader_id',
+                   'requestor_institution_id',)
 
     security_name = serializers.SerializerMethodField()
     security_isin = serializers.SerializerMethodField()
