@@ -1,4 +1,4 @@
-# MTrade API
+# MTrade RESTful API
 
 ## Requirements
 
